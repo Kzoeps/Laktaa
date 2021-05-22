@@ -1,0 +1,7 @@
+# Artifacts
+build
+coverage
+# File Types To Ignore
+*.yml
+*.html
+*.md
