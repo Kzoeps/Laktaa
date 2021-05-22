@@ -7,13 +7,14 @@
         "start": "react-native start",
         "test": "jest",
         "lint": "prettier --check .",
-        "format": "prettier --write ."
+        "format": "prettier --write .",
+        "prepare": "husky install"
     },
-  	"husky": {
-		"hooks": {
-	  		"pre-commit": "echo \"[Husky] pre-commit\" && prettier --write . && git add -A ."
-		}
-  	},
+    "husky": {
+        "hooks": {
+            "pre-commit": "echo \"[Husky] pre-commit\""
+        }
+    },
     "dependencies": {
         "expo": "~41.0.1",
         "expo-splash-screen": "~0.10.2",
