@@ -1,12 +1,10 @@
 {
-  "name": "FirstMile",
-  "displayName": "FirstMile",
-  "expo": {
     "name": "FirstMile",
-    "slug": "FirstMile",
-    "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
-  }
+    "displayName": "FirstMile",
+    "expo": {
+        "name": "FirstMile",
+        "slug": "FirstMile",
+        "version": "1.0.0",
+        "assetBundlePatterns": ["**/*"]
+    }
 }
