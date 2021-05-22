@@ -16,6 +16,8 @@
         }
     },
     "dependencies": {
+        "@commitlint/cli": "^12.1.4",
+        "@commitlint/config-conventional": "^12.1.4",
         "expo": "~41.0.1",
         "expo-splash-screen": "~0.10.2",
         "expo-updates": "~0.5.4",
