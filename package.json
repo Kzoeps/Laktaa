@@ -12,7 +12,7 @@
     },
     "husky": {
         "hooks": {
-            "pre-commit": "echo \"[Husky] pre-commit\""
+            "pre-commit": "echo \"[Husky] pre-commit\" && prettier --write ."
         }
     },
     "dependencies": {
