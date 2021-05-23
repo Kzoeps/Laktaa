@@ -1,7 +1,11 @@
 name: learn-github-actions
-on: [push]
+on: 
+    push: 
+        branches: [ development, main]
+    pull-request:
+        branches: [development, main]
 jobs:
-  check-bats-version:
+  lint-files:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -22,4 +26,5 @@ jobs:
             scope: # optional
             # Used to pull node distributions from node-versions.  Since there's a default, this is typically not supplied by the user.
             token: # optional, default is ${{ github.token }}
+      - run: yarn install
       - run: yarn lint
