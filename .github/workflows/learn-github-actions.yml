@@ -22,5 +22,4 @@ jobs:
             scope: # optional
             # Used to pull node distributions from node-versions.  Since there's a default, this is typically not supplied by the user.
             token: # optional, default is ${{ github.token }}
-      - run: yarn add bats
-      - run: bats -v
+      - run: yarn lint
