@@ -12,15 +12,30 @@
         "ecmaVersion": 12,
         "sourceType": "module"
     },
-    "plugins": ["react", "@typescript-eslint"],
+    "plugins": [
+        "react",
+        "@typescript-eslint",
+        "plugin:@typescript-eslint/recommended",
+        "react-hooks"
+    ],
     "rules": {
-        "react/jsx-filename-extension": [
-            2,
-            {
-                "extensions": [".jsx", ".tsx"]
-            }
-        ],
         "no-use-before-define": "off",
-        "@typescript-eslint/no-use-before-define": "warn"
+        "@typescript-eslint/no-use-before-define": ["error"],
+        "react/jsx-filename-extension": ["warn", { "extensions": [".tsx"] }],
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            { "ts": "never", "tsx": "never" }
+        ],
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": ["error"],
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        "react/prop-types": "off"
+    },
+    "settings": {
+        "import/resolver": {
+            "typescript": {}
+        }
     }
 }
