@@ -1,4 +1,4 @@
-import { View, Text } from 'native-base'
+import { Text, View } from 'native-base'
 import React from 'react'
 
 const SignUpScreen = () => (
@@ -7,4 +7,4 @@ const SignUpScreen = () => (
     </View>
 )
 
-export default { SignUpScreen }
+export default SignUpScreen
