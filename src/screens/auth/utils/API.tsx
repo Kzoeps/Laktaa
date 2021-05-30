@@ -1,5 +1,9 @@
 import firebase from 'firebase'
+
 export default {
-    signIn: (phoneNumber: string) =>
-        firebase.auth().signInWithPhoneNumber(phoneNumber),
+    signIn: (
+        phoneNumber: string,
+        applicationVerifier: firebase.auth.ApplicationVerifier
+    ) =>
+        firebase.auth().signInWithPhoneNumber(phoneNumber, applicationVerifier),
 }
