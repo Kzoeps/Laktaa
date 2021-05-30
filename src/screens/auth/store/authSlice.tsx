@@ -17,6 +17,4 @@ export const authSlice = createSlice({
     reducers: {},
 })
 
-export const signInUser = createAsyncThunk('auth/signIn', async () => {})
-
 export default authSlice.reducer
