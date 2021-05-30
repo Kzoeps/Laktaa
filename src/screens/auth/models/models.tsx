@@ -1,4 +1,10 @@
+import { APIStatuses } from 'src/shared/models/model'
+
 export interface AuthState {
-    userName: string
-    userId: string
+    userDetails: {
+        userName: string
+        userId: string
+    }
+    status: APIStatuses
+    error: string | null
 }

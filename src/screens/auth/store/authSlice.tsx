@@ -1,9 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AuthState } from 'src/screens/auth/models/models'
+import { APIStatuses } from 'src/shared/models/model.tsx.ts'
 
 const initialState: AuthState = {
-    userName: '',
-    userId: '',
+    userDetails: {
+        userName: '',
+        userId: '',
+    },
+    status: APIStatuses.IDLE,
+    error: null,
 }
 
 export const authSlice = createSlice({
@@ -11,5 +16,7 @@ export const authSlice = createSlice({
     initialState,
     reducers: {},
 })
+
+export const signInUser = createAsyncThunk('auth/signIn', async () => {})
 
 export default authSlice.reducer
