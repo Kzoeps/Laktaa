@@ -40,5 +40,9 @@
         "import/resolver": {
             "typescript": {}
         }
+    },
+    "globals": {
+        "JSX": true,
+        "React": true
     }
 }
