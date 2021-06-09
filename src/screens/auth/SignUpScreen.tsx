@@ -1,6 +1,6 @@
-import { Text, View } from 'native-base'
-import React from 'react'
-import firebase from 'firebase'
+import { Text, View } from 'native-base';
+import React from 'react';
+import firebase from 'firebase';
 
 // const setUpRecaptcha = () => {
 // 	window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
@@ -16,6 +16,6 @@ const SignUpScreen = () => (
     <View>
         <Text>SignUpScreen</Text>
     </View>
-)
+);
 
-export default SignUpScreen
+export default SignUpScreen;

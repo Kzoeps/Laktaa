@@ -1,6 +1,5 @@
-import React from 'react'
-import { Text, View } from 'react-native'
-import { NavigationNavigator } from 'react-navigation'
+import React from 'react';
+import { Text, View } from 'react-native';
 
 const LoginScreen = ({ navigation }): JSX.Element => (
     <View>
@@ -9,6 +8,6 @@ const LoginScreen = ({ navigation }): JSX.Element => (
             Go To Sign Up
         </Text>
     </View>
-)
+);
 
-export default LoginScreen
+export default LoginScreen;

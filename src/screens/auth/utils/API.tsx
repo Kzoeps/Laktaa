@@ -1,6 +1,7 @@
-import firebase from 'firebase'
+import firebase from 'firebase';
 
-export default {
+// eslint-disable-next-line import/prefer-default-export
+export const FIREBASE_CALLS = {
     signIn: (
         phoneNumber: string,
         applicationVerifier: firebase.auth.ApplicationVerifier
@@ -10,4 +11,4 @@ export default {
         confirmation: firebase.auth.ConfirmationResult,
         code: string
     ): Promise<firebase.auth.UserCredential> => confirmation.confirm(code),
-}
+};
