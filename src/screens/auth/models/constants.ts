@@ -1,0 +1,9 @@
+import * as Yup from 'yup';
+import { VALIDATION_MESSAGES } from '../../../shared/models/constants';
+
+export const SIGN_UP_SCHEMA = Yup.object().shape({
+  email: Yup.string().email().required(VALIDATION_MESSAGES.required),
+  password: Yup.string()
+    .required(VALIDATION_MESSAGES.required)
+    .min(8, VALIDATION_MESSAGES.minLength),
+});

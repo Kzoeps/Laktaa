@@ -1,20 +1,30 @@
-import { Text, View } from 'native-base';
-import React from 'react';
+import { Container, Content, Form, Input, Item, Label } from 'native-base';
+import React, { FC } from 'react';
+import { SIGN_UP_SCHEMA } from './models/constants';
 
-// const setUpRecaptcha = () => {
-// 	window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
-// 		'size': 'invisible',
-// 		'callback': (response) => {
-// 			reCAPTCHA solved, allow signInWithPhoneNumber.
-// onSignInSubmit();
-// }
-// });
-// }
+const SignUpScreen: FC = () => {
+  const initialFormValues = {
+    email: '',
+    password: '',
+  };
 
-const SignUpScreen = () => (
-  <View>
-    <Text>SignUpScreen</Text>
-  </View>
-);
+  const signUpSchema = SIGN_UP_SCHEMA;
+  return (
+    <Container>
+      <Content>
+        <Form>
+          <Item floatingLabel>
+            <Label>Email</Label>
+            <Input />
+          </Item>
+          <Item floatingLabel last>
+            <Label>Password</Label>
+            <Input keyboardType="visible-password" />
+          </Item>
+        </Form>
+      </Content>
+    </Container>
+  );
+};
 
 export default SignUpScreen;
