@@ -11,4 +11,15 @@ export const FIREBASE_CALLS = {
         confirmation: firebase.auth.ConfirmationResult,
         code: string
     ): Promise<firebase.auth.UserCredential> => confirmation.confirm(code),
+    signUpWithEmail: (
+        email: string,
+        password: string
+    ): Promise<firebase.auth.UserCredential> =>
+        firebase.auth().createUserWithEmailAndPassword(email, password),
+    signInWithEmail: (
+        email: string,
+        password: string
+    ): Promise<firebase.auth.UserCredential> =>
+        firebase.auth().signInWithEmailAndPassword(email, password),
+    logout: (): Promise<void> => firebase.auth().signOut(),
 };

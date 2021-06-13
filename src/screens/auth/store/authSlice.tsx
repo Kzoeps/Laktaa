@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AuthState } from 'src/screens/auth/models/models';
-import { APIStatuses } from 'src/shared/models/model.tsx.ts';
+import { APIStatuses } from 'src/shared/models/model';
 
 const initialState: AuthState = {
     userDetails: {
