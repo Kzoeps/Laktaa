@@ -1,24 +1,16 @@
-import {
-  Button,
-  Container,
-  Content,
-  Form,
-  Input,
-  Item,
-  Label,
-  Text,
-} from 'native-base';
-import React, { FC } from 'react';
+import { Button, Container, Content, Form, Text } from 'native-base';
+import React, { FC, useContext } from 'react';
 import { Formik, FormikProps, FormikValues } from 'formik';
 import { SIGN_UP_SCHEMA } from './models/constants';
 import FMTextInput from '../../shared/components/TextInput';
+import { AuthContext } from './auth';
 
 const SignUpScreen: FC = () => {
+  const { signUpWithEmail } = useContext(AuthContext);
   const initialValues = {
     email: '',
     password: '',
   };
-
   const validationSchema = SIGN_UP_SCHEMA;
 
   return (
@@ -27,7 +19,11 @@ const SignUpScreen: FC = () => {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={({ email, password }) =>
+            signUpWithEmail(email, password).then((response: unknown) =>
+              console.log(response)
+            )
+          }
         >
           {(formik: FormikProps<{ email: string; password: string }>) => (
             <Form>

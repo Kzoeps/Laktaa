@@ -17,7 +17,7 @@ const Routes = (): JSX.Element => {
       setPending(false);
     };
     firebase.auth().onAuthStateChanged(onAuthStateChanges);
-  }, []);
+  });
   if (pending) return <Text>Loading...</Text>;
   return (
     <NavigationContainer>
