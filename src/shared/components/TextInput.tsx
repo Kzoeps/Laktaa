@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { FormikProps, FormikValues } from 'formik';
 import { Input, Item, Label, Text } from 'native-base';
 
-const TextInput: FC<{
+const FMTextInput: FC<{
   label: string;
   formik: FormikProps<FormikValues>;
   name: string;
@@ -18,4 +18,4 @@ const TextInput: FC<{
   </>
 );
 
-export default TextInput;
+export default FMTextInput;
