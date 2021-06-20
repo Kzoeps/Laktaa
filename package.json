@@ -28,6 +28,7 @@
     "@types/react": "^17.0.11",
     "@types/react-native": "~0.63.2",
     "@types/react-redux": "^7.1.16",
+    "commitizen": "^4.2.4",
     "expo": "~41.0.1",
     "expo-font": "~9.1.0",
     "expo-splash-screen": "~0.10.2",
@@ -56,6 +57,7 @@
     "@typescript-eslint/eslint-plugin": "^4.24.0",
     "@typescript-eslint/parser": "^4.24.0",
     "babel-preset-expo": "~8.3.0",
+    "cz-conventional-changelog": "^3.2.0",
     "eslint": "^7.27.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",
@@ -71,5 +73,10 @@
   "jest": {
     "preset": "react-native"
   },
-  "private": true
+  "private": true,
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
