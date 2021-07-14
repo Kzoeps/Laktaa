@@ -21,7 +21,7 @@ const Routes = (): JSX.Element => {
   if (pending) return <Text>Loading...</Text>;
   return (
     <NavigationContainer>
-      {currentUser ? <AppStack /> : <AuthStack />}
+      {currentUser ? <AppStack /> : <AppStack />}
     </NavigationContainer>
   );
 };

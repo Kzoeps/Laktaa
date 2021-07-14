@@ -50,6 +50,7 @@
     "react-redux": "^7.2.4",
     "redux-thunk": "^2.3.0",
     "styled-components": "^5.3.0",
+    "tailwind-rn": "^3.0.1",
     "yup": "^0.32.9"
   },
   "devDependencies": {
