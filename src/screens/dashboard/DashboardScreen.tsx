@@ -115,7 +115,7 @@ const DashboardScreen: FC = () => {
             >
               <View style={tailwind('w-24 border')}>
                 <Image
-                  style={tailwind('w-26')}
+                  style={tailwind('w-24')}
                   source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
                 />
               </View>
