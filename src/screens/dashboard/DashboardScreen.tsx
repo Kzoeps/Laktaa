@@ -20,7 +20,7 @@ const DashboardScreen: FC = () => {
       image: 'https://phuntshonorbu.com/images/gallery/Lungchutse/IMG_6846.jpg',
     },
     {
-      from_place: 'Pemagathsel',
+      from_place: 'P/gathsel',
       to_place: 'Bumthang',
       price: 4300.0,
       pieces: 8,
@@ -41,7 +41,7 @@ const DashboardScreen: FC = () => {
     },
     {
       from_place: 'Lhuntse',
-      to_place: 'Samdrupjongkhar',
+      to_place: 'S/Jongkhar',
       price: 789.0,
       pieces: 6,
       weight: '32kg',
@@ -99,7 +99,7 @@ const DashboardScreen: FC = () => {
           {data.map((item) => (
             <View
               style={[
-                tailwind('bg-white m-2 px-5 py-3 flex flex-row rounded-3xl'),
+                tailwind('bg-white m-2 flex flex-row rounded-3xl'),
                 {
                   shadowColor: '#000',
                   shadowOffset: {
@@ -113,15 +113,50 @@ const DashboardScreen: FC = () => {
                 },
               ]}
             >
-              <View style={tailwind('w-20 border ')}>
+              <View style={tailwind('w-24 border')}>
                 <Image
-                  style={tailwind('w-24')}
+                  style={tailwind('w-26')}
                   source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
                 />
               </View>
 
-              <View style={tailwind('flex-1 border')}>
-                <Text>{item.image}</Text>
+              <View style={tailwind('flex-1 px-2 pt-4')}>
+                <View style={tailwind('mb-3')}>
+                  <View style={tailwind('flex flex-row')}>
+                    <View style={tailwind('flex-1 border-r border-gray-200')}>
+                      <Text style={tailwind('text-center')}>
+                        {item.from_place}
+                      </Text>
+                      <Text style={tailwind('text-center')}>to</Text>
+                      <Text style={tailwind('text-center')}>
+                        {item.to_place}
+                      </Text>
+                    </View>
+                    <View style={tailwind('flex-1 border-r border-gray-200')}>
+                      <Text style={tailwind('text-center')}>Price</Text>
+                      <Text style={tailwind('text-center')}>
+                        Nu {item.price}
+                      </Text>
+                    </View>
+                    <View style={tailwind('flex-1 border-gray-200')}>
+                      <Text style={tailwind('text-center')}>
+                        Nos: {item.pieces}
+                      </Text>
+                      <Text style={tailwind('text-center')}>{item.weight}</Text>
+                    </View>
+                  </View>
+                </View>
+
+                <View
+                  style={tailwind('flex-row border-t border-gray-100 py-2')}
+                >
+                  <View style={tailwind('flex-1')}>
+                    <Text style={tailwind('text-center')}>Call</Text>
+                  </View>
+                  <View style={tailwind('flex-1')}>
+                    <Text style={tailwind('text-center')}>Detail</Text>
+                  </View>
+                </View>
               </View>
             </View>
           ))}
