@@ -10,10 +10,10 @@ const DashboardScreen: FC = () => {
   }, [shouldLogout, logout]);
   return (
     <Container>
-        <Text>THIS IS DASHBOARD SCREEN AND WORKS</Text>
-        <Button onPress={() => setShouldLogout(true)}>
-          <Text>Logout</Text>
-        </Button>
+      <Text>THIS IS DASHBOARD SCREEN AND WORKS</Text>
+      <Button onPress={() => setShouldLogout(true)}>
+        <Text>Logout</Text>
+      </Button>
     </Container>
   );
 };

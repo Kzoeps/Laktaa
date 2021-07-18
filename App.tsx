@@ -20,12 +20,13 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 export default function App() {
-	return (
-		<NativeBaseProvider>
-			<Provider store={store}>
-				<AuthProvider>
-					<Routes />
-				</AuthProvider>
-			</Provider>
-		</NativeBaseProvider>);
+  return (
+    <NativeBaseProvider>
+      <Provider store={store}>
+        <AuthProvider>
+          <Routes />
+        </AuthProvider>
+      </Provider>
+    </NativeBaseProvider>
+  );
 }
