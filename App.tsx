@@ -1,10 +1,8 @@
-import React from 'react';
+import React, { FC } from 'react';
 import 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
 import firebase from 'firebase';
-import { useFonts } from 'expo-font';
-import { Ionicons } from '@expo/vector-icons';
-import { Text } from 'native-base';
+import { NativeBaseProvider } from 'native-base';
 import { AuthProvider } from './src/screens/auth/auth';
 import Routes from './src/Routes';
 import store from './src/store/store';
@@ -22,19 +20,12 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 export default function App() {
-  const [loaded] = useFonts({
-    // eslint-disable-next-line global-require
-    Roboto: require('native-base/Fonts/Roboto.ttf'),
-    // eslint-disable-next-line global-require
-    Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
-    ...Ionicons.font,
-  });
-  if (!loaded) return <Text>Loading ...</Text>;
-  return (
-    <Provider store={store}>
-      <AuthProvider>
-        <Routes />
-      </AuthProvider>
-    </Provider>
-  );
+	return (
+		<NativeBaseProvider>
+			<Provider store={store}>
+				<AuthProvider>
+					<Routes />
+				</AuthProvider>
+			</Provider>
+		</NativeBaseProvider>);
 }
