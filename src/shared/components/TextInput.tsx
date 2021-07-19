@@ -8,9 +8,9 @@ const FMTextInput: FC<{
   formik: FormikProps<FormikValues>;
   name: string;
   icon?: string;
-  show?: boolean;
-}> = ({ label, formik, name, icon, show }) => (
-  <Box w="100%">
+  doNotShow?: boolean;
+}> = ({ label, formik, name, icon, doNotShow }) => (
+  <Box w="90%">
     <Input
       InputLeftElement={
         icon ? (
@@ -23,7 +23,7 @@ const FMTextInput: FC<{
           />
         ) : undefined
       }
-      type={show ? 'text' : 'password'}
+      type={doNotShow ? 'password' : 'text'}
       variant="underlined"
       placeholder={label}
       onChangeText={formik.handleChange(name)}
