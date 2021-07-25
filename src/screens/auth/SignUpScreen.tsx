@@ -25,8 +25,7 @@ const SignUpScreen: FC = () => {
   useEffect(() => {
     if (shouldUpdateProfile) {
       const user: firebase.User | null = firebase.auth().currentUser;
-      user
-        ?.updateProfile({ displayName })
+      user?.updateProfile({ displayName })
         .catch((error: firebase.FirebaseError) => {
           console.error(error.message);
         });
