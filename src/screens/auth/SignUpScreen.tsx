@@ -1,36 +1,46 @@
-import { Box, Button, Icon, Text } from 'native-base';
+import { Box, Button, Icon } from 'native-base';
 import React, { FC, useContext, useEffect, useState } from 'react';
 import { Formik, FormikProps, FormikValues } from 'formik';
 import tailwind from 'tailwind-rn';
 import firebase from 'firebase';
 import { Image, View } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useDispatch } from 'react-redux';
 import { SIGN_UP_SCHEMA } from './models/constants';
 import FMTextInput from '../../shared/components/TextInput';
 import { AuthContext } from './auth';
+import { UserDetails } from './models/models';
+import { setUserDetails as updateUserDetails } from './store/authSlice';
 
 const SignUpScreen: FC = () => {
-  const { signUpWithEmail, currentUser } = useContext(AuthContext);
-  const [shouldUpdateProfile, setShouldUpdateProfile] =
-    useState<boolean>(false);
-  const [displayName, setDisplayName] = useState<string>('');
-  const initialValues = {
-    name: '',
-    location: '',
-    email: '',
-    password: '',
-  };
-  const validationSchema = SIGN_UP_SCHEMA;
+	const { signUpWithEmail, currentUser } = useContext(AuthContext);
+	const [shouldUpdateProfile, setShouldUpdateProfile] =
+		useState<boolean>(false);
+	const [displayName, setDisplayName] = useState<string>('');
+	const [userDetails, setUserDetails] = useState<UserDetails>({});
+	const initialValues = {
+		name: '',
+		location: '',
+		email: '',
+		password: '',
+	};
+	const validationSchema = SIGN_UP_SCHEMA;
+	const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (shouldUpdateProfile) {
-      const user: firebase.User | null = firebase.auth().currentUser;
-      user?.updateProfile({ displayName })
-        .catch((error: firebase.FirebaseError) => {
-          console.error(error.message);
-        });
-    }
-  }, [shouldUpdateProfile, currentUser, displayName]);
+
+	useEffect(() => {
+		if (shouldUpdateProfile) {
+			const user: firebase.User | null = firebase.auth().currentUser;
+			user?.updateProfile({ displayName })
+				.catch((error: firebase.FirebaseError) => {
+					console.error(error.message);
+				});
+			const updateUserProfile = async () => {
+				await dispatch(updateUserDetails(userDetails));
+			};
+			updateUserProfile();
+		}
+  }, [shouldUpdateProfile, userDetails, currentUser, displayName, dispatch]);
 
   return (
 		<View style={tailwind('bg-blue-200 items-center')}>
@@ -44,6 +54,7 @@ const SignUpScreen: FC = () => {
 						signUpWithEmail(email, password)
 							.then(() => {
 								setDisplayName(name);
+								setUserDetails({ email, userName: name, location });
 								setShouldUpdateProfile(true);
 							})
 							.catch((error: firebase.FirebaseError) => {

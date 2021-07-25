@@ -13,29 +13,6 @@ const initialState: AuthState = {
 	error: null,
 };
 
-export const authSlice = createSlice({
-	name: 'auth',
-	initialState,
-	reducers: {
-		setUserDetails: {
-			reducer(state, action: PayloadAction<UserDetails>) {
-				state.userDetails = action.payload;
-			},
-			prepare(userId: string, location: string, userName: string) {
-				return {
-					payload: {
-						userId,
-						location,
-						userName,
-					},
-				};
-			},
-		},
-	},
-});
-
-// export const { setUserDetails } = authSlice.actions;
-
 export const setUserDetails = createAsyncThunk(
 	AuthStoreActionTypes.setUserDetails,
 	async (userDetails: UserDetails) => {
@@ -43,5 +20,20 @@ export const setUserDetails = createAsyncThunk(
 		return response.data;
 	}
 );
+
+export const authSlice = createSlice({
+	name: 'auth',
+	initialState,
+	reducers: {
+	},
+	extraReducers: {
+		[setUserDetails.fulfilled as unknown as string]: (state: AuthState,action: PayloadAction<UserDetails>) => {
+			state.userDetails = action.payload;
+		}
+	}
+});
+
+// export const { setUserDetails } = authSlice.actions;
+
 
 export default authSlice.reducer;
