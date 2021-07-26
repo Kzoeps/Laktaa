@@ -1,5 +1,5 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
-import { TouchableOpacity, Dimensions, Image } from 'react-native';
+import { TouchableOpacity, Dimensions, Image, ScrollView } from 'react-native';
 import { Container, Content, Text, View } from 'native-base';
 import tailwind from 'tailwind-rn';
 import { AuthContext } from '../auth/auth';
@@ -15,6 +15,7 @@ const DashboardScreen: FC = () => {
       price: 100.0,
       pieces: 3,
       weight: '10kg',
+      id: 1,
       phone: '17949642',
       name: 'Phuntsho Norbu',
       image: 'https://phuntshonorbu.com/images/gallery/Lungchutse/IMG_6846.jpg',
@@ -25,11 +26,13 @@ const DashboardScreen: FC = () => {
       price: 4300.0,
       pieces: 8,
       weight: '50kg',
+      id: 2,
       phone: '17942422',
       name: 'Sangay Chezom',
-      image: 'https://phuntshonorbu.com/images/gallery/Lungchutse/IMG_6846.jpg',
+      image: 'https://phuntshonorbu.com/images/gallery/Nepal/IMG_6460.jpg',
     },
     {
+      id: 3,
       from_place: 'Thimphu',
       to_place: 'Mongar',
       price: 1000.0,
@@ -37,9 +40,10 @@ const DashboardScreen: FC = () => {
       weight: '23kg',
       phone: '77889966',
       name: 'Pema Dorji',
-      image: 'https://phuntshonorbu.com/images/gallery/Lungchutse/IMG_6846.jpg',
+      image: 'https://phuntshonorbu.com/images/gallery/Nepal/IMG_6272.jpg',
     },
     {
+      id: 4,
       from_place: 'Lhuntse',
       to_place: 'S/Jongkhar',
       price: 789.0,
@@ -47,9 +51,10 @@ const DashboardScreen: FC = () => {
       weight: '32kg',
       phone: '17981235',
       name: 'Sonam Zangmo',
-      image: 'https://phuntshonorbu.com/images/gallery/Lungchutse/IMG_6846.jpg',
+      image: 'https://phuntshonorbu.com/images/gallery/Nepal/IMG_6561-2.jpg',
     },
     {
+      id: 5,
       from_place: 'Mongar',
       to_place: 'Zhemgang',
       price: 1235.0,
@@ -57,9 +62,10 @@ const DashboardScreen: FC = () => {
       weight: '10kg',
       phone: '17949642',
       name: 'Phuntsho Norbu',
-      image: 'https://phuntshonorbu.com/images/gallery/Lungchutse/IMG_6846.jpg',
+      image: 'https://phuntshonorbu.com/images/gallery/Nepal/IMG_6189.jpg',
     },
     {
+      id: 6,
       from_place: 'Thimphu',
       to_place: 'Phuntsholing',
       price: 3465.0,
@@ -70,6 +76,7 @@ const DashboardScreen: FC = () => {
       image: 'https://phuntshonorbu.com/images/gallery/Lungchutse/IMG_6846.jpg',
     },
     {
+      id: 7,
       from_place: 'Paro',
       to_place: 'Haa',
       price: 550.0,
@@ -88,18 +95,14 @@ const DashboardScreen: FC = () => {
   return (
     <Container>
       <Content>
-        <Pageheader navigation page="dashboard" />
-        <View
-          style={[
-            tailwind('bg-white px-5 py-3 pb-3 -my-10 rounded-t-3xl '),
-            { height: Dimensions.get('window').height },
-          ]}
-        >
-          <Text>yo yo man </Text>
+        <View style={tailwind('-mb-20')}>
+          <Pageheader navigation page="dashboard" />
+        </View>
+        <View style={tailwind('bg-white px-2 py-3 pb-3 my-10 rounded-t-3xl ')}>
           {data.map((item) => (
             <View
               style={[
-                tailwind('bg-white m-2 flex flex-row rounded-3xl'),
+                tailwind('bg-white m-2 flex flex-row rounded-2xl'),
                 {
                   shadowColor: '#000',
                   shadowOffset: {
@@ -113,12 +116,10 @@ const DashboardScreen: FC = () => {
                 },
               ]}
             >
-              <View style={tailwind('w-24 border')}>
-                <Image
-                  style={tailwind('w-24')}
-                  source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
-                />
-              </View>
+              <Image
+                style={tailwind('w-24 rounded-l-2xl')}
+                source={{ uri: item.image }}
+              />
 
               <View style={tailwind('flex-1 px-2 pt-4')}>
                 <View style={tailwind('mb-3')}>
@@ -162,6 +163,7 @@ const DashboardScreen: FC = () => {
           ))}
         </View>
       </Content>
+
       <View
         style={tailwind(
           'bg-green-400 px-5 py-3 text-center absolute bottom-0 w-full'
