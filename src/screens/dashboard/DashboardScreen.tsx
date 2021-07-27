@@ -98,7 +98,7 @@ const DashboardScreen: FC = () => {
         <View style={tailwind('-mb-20')}>
           <Pageheader navigation page="dashboard" />
         </View>
-        <View style={tailwind('bg-white px-2 py-3 pb-3 my-10 rounded-t-3xl ')}>
+        <View style={tailwind('bg-white  pb-3 my-10 rounded-t-3xl ')}>
           {data.map((item) => (
             <View
               style={[
