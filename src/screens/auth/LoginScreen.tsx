@@ -2,12 +2,16 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Formik, FormikProps, FormikValues } from 'formik';
 import { Text, View } from 'react-native';
 import { useDispatch } from 'react-redux';
+import { Button, Icon } from 'native-base';
+import { MaterialIcons } from '@expo/vector-icons';
+import { Error } from '@firebase/auth-types';
 import { AuthContext } from './auth';
 import FMTextInput from '../../shared/components/TextInput';
-import { getUserProfile, selectUserDetails } from './store/authSlice';
+import { FIREBASE_CALLS } from './utils/API';
+import { fetchUserProfile } from './store/authSlice';
 
 const LoginScreen = ({ navigation }): JSX.Element => {
-  const { signInWithEmail } = useContext(AuthContext);
+  const { loginWithEmail } = useContext(AuthContext);
   const [updateUserProfile, setUpdateUserProfile] = useState<boolean>(false);
   const [userEmail, setEmail] = useState<string>('');
   const initialValues = {
@@ -18,19 +22,29 @@ const LoginScreen = ({ navigation }): JSX.Element => {
 
   useEffect(() => {
     if (updateUserProfile) {
-      dispatch(getUserProfile(initialValues.email));
+      dispatch(fetchUserProfile(userEmail));
       setUpdateUserProfile(false);
     }
-  }, [updateUserProfile, setUpdateUserProfile, initialValues.email, dispatch]);
+  }, [
+    updateUserProfile,
+    userEmail,
+    setUpdateUserProfile,
+    initialValues.email,
+    dispatch,
+  ]);
   return (
     <View>
       <Formik
         initialValues={initialValues}
         onSubmit={({ email, password }) =>
-          signInWithEmail(email, password).then(() => {
-            setEmail(email);
-            setUpdateUserProfile(true);
-          })
+          loginWithEmail(email, password)
+            .then(() => {
+              setEmail(email);
+              setUpdateUserProfile(true);
+            })
+            .catch((error: Error) => {
+              console.log(error);
+            })
         }
       >
         {(
@@ -53,6 +67,16 @@ const LoginScreen = ({ navigation }): JSX.Element => {
               icon="lock"
               doNotShow
             />
+            <Button
+              endIcon={
+                <Icon as={<MaterialIcons name="arrow-forward" size="4" />} />
+              }
+              onPress={formik.handleSubmit}
+              block
+              light
+            >
+              Log In
+            </Button>
           </>
         )}
       </Formik>

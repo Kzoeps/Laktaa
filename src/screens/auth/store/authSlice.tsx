@@ -23,11 +23,11 @@ export const setUserDetails = createAsyncThunk(
   }
 );
 
-export const getUserProfile = createAsyncThunk(
+export const fetchUserProfile = createAsyncThunk(
   AuthStoreActionTypes.fetchUserProfile,
   async (email: string) => {
     const response = await FIREBASE_CALLS.getUserProfile(email);
-    return response.data;
+    return response.data();
   }
 );
 
@@ -42,10 +42,10 @@ export const authSlice = createSlice({
     ) => {
       state.userDetails = action.payload;
     },
-    [getUserProfile.pending as unknown as string]: (state: AuthState) => {
+    [fetchUserProfile.pending as unknown as string]: (state: AuthState) => {
       state.status = APIStatuses.LOADING;
     },
-    [getUserProfile.fulfilled as unknown as string]: (
+    [fetchUserProfile.fulfilled as unknown as string]: (
       state: AuthState,
       action: PayloadAction<UserDetails>
     ) => {

@@ -13,7 +13,7 @@ const Routes = (): JSX.Element => {
       setCurrentUser(user);
     };
     firebase.auth().onAuthStateChanged(onAuthStateChanges);
-  });
+  }, [setCurrentUser]);
   return (
     <NavigationContainer>
       {currentUser ? <AppStack /> : <AuthStack />}
