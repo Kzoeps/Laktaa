@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
+import firebase from 'firebase';
+import { User } from '@firebase/auth-types';
 import AuthStack from './screens/auth/AuthStack';
 import AppStack from './screens/AppStack';
-import { selectUserDetails } from './screens/auth/store/authSlice';
+import { AuthContext } from './screens/auth/auth';
 
 const Routes = (): JSX.Element => {
-  // Possibly memory leak here check back
-  const userDetails = useSelector(selectUserDetails);
-
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
+  useEffect((): void => {
+    const onAuthStateChanges = (user: User | null) => {
+      setCurrentUser(user);
+    };
+    firebase.auth().onAuthStateChanged(onAuthStateChanges);
+  });
   return (
     <NavigationContainer>
-      {userDetails.userName ? <AppStack /> : <AuthStack />}
+      {currentUser ? <AppStack /> : <AuthStack />}
     </NavigationContainer>
   );
 };

@@ -38,11 +38,7 @@ export const FIREBASE_CALLS = {
       userName,
       location,
     }),
-  getUserProfile: ({
-    email,
-  }: {
-    email: string;
-  }): Promise<DocumentSnapshot<UserDetails>> =>
+  getUserProfile: (email: string): Promise<DocumentSnapshot<UserDetails>> =>
     firebase.firestore().collection(email).doc('userProfile').get() as Promise<
       DocumentSnapshot<UserDetails>
     >,
