@@ -1,4 +1,6 @@
 import firebase from 'firebase';
+import { DocumentSnapshot } from '@firebase/firestore-types';
+import { UserDetails } from '../models/models';
 
 // eslint-disable-next-line import/prefer-default-export
 export const FIREBASE_CALLS = {
@@ -30,10 +32,18 @@ export const FIREBASE_CALLS = {
     email: string;
     location: string;
     userName: string;
-  }): Promise<any> =>
+  }): Promise<void> =>
     firebase.firestore().collection(email).doc('userProfile').set({
       email,
       userName,
       location,
     }),
+  getUserProfile: ({
+    email,
+  }: {
+    email: string;
+  }): Promise<DocumentSnapshot<UserDetails>> =>
+    firebase.firestore().collection(email).doc('userProfile').get() as Promise<
+      DocumentSnapshot<UserDetails>
+    >,
 };
