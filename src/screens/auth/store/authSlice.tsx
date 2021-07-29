@@ -16,8 +16,8 @@ const initialState: AuthState = {
 export const setUserDetails = createAsyncThunk(
   AuthStoreActionTypes.setUserDetails,
   async (userDetails: UserDetails) => {
-    const response = await FIREBASE_CALLS.createUserProfile(userDetails);
-    return response.data;
+    await FIREBASE_CALLS.createUserProfile(userDetails);
+    return userDetails;
   }
 );
 
@@ -35,6 +35,9 @@ export const authSlice = createSlice({
   },
 });
 
+export const selectUserDetails = (state: { auth: AuthState }): UserDetails => {
+  return state.auth.userDetails;
+};
 // export const { setUserDetails } = authSlice.actions;
 
 export default authSlice.reducer;
