@@ -2,6 +2,8 @@ import React, { FC } from 'react';
 import { FormikProps, FormikValues } from 'formik';
 import { Box, Icon, Input, Text } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
+import { StyleProp, ViewStyle } from 'react-native';
+import tailwind from 'tailwind-rn';
 
 const FMTextInput: FC<{
   label: string;
@@ -9,8 +11,9 @@ const FMTextInput: FC<{
   name: string;
   icon?: string;
   doNotShow?: boolean;
-}> = ({ label, formik, name, icon, doNotShow }) => (
-  <Box w="90%">
+  styleProp?: string;
+}> = ({ label, formik, name, icon, doNotShow, styleProp }) => (
+  <Box w="90%" style={tailwind(styleProp ?? '')}>
     <Input
       InputLeftElement={
         icon ? (

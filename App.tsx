@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
 import firebase from 'firebase';
-import { NativeBaseProvider } from 'native-base';
+import { extendTheme, NativeBaseProvider } from 'native-base';
 import { AuthProvider } from './src/screens/auth/auth';
 import Routes from './src/Routes';
 import store from './src/store/store';
