@@ -5,10 +5,10 @@ import { useDispatch } from 'react-redux';
 import { Button, Icon } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Error } from '@firebase/auth-types';
+import tailwind from 'tailwind-rn';
 import { AuthContext } from './auth';
 import FMTextInput from '../../shared/components/TextInput';
 import { fetchUserProfile } from './store/authSlice';
-import tailwind from 'tailwind-rn';
 
 const LoginScreen = ({ navigation }): JSX.Element => {
 	const { loginWithEmail } = useContext(AuthContext);
