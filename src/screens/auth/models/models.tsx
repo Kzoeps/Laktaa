@@ -12,6 +12,7 @@ export interface UserDetails {
   userId?: string;
   location: string;
   email: string;
+  phoneNumber?: number| string;
 }
 
 export interface AuthContext {

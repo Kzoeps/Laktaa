@@ -26,6 +26,7 @@ const FMTextInput: FC<{
           />
         ) : undefined
       }
+			value={formik.values[name]}
       type={doNotShow ? 'password' : 'text'}
       variant="underlined"
       placeholder={label}
