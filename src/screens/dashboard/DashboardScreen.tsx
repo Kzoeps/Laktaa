@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { AuthContext } from '../auth/auth';
 import { selectUserDetails } from '../auth/store/authSlice';
 
-const DashboardScreen: FC = () => {
+const DashboardScreen: FC = ({navigation}) => {
   const [shouldLogout, setShouldLogout] = useState<boolean>(false);
   const { logout } = useContext(AuthContext);
   const details = useSelector(selectUserDetails);
@@ -15,6 +15,7 @@ const DashboardScreen: FC = () => {
     <Container>
       <Text>THIS IS DASHBOARD SCREEN AND WORKS</Text>
       <Text>{details.userName}</Text>
+			<Button onPress={() => navigation.navigate('User Profile')}> G0 T0 USER PROFILE</Button>
       <Button onPress={() => setShouldLogout(true)}>
         <Text>Logout</Text>
       </Button>
