@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Box, Spinner } from 'native-base';
@@ -8,6 +8,7 @@ import { EDIT_PROFILE_SCHEMA } from './models/constants';
 import FMTextInput from '../../shared/components/TextInput';
 
 const UserProfile: FC = () => {
+	const [inputsDisabled, setInputsDisabled] = useState(true);
 	const userDetails = useSelector(selectUserDetails);
 	const initialValues = {
 		name: userDetails?.userName ?? '',
@@ -19,9 +20,6 @@ const UserProfile: FC = () => {
 	if (!userDetails.userName) return <Spinner accessibilityLabel='loading profile' />;
 	return (
 		<View>
-			<Text>
-				{userDetails.userName} {userDetails.location}
-			</Text>
 			<Formik
 				initialValues={initialValues}
 				validationSchema={validationSchema}
@@ -32,17 +30,14 @@ const UserProfile: FC = () => {
 				{(formik: FormikProps<{ name: string, phoneNumber: number, location: string }>) => (
 					<>
 						<Box>
-							<FMTextInput label='Name' name='name' formik={formik as unknown as FormikProps<FormikValues>} />
-							<FMTextInput label='Location' name='location' formik={formik as unknown as FormikProps<FormikValues>} />
-							<FMTextInput label='Phone Number' name='phoneNumber'
+							<FMTextInput disableInput={inputsDisabled} label='Name' name='name' formik={formik as unknown as FormikProps<FormikValues>} />
+							<FMTextInput disableInput={inputsDisabled} label='Location' name='location' formik={formik as unknown as FormikProps<FormikValues>} />
+							<FMTextInput disableInput={inputsDisabled} label='Phone Number' name='phoneNumber'
 													 formik={formik as unknown as FormikProps<FormikValues>} />
 						</Box>
 					</>
 				)}
 			</Formik>
-			<Text>
-				It wroks
-			</Text>
 		</View>
 	);
 };

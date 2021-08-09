@@ -12,7 +12,8 @@ const FMTextInput: FC<{
   icon?: string;
   doNotShow?: boolean;
   styleProp?: string;
-}> = ({ label, formik, name, icon, doNotShow, styleProp }) => (
+  disableInput?: boolean
+}> = ({ label, formik, name, icon, doNotShow, styleProp, disableInput }) => (
   <Box w="90%" style={tailwind(styleProp ?? '')}>
     <Input
       InputLeftElement={
@@ -26,6 +27,7 @@ const FMTextInput: FC<{
           />
         ) : undefined
       }
+			isDisabled={!!disableInput}
 			value={formik.values[name]}
       type={doNotShow ? 'password' : 'text'}
       variant="underlined"
