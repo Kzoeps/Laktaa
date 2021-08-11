@@ -24,4 +24,5 @@ export interface AuthContext {
 export enum AuthStoreActionTypes {
   setUserDetails = 'auth/setUserDetails',
   fetchUserProfile = 'auth/fetchUserProfile',
+	updateUserProfile = 'auth/updateUserProfile'
 }

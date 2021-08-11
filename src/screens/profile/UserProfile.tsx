@@ -1,34 +1,46 @@
 import React, { FC, useState } from 'react';
 import { View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Box, Button, Icon, Spinner } from 'native-base';
 import { Formik, FormikProps, FormikValues } from 'formik';
-import { selectUserDetails } from '../auth/store/authSlice';
+import { MaterialIcons } from '@expo/vector-icons';
+import {
+	selectStoreStatus,
+	selectUserDetails,
+	updateUserProfile as updateUserProfileStore,
+} from '../auth/store/authSlice';
 import { EDIT_PROFILE_SCHEMA } from './models/constants';
 import FMTextInput from '../../shared/components/TextInput';
-import { MaterialIcons } from '@expo/vector-icons';
+import { APIStatuses } from '../../shared/models/model';
+import { UserDetails } from '../auth/models/models';
 
 const UserProfile: FC = () => {
 	const [inputsDisabled, setInputsDisabled] = useState(true);
 	const userDetails = useSelector(selectUserDetails);
+	const storeStatus = useSelector(selectStoreStatus);
+	const dispatch = useDispatch();
 	const initialValues = {
 		name: userDetails?.userName ?? '',
 		location: userDetails?.location ?? '',
 		phoneNumber: userDetails?.phoneNumber ?? '',
 	};
 	const validationSchema = EDIT_PROFILE_SCHEMA;
+	const updateUserProfile = async (userDetailsPayload: UserDetails) => {
+		await dispatch(updateUserProfileStore(userDetailsPayload));
+		setInputsDisabled(true);
+	};
 
-	if (!userDetails.userName) return <Spinner accessibilityLabel='loading profile' />;
+	if (storeStatus === APIStatuses.LOADING) return <Spinner accessibilityLabel='loading profile' />;
 	return (
 		<View>
 			<Formik
 				initialValues={initialValues}
 				validationSchema={validationSchema}
-				onSubmit={({ name, phoneNumber, location }) => {
-					setInputsDisabled(true);
+				onSubmit={({ name: userName, phoneNumber, location }) => {
+					updateUserProfile({ userName, phoneNumber, location, email: userDetails.email });
 				}}
 				onReset={() => {
-					setInputsDisabled(true)
+					setInputsDisabled(true);
 				}}
 			>
 				{(formik: FormikProps<{ name: string, phoneNumber: number, location: string }>) => (
@@ -49,7 +61,10 @@ const UserProfile: FC = () => {
 																			 light
 							>Edit</Button> : <>
 								<Button onPress={formik.handleSubmit}>Save</Button>
-								<Button onPress={() => {formik.resetForm(); setInputsDisabled(true)}}>Cancel</Button>
+								<Button onPress={() => {
+									formik.resetForm();
+									setInputsDisabled(true);
+								}}>Cancel</Button>
 							</>
 						}
 					</>

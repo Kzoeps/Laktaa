@@ -42,4 +42,10 @@ export const FIREBASE_CALLS = {
     firebase.firestore().collection(email).doc('userProfile').get() as Promise<
       DocumentSnapshot<UserDetails>
     >,
+	updateUserProfile: (userDetails: UserDetails): Promise<void> =>
+ 	  firebase.firestore().collection(userDetails.email).doc('userProfile').update({
+			userName: userDetails.userName,
+			location: userDetails.location,
+			phoneNumber: userDetails.phoneNumber
+		})
 };
