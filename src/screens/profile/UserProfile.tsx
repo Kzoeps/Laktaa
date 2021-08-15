@@ -1,9 +1,11 @@
 import React, { FC, useState } from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Button, Icon, Spinner } from 'native-base';
+import { Avatar, Box, Button, Icon, Spinner } from 'native-base';
 import { Formik, FormikProps, FormikValues } from 'formik';
 import { MaterialIcons } from '@expo/vector-icons';
+import * as DocumentPicker from 'expo-document-picker';
+import { DocumentResult } from 'expo-document-picker';
 import {
 	selectStoreStatus,
 	selectUserDetails,
@@ -13,12 +15,18 @@ import { EDIT_PROFILE_SCHEMA } from './models/constants';
 import FMTextInput from '../../shared/components/TextInput';
 import { APIStatuses } from '../../shared/models/model';
 import { UserDetails } from '../auth/models/models';
+import useFirestoreUpload from '../../shared/components/useFirestoreUpload';
 
 const UserProfile: FC = () => {
-	const [inputsDisabled, setInputsDisabled] = useState(true);
+	const [inputsDisabled, setInputsDisabled] = useState<boolean>(true);
 	const userDetails = useSelector(selectUserDetails);
 	const storeStatus = useSelector(selectStoreStatus);
+	const [file, setFile] = useState<DocumentResult | undefined>(undefined);
+	const [userInitials, setUserInitials] = useState<string>('KZ');
+	const [userImageUrl, setUserImageUrl] = useState<string>('broke');
 	const dispatch = useDispatch();
+	const uploadImage = useFirestoreUpload(`profileImages/${userDetails?.email}`, file, setFile);
+
 	const initialValues = {
 		name: userDetails?.userName ?? '',
 		location: userDetails?.location ?? '',
@@ -29,10 +37,23 @@ const UserProfile: FC = () => {
 		await dispatch(updateUserProfileStore(userDetailsPayload));
 		setInputsDisabled(true);
 	};
+	const openFilePicker = async () => {
+		const fileRef = await DocumentPicker.getDocumentAsync({ type: 'image/*' });
+		if (fileRef.type === 'success') setFile(fileRef);
+	};
 
-	if (storeStatus === APIStatuses.LOADING) return <Spinner accessibilityLabel='loading profile' />;
+	if (storeStatus === APIStatuses.LOADING || uploadImage === 'pending') return <Spinner
+		accessibilityLabel='loading profile' />;
 	return (
 		<View>
+			<Avatar
+				bg='emerald.400'
+				size='xl' source={{
+				uri: userImageUrl,
+			}}>
+				{userInitials}
+			</Avatar>
+			<Text onPress={openFilePicker}>Change image url</Text>
 			<Formik
 				initialValues={initialValues}
 				validationSchema={validationSchema}
