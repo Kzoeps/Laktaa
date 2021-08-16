@@ -13,8 +13,9 @@ const Routes = (): JSX.Element => {
   const dispatch = useDispatch();
   useEffect((): void => {
     const onAuthStateChanges = (user: User | null) => {
-			// eslint-disable-next-line no-unused-expressions
-    	currentUser?.email !== user?.email && dispatch(fetchUserProfile(user?.email as string));
+      // eslint-disable-next-line no-unused-expressions
+      currentUser?.email !== user?.email &&
+        dispatch(fetchUserProfile(user?.email as string));
       setCurrentUser(user);
     };
     firebase.auth().onAuthStateChanged(onAuthStateChanges);

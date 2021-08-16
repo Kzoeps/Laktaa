@@ -12,7 +12,13 @@ export interface UserDetails {
   userId?: string;
   location: string;
   email: string;
-  phoneNumber?: number| string;
+  phoneNumber?: number | string;
+  profileImageUrl?: string;
+}
+
+export interface ProfileUpdatePayload {
+  profileImageUrl: string;
+  email: string;
 }
 
 export interface AuthContext {
@@ -24,5 +30,6 @@ export interface AuthContext {
 export enum AuthStoreActionTypes {
   setUserDetails = 'auth/setUserDetails',
   fetchUserProfile = 'auth/fetchUserProfile',
-	updateUserProfile = 'auth/updateUserProfile'
+  updateUserProfile = 'auth/updateUserProfile',
+  updateUserProfileImage = 'auth/updateUserProfileImage',
 }
