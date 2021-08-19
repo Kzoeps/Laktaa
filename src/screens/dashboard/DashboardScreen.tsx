@@ -1,9 +1,10 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
 import { TouchableOpacity, Dimensions, Image, ScrollView } from 'react-native';
-import { Container, Content, Text, View } from 'native-base';
+import { Container, Text, View } from 'native-base';
 import tailwind from 'tailwind-rn';
 import { AuthContext } from '../auth/auth';
 import Pageheader from '../../shared/components/Pageheader/Pageheader';
+import SearchInput from './SearchInput';
 
 const DashboardScreen: FC = () => {
   const [shouldLogout, setShouldLogout] = useState<boolean>(false);
@@ -93,12 +94,17 @@ const DashboardScreen: FC = () => {
   }, [shouldLogout, logout]);
 
   return (
-    <Container>
-      <Content>
+    <>
+      <ScrollView>
         <View style={tailwind('-mb-20')}>
           <Pageheader navigation page="dashboard" />
         </View>
+
         <View style={tailwind('bg-white  pb-3 my-10 rounded-t-3xl ')}>
+          <View>
+            <SearchInput />
+          </View>
+
           {data.map((item) => (
             <View
               style={[
@@ -111,7 +117,6 @@ const DashboardScreen: FC = () => {
                   },
                   shadowOpacity: 0.1,
                   shadowRadius: 2.62,
-
                   elevation: 4,
                 },
               ]}
@@ -162,8 +167,7 @@ const DashboardScreen: FC = () => {
             </View>
           ))}
         </View>
-      </Content>
-
+      </ScrollView>
       <View
         style={tailwind(
           'bg-green-400 px-5 py-3 text-center absolute bottom-0 w-full'
@@ -175,7 +179,7 @@ const DashboardScreen: FC = () => {
           </Text>
         </TouchableOpacity>
       </View>
-    </Container>
+    </>
   );
 };
 
