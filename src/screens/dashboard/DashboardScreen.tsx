@@ -1,6 +1,6 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
-import { TouchableOpacity, Dimensions, Image, ScrollView } from 'react-native';
-import { Container, Text, View } from 'native-base';
+import { TouchableOpacity, Image, ScrollView } from 'react-native';
+import { Text, View } from 'native-base';
 import tailwind from 'tailwind-rn';
 import { AuthContext } from '../auth/auth';
 import Pageheader from '../../shared/components/Pageheader/Pageheader';
@@ -104,7 +104,6 @@ const DashboardScreen: FC = () => {
           <View>
             <SearchInput />
           </View>
-
           {data.map((item) => (
             <View
               style={[
