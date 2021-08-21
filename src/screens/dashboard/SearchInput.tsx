@@ -2,8 +2,6 @@ import React, { FC, useState } from 'react';
 import { Select, View, Text, Button } from 'native-base';
 import tailwind from 'tailwind-rn';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { style } from 'styled-system';
 
 const SearchInput: FC = () => {
   const [pickDzongkhag, setPickDzongkhag] = useState('');

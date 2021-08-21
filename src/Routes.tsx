@@ -1,27 +1,22 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import firebase from 'firebase';
-import { Text } from 'native-base';
-import { AuthContext } from './screens/auth/auth';
+import { User } from '@firebase/auth-types';
 import AuthStack from './screens/auth/AuthStack';
 import AppStack from './screens/AppStack';
+import { AuthContext } from './screens/auth/auth';
 
 const Routes = (): JSX.Element => {
   const { currentUser, setCurrentUser } = useContext(AuthContext);
-  const [pending, setPending] = useState<boolean>(true);
   useEffect((): void => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const onAuthStateChanges = (user) => {
+    const onAuthStateChanges = (user: User | null) => {
       setCurrentUser(user);
-      setPending(false);
     };
     firebase.auth().onAuthStateChanged(onAuthStateChanges);
-  });
-  if (pending) return <Text>Loading...</Text>;
+  }, [setCurrentUser]);
   return (
     <NavigationContainer>
-      {currentUser ? <AppStack /> : <AppStack />}
+      {currentUser ? <AuthStack /> : <AppStack />}
     </NavigationContainer>
   );
 };
