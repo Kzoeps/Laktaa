@@ -101,7 +101,7 @@ const DashboardScreen: FC = () => {
         </View>
 
         <View style={tailwind('bg-white  pb-3 my-10 rounded-t-3xl ')}>
-          <View>
+          <View style={tailwind('my-2')}>
             <SearchInput />
           </View>
           {data.map((item) => (
