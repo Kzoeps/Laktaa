@@ -16,7 +16,7 @@ const Routes = (): JSX.Element => {
   }, [setCurrentUser]);
   return (
     <NavigationContainer>
-      {currentUser ? <AuthStack /> : <AppStack />}
+      {currentUser ? <AppStack /> : <AuthStack />}
     </NavigationContainer>
   );
 };

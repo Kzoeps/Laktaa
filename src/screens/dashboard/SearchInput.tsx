@@ -6,7 +6,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 const SearchInput: FC = () => {
   const [pickDzongkhag, setPickDzongkhag] = useState('');
   const [dropDzongkhag, setDropDzongkhag] = useState('');
-  const [selctDate, setSelectDate] = useState('');
+  const [selctDate, setSelectDate] = useState('Date');
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
 
@@ -36,6 +36,7 @@ const SearchInput: FC = () => {
   const dateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setDate(currentDate);
+    setSelectDate(` home-${date.getFullYear()}`);
     setShow(false);
   };
 
@@ -90,7 +91,7 @@ const SearchInput: FC = () => {
           </View>
         ) : (
           <View alignItems="center">
-            <Text onPress={showCal}>hello world</Text>
+            <Text onPress={showCal}>{selctDate}</Text>
           </View>
         )}
       </View>
