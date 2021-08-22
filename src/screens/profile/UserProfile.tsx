@@ -3,9 +3,10 @@ import { Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, Box, Button, Icon, Spinner } from 'native-base';
 import { Formik, FormikProps, FormikValues } from 'formik';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import * as DocumentPicker from 'expo-document-picker';
 import { DocumentResult } from 'expo-document-picker';
+import tailwind from 'tailwind-rn';
 import {
   selectStoreStatus,
   selectUserDetails,
@@ -17,7 +18,6 @@ import FMTextInput from '../../shared/components/TextInput';
 import { APIStatuses } from '../../shared/models/model';
 import { UserDetails } from '../auth/models/models';
 import useFirestoreUpload from '../../shared/components/useFirestoreUpload';
-
 
 const UserProfile: FC = () => {
   const [inputsDisabled, setInputsDisabled] = useState<boolean>(true);
@@ -60,94 +60,131 @@ const UserProfile: FC = () => {
       updateUserProfileImageUrl();
     }
   }, [uploadImage, userDetails.email, dispatch]);
-	useEffect(() => {
-		setUserInitials(userDetails.userName.split(' ').map((name) => name[0]).join('').toUpperCase());
-	}, [userDetails.userName])
+  useEffect(() => {
+    setUserInitials(
+      userDetails.userName
+        .split(' ')
+        .map((name) => name[0])
+        .join('')
+        .toUpperCase()
+    );
+  }, [userDetails.userName]);
+
   if (storeStatus === APIStatuses.LOADING || uploadImage === 'pending')
     return <Spinner accessibilityLabel="loading profile" />;
   return (
-    <View>
-      <Avatar
-        bg="emerald.400"
-        size="xl"
-        source={{
-          uri: userDetails.profileImageUrl
-            ? userDetails.profileImageUrl
-            : 'brokenLink',
-        }}
-      >
-        {userInitials}
-      </Avatar>
-      <Text onPress={openFilePicker}>Change image url</Text>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={({ name: userName, phoneNumber, location }) => {
-          updateUserProfile({
-            userName,
-            phoneNumber,
-            location,
-            email: userDetails.email,
-          });
-        }}
-        onReset={() => {
-          setInputsDisabled(true);
-        }}
-      >
-        {(
-          formik: FormikProps<{
-            name: string;
-            phoneNumber: number;
-            location: string;
-          }>
-        ) => (
-          <>
-            <Box>
-              <FMTextInput
-                disableInput={inputsDisabled}
-                label="Name"
-                name="name"
-                formik={formik as unknown as FormikProps<FormikValues>}
-              />
-              <FMTextInput
-                disableInput={inputsDisabled}
-                label="Location"
-                name="location"
-                formik={formik as unknown as FormikProps<FormikValues>}
-              />
-              <FMTextInput
-                disableInput={inputsDisabled}
-                label="Phone Number"
-                name="phoneNumber"
-                formik={formik as unknown as FormikProps<FormikValues>}
-              />
-            </Box>
-            {inputsDisabled ? (
-              <Button
-                endIcon={
-                  <Icon as={<MaterialIcons name="arrow-forward" size="4" />} />
-                }
-                onPress={() => setInputsDisabled(false)}
-                light
-              >
-                Edit
-              </Button>
-            ) : (
-              <>
-                <Button onPress={formik.handleSubmit}>Save</Button>
-                <Button
-                  onPress={() => {
-                    formik.resetForm();
-                    setInputsDisabled(true);
-                  }}
-                >
-                  Cancel
-                </Button>
-              </>
-            )}
-          </>
-        )}
-      </Formik>
+    <View style={tailwind('items-center h-full w-full')}>
+      <View style={tailwind('mt-10 mb-4')}>
+        <Avatar
+          style={tailwind('items-center')}
+          bg="tomato"
+          size="xl"
+          source={{
+            uri: userDetails.profileImageUrl
+              ? userDetails.profileImageUrl
+              : 'brokenLink',
+          }}
+        >
+          {userInitials}
+          <Avatar.Badge
+            style={tailwind('w-2/6 h-2/6')}
+            border={0}
+            bg="transparent"
+          >
+            <Icon
+              onPress={openFilePicker}
+              color="emerald.400"
+              style={tailwind('w-full h-full')}
+              as={<MaterialCommunityIcons name="camera-plus" />}
+            />
+          </Avatar.Badge>
+        </Avatar>
+      </View>
+      <View style={tailwind('items-center w-full h-full')}>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={({ name: userName, phoneNumber, location }) => {
+            updateUserProfile({
+              userName,
+              phoneNumber,
+              location,
+              email: userDetails.email,
+            });
+          }}
+          onReset={() => {
+            setInputsDisabled(true);
+          }}
+        >
+          {(
+            formik: FormikProps<{
+              name: string;
+              phoneNumber: number;
+              location: string;
+            }>
+          ) => (
+            <>
+              <Box style={tailwind('w-10/12 items-center')}>
+                <FMTextInput
+                  styleProp="mt-3"
+                  disableInput={inputsDisabled}
+                  label="Name"
+                  name="name"
+                  formik={formik as unknown as FormikProps<FormikValues>}
+                />
+                <FMTextInput
+                  styleProp="mt-3"
+                  disableInput={inputsDisabled}
+                  label="Location"
+                  name="location"
+                  formik={formik as unknown as FormikProps<FormikValues>}
+                />
+                <FMTextInput
+                  styleProp="mt-3"
+                  disableInput={inputsDisabled}
+                  label="Phone Number"
+                  name="phoneNumber"
+                  formik={formik as unknown as FormikProps<FormikValues>}
+                />
+              </Box>
+
+              <View style={tailwind('mt-8 items-center')}>
+                {inputsDisabled ? (
+                  <Button
+                    endIcon={
+                      <Icon
+                        as={<MaterialIcons name="arrow-forward" size="4" />}
+                      />
+                    }
+                    onPress={() => setInputsDisabled(false)}
+                    light
+                  >
+                    Edit
+                  </Button>
+                ) : (
+                  <View style={tailwind('w-10/12 flex flex-row')}>
+                    <Button
+                      style={tailwind('flex-auto mr-3')}
+                      onPress={formik.handleSubmit}
+                    >
+                      Save
+                    </Button>
+                    <Button
+                      style={tailwind('flex-auto ml-1')}
+                      onPress={() => {
+                        formik.resetForm();
+                        setInputsDisabled(true);
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                  </View>
+                )}
+              </View>
+            </>
+          )}
+        </Formik>
+      </View>
     </View>
   );
 };
