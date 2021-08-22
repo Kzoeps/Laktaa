@@ -36,7 +36,7 @@ const SearchInput: FC = () => {
   const dateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setDate(currentDate);
-    setSelectDate(` home-${date.getFullYear()}`);
+    setSelectDate(` ${date.getDate()}/${date.getMonth()}`);
     setShow(false);
   };
 
@@ -90,7 +90,7 @@ const SearchInput: FC = () => {
             )}
           </View>
         ) : (
-          <View alignItems="center">
+          <View style={[tailwind('mt-1 ml-4 py-0 text-sm pr-2 border')]}>
             <Text onPress={showCal}>{selctDate}</Text>
           </View>
         )}
