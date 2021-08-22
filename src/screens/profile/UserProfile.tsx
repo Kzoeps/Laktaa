@@ -18,12 +18,13 @@ import { APIStatuses } from '../../shared/models/model';
 import { UserDetails } from '../auth/models/models';
 import useFirestoreUpload from '../../shared/components/useFirestoreUpload';
 
+
 const UserProfile: FC = () => {
   const [inputsDisabled, setInputsDisabled] = useState<boolean>(true);
   const userDetails = useSelector(selectUserDetails);
   const storeStatus = useSelector(selectStoreStatus);
   const [file, setFile] = useState<DocumentResult | undefined>(undefined);
-  const [userInitials, setUserInitials] = useState<string>('KZ');
+  const [userInitials, setUserInitials] = useState<string>('');
   const dispatch = useDispatch();
   const uploadImage = useFirestoreUpload(
     `profileImages/${userDetails?.email}`,
@@ -59,15 +60,13 @@ const UserProfile: FC = () => {
       updateUserProfileImageUrl();
     }
   }, [uploadImage, userDetails.email, dispatch]);
-
+	useEffect(() => {
+		setUserInitials(userDetails.userName.split(' ').map((name) => name[0]).join('').toUpperCase());
+	}, [userDetails.userName])
   if (storeStatus === APIStatuses.LOADING || uploadImage === 'pending')
     return <Spinner accessibilityLabel="loading profile" />;
   return (
     <View>
-      <Text>
-        {userDetails.userName} {userDetails.email}
-        {userDetails.profileImageUrl}
-      </Text>
       <Avatar
         bg="emerald.400"
         size="xl"
