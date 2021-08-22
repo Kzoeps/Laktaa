@@ -8,7 +8,7 @@ import SearchInput from './SearchInput';
 import JobCard from './JobCard';
 import Layout from '../../shared/layout/layout';
 
-const DashboardScreen: FC = () => {
+const DashboardScreen: FC = ({ navigation }) => {
   const [shouldLogout, setShouldLogout] = useState<boolean>(false);
   const { logout } = useContext(AuthContext);
 
@@ -22,7 +22,7 @@ const DashboardScreen: FC = () => {
         <View style={tailwind('-mb-20')}>
           <Pageheader navigation page="dashboard" />
         </View>
-        <Layout>
+        <Layout styleProp='h-full'>
           <View style={tailwind('my-2')}>
             <SearchInput />
           </View>

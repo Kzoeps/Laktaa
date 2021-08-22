@@ -1,8 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AuthState, AuthStoreActionTypes, UserDetails } from '../models/models';
+import {
+  AuthState,
+  AuthStoreActionTypes,
+  ProfileUpdatePayload,
+  UserDetails,
+} from '../models/models';
 import { APIStatuses } from '../../../shared/models/model';
 import { FIREBASE_CALLS } from '../utils/API';
-import { string } from 'yup';
 
 const initialState: AuthState = {
   userDetails: {
@@ -10,6 +14,7 @@ const initialState: AuthState = {
     userId: '',
     location: '',
     email: '',
+    profileImageUrl: '',
   },
   status: APIStatuses.IDLE,
   error: null,
@@ -23,6 +28,22 @@ export const setUserDetails = createAsyncThunk(
   }
 );
 
+export const updateUserProfile = createAsyncThunk(
+  AuthStoreActionTypes.updateUserProfile,
+  async (userProfile: UserDetails) => {
+    await FIREBASE_CALLS.updateUserProfile(userProfile);
+    return userProfile;
+  }
+);
+
+export const updateUserProfileImage = createAsyncThunk(
+  AuthStoreActionTypes.updateUserProfileImage,
+  async (payload: ProfileUpdatePayload) => {
+    await FIREBASE_CALLS.updateUserProfileImage(payload);
+    return payload;
+  }
+);
+
 export const fetchUserProfile = createAsyncThunk(
   AuthStoreActionTypes.fetchUserProfile,
   async (email: string) => {
@@ -31,6 +52,7 @@ export const fetchUserProfile = createAsyncThunk(
   }
 );
 
+/* eslint-disable no-param-reassign */
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -41,6 +63,20 @@ export const authSlice = createSlice({
       action: PayloadAction<UserDetails>
     ) => {
       state.userDetails = action.payload;
+      state.status = APIStatuses.SUCCEEDED;
+    },
+    [setUserDetails.pending as unknown as string]: (state: AuthState) => {
+      state.status = APIStatuses.LOADING;
+    },
+    [updateUserProfile.pending as unknown as string]: (state: AuthState) => {
+      state.status = APIStatuses.LOADING;
+    },
+    [updateUserProfile.fulfilled as unknown as string]: (
+      state: AuthState,
+      action: PayloadAction<UserDetails>
+    ) => {
+      state.status = APIStatuses.SUCCEEDED;
+      state.userDetails = { ...state.userDetails, ...action.payload };
     },
     [fetchUserProfile.pending as unknown as string]: (state: AuthState) => {
       state.status = APIStatuses.LOADING;
@@ -50,13 +86,40 @@ export const authSlice = createSlice({
       action: PayloadAction<UserDetails>
     ) => {
       state.userDetails = action.payload;
+      state.status = APIStatuses.SUCCEEDED;
+    },
+    [updateUserProfileImage.pending as unknown as string]: (
+      state: AuthState
+    ) => {
+      state.status = APIStatuses.LOADING;
+    },
+    [updateUserProfileImage.fulfilled as unknown as string]: (
+      state: AuthState,
+      action: PayloadAction<ProfileUpdatePayload>
+    ) => {
+      state.userDetails = { ...state.userDetails, ...action.payload };
+      console.log('data saved', state.userDetails);
+      console.log('payload :', action.payload);
+      state.status = APIStatuses.SUCCEEDED;
+    },
+    [updateUserProfileImage.rejected as unknown as string]: (
+      state: AuthState
+    ) => {
+      state.status = APIStatuses.FAILED;
+    },
+    [updateUserProfile.rejected as unknown as string]: (state: AuthState) => {
+      state.status = APIStatuses.FAILED;
     },
   },
 });
+/* eslint-disable no-param-reassign */
 
 export const selectUserDetails = (state: { auth: AuthState }): UserDetails => {
   return state.auth.userDetails;
 };
+
+export const selectStoreStatus = (state: { auth: AuthState }): APIStatuses =>
+  state.auth.status;
 // export const { setUserDetails } = authSlice.actions;
 
 export default authSlice.reducer;
