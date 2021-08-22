@@ -20,6 +20,7 @@ import { UserDetails } from '../auth/models/models';
 import useFirestoreUpload from '../../shared/components/useFirestoreUpload';
 import Layout from '../../shared/layout/layout';
 import FMAvatar from '../../shared/components/FMAvatar/FMAvatar';
+import FMHeader from '../../shared/components/FMHeader/FMHeader';
 
 const UserProfile: FC = () => {
 	const [inputsDisabled, setInputsDisabled] = useState<boolean>(true);
@@ -76,6 +77,7 @@ const UserProfile: FC = () => {
 		return <Spinner accessibilityLabel='loading profile' />;
 	return (
 		<Box bg='emerald.400'>
+			<FMHeader header='My Profile'/>
 			<Layout styleProp='h-full'>
 				<View style={tailwind('items-center h-full w-full')}>
 					<View style={tailwind('mt-10 mb-4')}>
