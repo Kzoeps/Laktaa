@@ -8,15 +8,15 @@ const Stack = createStackNavigator();
 
 const AppStack = (): JSX.Element => (
   <Stack.Navigator>
+		<Stack.Screen
+			name="User Profile"
+			component={UserProfile}
+			options={{
+				title: 'User Profile',
+				...NAVIGATION_HEADER_CONFIG,
+			}}
+		/>
     <Stack.Screen name="Dashboard" component={DashboardScreen} />
-    <Stack.Screen
-      name="User Profile"
-      component={UserProfile}
-      options={{
-        title: 'User Profile',
-        ...NAVIGATION_HEADER_CONFIG,
-      }}
-    />
   </Stack.Navigator>
 );
 
