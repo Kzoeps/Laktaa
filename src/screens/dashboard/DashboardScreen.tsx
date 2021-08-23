@@ -6,9 +6,9 @@ import { AuthContext } from '../auth/auth';
 import Pageheader from '../../shared/components/Pageheader/Pageheader';
 import SearchInput from './SearchInput';
 import JobCard from './JobCard';
-import Layout from '../../shared/layout/layout';
+import Layout from '../../shared/layout/dashboard';
 
-const DashboardScreen: FC = () => {
+const DashboardScreen: FC = ({ navigation }) => {
   const [shouldLogout, setShouldLogout] = useState<boolean>(false);
   const { logout } = useContext(AuthContext);
 
@@ -35,7 +35,7 @@ const DashboardScreen: FC = () => {
           'bg-green-400 px-5 py-3 text-center absolute bottom-0 w-full'
         )}
       >
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('PostJob')}>
           <Text style={tailwind('text-white text-center font-semibold')}>
             Post Job
           </Text>

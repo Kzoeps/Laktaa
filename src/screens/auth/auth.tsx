@@ -7,8 +7,9 @@ export const AuthContext = React.createContext<Record<string, any>>({});
 export const AuthProvider: React.FC<any> = ({
   children,
 }: Record<string, ReactElement>) => {
-  const [currentUser, setCurrentUser] =
-    useState<firebase.User | undefined>(undefined);
+  const [currentUser, setCurrentUser] = useState<firebase.User | undefined>(
+    undefined
+  );
   return (
     <AuthContext.Provider
       value={{

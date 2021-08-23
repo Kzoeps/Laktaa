@@ -4,7 +4,9 @@ import { Box, Icon, Input, Text } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import { StyleProp, ViewStyle } from 'react-native';
 import tailwind from 'tailwind-rn';
+import { Picker } from '@react-native-picker/picker';
 
+const loadType = [{ name: 'Perishibale' }, { name: 'Non-perishable' }];
 const FMTextInput: FC<{
   label: string;
   formik: FormikProps<FormikValues>;
@@ -12,8 +14,9 @@ const FMTextInput: FC<{
   icon?: string;
   doNotShow?: boolean;
   styleProp?: string;
-}> = ({ label, formik, name, icon, doNotShow, styleProp }) => (
-  <Box w="90%" style={tailwind(styleProp ?? '')}>
+  inputColor?: string;
+}> = ({ label, formik, name, icon, doNotShow, inputColor, styleProp }) => (
+  <Box w="98%" style={tailwind(styleProp ?? '')}>
     <Input
       InputLeftElement={
         icon ? (
@@ -21,7 +24,7 @@ const FMTextInput: FC<{
             as={<MaterialIcons name={icon} />}
             size="md"
             _light={{
-              color: 'white',
+              color: inputColor || 'white',
             }}
           />
         ) : undefined
@@ -31,6 +34,7 @@ const FMTextInput: FC<{
       placeholder={label}
       onChangeText={formik.handleChange(name)}
     />
+
     {formik.touched[name] && formik.errors[name] && (
       <Text>{formik.errors[name]}</Text>
     )}
