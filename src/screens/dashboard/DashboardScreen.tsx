@@ -22,7 +22,7 @@ const DashboardScreen: FC = ({ navigation }) => {
         <View style={tailwind('-mb-20')}>
           <Pageheader navigation page="dashboard" />
         </View>
-        <Layout styleProp='h-full'>
+        <Layout styleProp="h-full">
           <View style={tailwind('my-2')}>
             <SearchInput />
           </View>

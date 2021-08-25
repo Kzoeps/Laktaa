@@ -31,7 +31,7 @@ const FMTextInput: FC<{
       value={formik.values[name]}
       type={doNotShow ? 'password' : 'text'}
       variant="underlined"
-			bg='transparent'
+      bg="transparent"
       placeholder={label}
       onChangeText={formik.handleChange(name)}
     />
