@@ -1,12 +1,13 @@
 import React, { FC, useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Avatar, Box, Button, Icon, Spinner } from 'native-base';
+import { Box, Button, Icon, Spinner } from 'native-base';
 import { Formik, FormikProps, FormikValues } from 'formik';
-import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import * as DocumentPicker from 'expo-document-picker';
 import { DocumentResult } from 'expo-document-picker';
 import tailwind from 'tailwind-rn';
+import { NavigationScreenProp } from 'react-navigation';
 import {
 	selectStoreStatus,
 	selectUserDetails,
@@ -22,7 +23,7 @@ import Layout from '../../shared/layout/layout';
 import FMAvatar from '../../shared/components/FMAvatar/FMAvatar';
 import FMHeader from '../../shared/components/FMHeader/FMHeader';
 
-const UserProfile: FC = () => {
+const UserProfile: FC<{navigation: NavigationScreenProp<any>}> = ({ navigation }) => {
 	const [inputsDisabled, setInputsDisabled] = useState<boolean>(true);
 	const userDetails = useSelector(selectUserDetails);
 	const storeStatus = useSelector(selectStoreStatus);
@@ -77,11 +78,12 @@ const UserProfile: FC = () => {
 		return <Spinner accessibilityLabel='loading profile' />;
 	return (
 		<Box bg='emerald.400'>
-			<FMHeader header='My Profile'/>
+			<FMHeader header='My Profile' />
 			<Layout styleProp='h-full'>
 				<View style={tailwind('items-center h-full w-full')}>
 					<View style={tailwind('mt-10 mb-4')}>
-						<FMAvatar fallbackText={userInitials} showBadge={true} onBadgeClick={openFilePicker} imageUrl={userDetails.profileImageUrl}/>
+						<FMAvatar fallbackText={userInitials} showBadge={true} onBadgeClick={openFilePicker}
+											imageUrl={userDetails.profileImageUrl} />
 					</View>
 					<View style={tailwind('items-center w-full h-full')}>
 						<Formik
@@ -132,6 +134,7 @@ const UserProfile: FC = () => {
 									</Box>
 
 									<View style={tailwind('mt-8 items-center')}>
+										<Button onPress={() => navigation.navigate('Vehicle Registration')}>ROUTE TO REGI</Button>
 										{inputsDisabled ? (
 											<Button
 												endIcon={
