@@ -3,13 +3,19 @@ import { TouchableOpacity, ScrollView } from 'react-native';
 import { Box, Text, View, Icon } from 'native-base';
 import tailwind from 'tailwind-rn';
 import { Formik, FormikProps, FormikValues } from 'formik';
+import {
+  MaterialCommunityIcons,
+  Entypo,
+  FontAwesome,
+} from '@expo/vector-icons';
 import Pageheader from '../../shared/components/Pageheader/Pageheader';
 import Layout from '../../shared/layout/dashboard';
 import POST_JOB_SCHEMA from './models/constants';
 import FMTextInput from '../../shared/components/TextInput';
 import SelectInput from '../../shared/components/SelectInput';
 import { DZONGKHAG_GEWOG } from '../../shared/models/constants';
-// import { StringSchema } from 'yup';
+
+import OpenCamera from './Camera';
 
 const PostJob: FC = ({ navigation }) => {
   const [loadType, setLoadType] = useState('');
@@ -86,7 +92,29 @@ const PostJob: FC = ({ navigation }) => {
                 }>
               ) => (
                 <>
-                  <Box style={tailwind('mx-3')}>
+                  <TouchableOpacity
+                    style={[
+                      tailwind('mx-24 py-16 mb-8'),
+                      {
+                        borderStyle: 'dashed',
+                        borderRadius: 1,
+                        borderWidth: 1,
+                      },
+                    ]}
+                  >
+                    <Text style={tailwind('text-center')}>Take a picture!</Text>
+                    <Text style={tailwind('text-center mt-4')}>
+                      <Icon
+                        as={<Entypo name="camera" />}
+                        size="md"
+                        _light={{
+                          color: 'grey',
+                        }}
+                      />
+                    </Text>
+                  </TouchableOpacity>
+
+                  <Box style={tailwind('mx-8')}>
                     {/* icon, selectedValue, setValue, options */}
                     <SelectInput
                       icon="luggage"
@@ -94,39 +122,54 @@ const PostJob: FC = ({ navigation }) => {
                       setValue={setLoad}
                       options={loadOptions}
                       placeHolderValue="Load Type"
+                      width="98%"
                     />
                   </Box>
-                  <Box style={tailwind('mx-3')}>
+                  <Box style={tailwind('mx-8')}>
                     <SelectInput
-                      icon="timer"
+                      icon="food-variant"
                       selectedValue={perish}
                       setValue={setPerishable}
                       options={perishOptions}
                       placeHolderValue="Perishable / Not"
+                      iconPlacement={
+                        <MaterialCommunityIcons name="food-variant" />
+                      }
                     />
                   </Box>
-                  <Box style={tailwind('mx-3')}>
+                  <Box style={tailwind('mx-8')}>
                     <FMTextInput
                       label="Price"
                       name="price"
                       formik={formik as unknown as FormikProps<FormikValues>}
                       icon="money"
                       inputColor="grey"
+                      iconPlacement={<FontAwesome name="money" />}
                     />
                   </Box>
-                  <Box style={tailwind('mx-3')}>
+                  <Box style={tailwind('mx-8 my-2')}>
                     <FMTextInput
-                      label="Weight"
+                      label="Weight in KG"
                       name="weight"
                       formik={formik as unknown as FormikProps<FormikValues>}
                       icon="fitness-center"
                       inputColor="grey"
+                      iconPlacement={
+                        <MaterialCommunityIcons name="weight-kilogram" />
+                      }
                     />
                   </Box>
 
                   <View
+                    style={tailwind('items-center justify-center w-full mt-6 ')}
+                  >
+                    <Text style={tailwind('text-gray-400')}>
+                      All the mesurements in meters
+                    </Text>
+                  </View>
+                  <View
                     style={tailwind(
-                      'flex flex-row mt-2 items-center justify-center'
+                      'flex flex-row mt-4 items-center justify-center w-full'
                     )}
                   >
                     <Box style={tailwind('mx-2 w-28')}>
@@ -151,11 +194,7 @@ const PostJob: FC = ({ navigation }) => {
                       />
                     </Box>
                   </View>
-                  <View
-                    style={tailwind(
-                      'mt-8 items-center text-sm border-b mx-6 border-gray-400 pb-2'
-                    )}
-                  >
+                  <View style={tailwind('mt-8 items-center text-sm mx-6 pb-2')}>
                     <Text style={tailwind('mt-8 items-center text-xl ')}>
                       Location Details
                     </Text>
@@ -169,7 +208,7 @@ const PostJob: FC = ({ navigation }) => {
                       Pick Up
                     </Text>
                     <View>
-                      <Box style={tailwind('mx-8 w-full ')}>
+                      <Box style={tailwind('mx-8')}>
                         <FMTextInput
                           label="Place"
                           name="pickPlace"
@@ -178,7 +217,7 @@ const PostJob: FC = ({ navigation }) => {
                           }
                         />
                       </Box>
-                      <Box style={tailwind('mx-8 w-full')}>
+                      <Box style={tailwind('mx-8 w-11/12')}>
                         <SelectInput
                           selectedValue={pickDzongkhag}
                           setValue={setDzongkhagPick}
@@ -187,7 +226,7 @@ const PostJob: FC = ({ navigation }) => {
                         />
                       </Box>
                       {pickDzongkhag ? (
-                        <Box style={tailwind('mx-8 w-full')}>
+                        <Box style={tailwind('mx-8 w-11/12')}>
                           <SelectInput
                             selectedValue={pickGewog}
                             setValue={setGewogPick}
@@ -208,7 +247,7 @@ const PostJob: FC = ({ navigation }) => {
                       Drop Off
                     </Text>
                     <View>
-                      <Box style={tailwind('mx-8 w-full ')}>
+                      <Box style={tailwind('mx-8 w-10/12 ')}>
                         <FMTextInput
                           label="Place"
                           name="dropPlace"
@@ -217,7 +256,7 @@ const PostJob: FC = ({ navigation }) => {
                           }
                         />
                       </Box>
-                      <Box style={tailwind('mx-8 w-full')}>
+                      <Box style={tailwind('mx-8 w-11/12')}>
                         <SelectInput
                           selectedValue={dropDzongkhag}
                           setValue={setDzongkhagDrop}
@@ -226,7 +265,7 @@ const PostJob: FC = ({ navigation }) => {
                         />
                       </Box>
                       {dropDzongkhag ? (
-                        <Box style={tailwind('mx-8 w-full')}>
+                        <Box style={tailwind('mx-8 w-11/12')}>
                           <SelectInput
                             selectedValue={dropGewog}
                             setValue={setGewogDrop}
@@ -237,6 +276,15 @@ const PostJob: FC = ({ navigation }) => {
                       ) : undefined}
                     </View>
                   </View>
+                  <TouchableOpacity
+                    style={tailwind('bg-green-400 mx-4 my-6 rounded-md')}
+                  >
+                    <Text
+                      style={tailwind('text-white my-4 text-xl text-center')}
+                    >
+                      Post
+                    </Text>
+                  </TouchableOpacity>
                 </>
               )}
             </Formik>

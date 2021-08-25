@@ -15,13 +15,23 @@ const FMTextInput: FC<{
   doNotShow?: boolean;
   styleProp?: string;
   inputColor?: string;
-}> = ({ label, formik, name, icon, doNotShow, inputColor, styleProp }) => (
-  <Box w="98%" style={tailwind(styleProp ?? '')}>
+  iconPlacement?: JSX.Element;
+}> = ({
+  label,
+  formik,
+  name,
+  icon,
+  doNotShow,
+  inputColor,
+  styleProp,
+  iconPlacement,
+}) => (
+  <Box w="90%" style={tailwind(styleProp ?? '')}>
     <Input
       InputLeftElement={
         icon ? (
           <Icon
-            as={<MaterialIcons name={icon} />}
+            as={iconPlacement || <MaterialIcons name={icon} />}
             size="md"
             _light={{
               color: inputColor || 'white',

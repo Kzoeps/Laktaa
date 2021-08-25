@@ -2,6 +2,7 @@ import React, { FC, useContext, useEffect, useState } from 'react';
 import { Box, Icon, Select } from 'native-base';
 import tailwind from 'tailwind-rn';
 import { MaterialIcons } from '@expo/vector-icons';
+import { string } from 'yup';
 // import { Picker } from '@react-native-picker/picker';
 
 const SelectInput: FC = ({
@@ -10,12 +11,13 @@ const SelectInput: FC = ({
   setValue,
   options,
   placeHolderValue,
+  iconPlacement,
 }) => (
-  <Box style={tailwind(' py-2 w-11/12 flex-row ')}>
+  <Box style={tailwind('py-2 w-10/12 flex-row ')}>
     {icon ? (
       <Icon
-        style={tailwind('mr-2 my-3')}
-        as={<MaterialIcons name={icon} />}
+        style={tailwind('mr-3 my-3')}
+        as={iconPlacement || <MaterialIcons name={icon} />}
         size="md"
         _light={{
           color: 'grey',
