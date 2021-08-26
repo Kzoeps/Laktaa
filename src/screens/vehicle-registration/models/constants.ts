@@ -6,7 +6,7 @@ export const VEHICLE_REGISTER_INITIALIZER = {
   carModel: '',
   color: '',
   numberPlate: '',
-  bluebookNumber: '',
+  blueBookNumber: '',
   licenseNumber: '',
 };
 
@@ -15,7 +15,7 @@ export const VEHICLE_REGISTRATION_VALIDATION = Yup.object().shape({
   carModel: Yup.string().required(VALIDATION_MESSAGES.required),
   color: Yup.string(),
   numberPlate: Yup.string().required(VALIDATION_MESSAGES.required),
-  bluebookNumber: Yup.string().required(VALIDATION_MESSAGES.required),
+  blueBookNumber: Yup.string().required(VALIDATION_MESSAGES.required),
   licenseNumber: Yup.string().required(VALIDATION_MESSAGES.required),
 });
 

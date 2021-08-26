@@ -3,6 +3,6 @@ export interface VehicleInfo {
   carModel: string;
   color?: string;
   numberPlate: string;
-  bluebookNumber: string;
+  blueBookNumber: string;
   licenseNumber: string;
 }

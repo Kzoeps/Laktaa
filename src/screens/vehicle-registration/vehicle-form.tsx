@@ -35,6 +35,26 @@ const VehicleForm: FC = () => {
               formik={formik as unknown as FormikProps<FormikValues>}
               name="carModel"
             />
+						<FMTextInput
+							label="Color"
+							formik={formik as unknown as FormikProps<FormikValues>}
+							name="color"
+						/>
+						<FMTextInput
+							label="BP-A-1234"
+							formik={formik as unknown as FormikProps<FormikValues>}
+							name="numberPlate"
+						/>
+						<FMTextInput
+							label="Blue Book number"
+							formik={formik as unknown as FormikProps<FormikValues>}
+							name="blueBookNumber"
+						/>
+						<FMTextInput
+							label="License Number"
+							formik={formik as unknown as FormikProps<FormikValues>}
+							name="licenseNumber"
+						/>
           </>
         )}
       </Formik>
