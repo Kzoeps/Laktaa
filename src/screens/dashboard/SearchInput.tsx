@@ -2,11 +2,13 @@ import React, { FC, useState } from 'react';
 import { Select, View, Text, Button } from 'native-base';
 import tailwind from 'tailwind-rn';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { FontAwesome } from '@expo/vector-icons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const SearchInput: FC = () => {
   const [pickDzongkhag, setPickDzongkhag] = useState('');
   const [dropDzongkhag, setDropDzongkhag] = useState('');
-  const [selctDate, setSelectDate] = useState('Date');
+  const [selectDate, setSelectDate] = useState('Date');
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
 
@@ -36,13 +38,13 @@ const SearchInput: FC = () => {
   const dateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setDate(currentDate);
-    setSelectDate(` ${date.getDate()}/${date.getMonth()}`);
+    setSelectDate(`${currentDate.getDate()}/${currentDate.getMonth()}`);
+    console.log(`this is the dat: ${selectDate}`);
     setShow(false);
   };
 
   const showCal = () => {
     setShow(true);
-    console.log(show);
   };
 
   return (
@@ -63,7 +65,7 @@ const SearchInput: FC = () => {
           </Select>
         </View>
 
-        <View alignItems="center">
+        <View alignItems="center" style={[tailwind('mx-2')]}>
           <Select
             style={tailwind('text-sm p-1')}
             selectedValue={dropDzongkhag}
@@ -78,22 +80,32 @@ const SearchInput: FC = () => {
           </Select>
         </View>
 
-        {show ? (
+        {show && (
           <View alignItems="center">
             <DateTimePicker
               value={date}
               display="calendar"
               onChange={dateChange}
             />
-            {console.log(
-              `new date: ${date.getFullYear()} and ${date.getMonth()} and ${date.getDate()}`
-            )}
-          </View>
-        ) : (
-          <View style={[tailwind('mt-1 ml-4 py-0 text-sm pr-2 border')]}>
-            <Text onPress={showCal}>{selctDate}</Text>
           </View>
         )}
+        <View
+          style={[
+            tailwind(
+              'h-10 py-2 px-1 text-sm border border-gray-200 w-3/12 rounded-md'
+            ),
+          ]}
+        >
+          <TouchableOpacity
+            onPress={showCal}
+            style={tailwind('flex-row justify-between')}
+          >
+            <Text>{selectDate}</Text>
+            <View>
+              <FontAwesome name="calendar" size={20} color="black" />
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* border for the horizontal divide line */}

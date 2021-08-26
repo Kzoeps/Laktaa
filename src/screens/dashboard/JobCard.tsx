@@ -4,7 +4,6 @@ import { Text, View } from 'native-base';
 import tailwind from 'tailwind-rn';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import call from 'react-native-phone-call';
-import { PhoneAuthCredential } from '@firebase/auth-types';
 
 const JobCard: FC = () => {
   const data = [
