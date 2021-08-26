@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
-import { Image } from 'react-native';
+import { Image, TouchableOpacity } from 'react-native';
 import { Text, View } from 'native-base';
 import tailwind from 'tailwind-rn';
+import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 
 const JobCard: FC = () => {
   const data = [
@@ -128,13 +129,36 @@ const JobCard: FC = () => {
               </View>
             </View>
 
-            <View style={tailwind('flex-row border-t border-gray-100 py-2')}>
-              <View style={tailwind('flex-1')}>
-                <Text style={tailwind('text-center')}>Call</Text>
-              </View>
-              <View style={tailwind('flex-1')}>
-                <Text style={tailwind('text-center')}>Detail</Text>
-              </View>
+            <View
+              style={tailwind(
+                'flex-row border-t border-gray-100 py-2 justify-center'
+              )}
+            >
+              <TouchableOpacity style={tailwind('flex-1 mx-2 w-full')}>
+                <Text
+                  style={tailwind(
+                    'text-center border-gray-200 border rounded-3xl py-1 px-6'
+                  )}
+                >
+                  <Feather name="phone-call" size={16} color="#33d399" />
+                  &nbsp;&nbsp;Call
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={tailwind('flex-1 mx-2 w-full px-2')}>
+                <Text
+                  style={tailwind(
+                    'text-center border-gray-200 border rounded-3xl py-1 px-6'
+                  )}
+                >
+                  <MaterialCommunityIcons
+                    name="page-next-outline"
+                    size={16}
+                    color="#33d399"
+                  />
+                  &nbsp;&nbsp;Detail
+                </Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
