@@ -3,6 +3,8 @@ import { Image, TouchableOpacity } from 'react-native';
 import { Text, View } from 'native-base';
 import tailwind from 'tailwind-rn';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import call from 'react-native-phone-call';
+import { PhoneAuthCredential } from '@firebase/auth-types';
 
 const JobCard: FC = () => {
   const data = [
@@ -134,7 +136,10 @@ const JobCard: FC = () => {
                 'flex-row border-t border-gray-100 py-2 justify-center'
               )}
             >
-              <TouchableOpacity style={tailwind('flex-1 mx-2 w-full')}>
+              <TouchableOpacity
+                style={tailwind('flex-1 mx-2 w-full')}
+                onPress={() => call({ number: item.phone, prompt: true })}
+              >
                 <Text
                   style={tailwind(
                     'text-center border-gray-200 border rounded-3xl py-1 px-6'
