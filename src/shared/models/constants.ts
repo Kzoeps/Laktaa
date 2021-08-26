@@ -9,8 +9,29 @@ export const DZONGKHAG_GEWOG: {
   bumthang: string[];
   chhukha: string[];
 } = {
-  dzongkhag: [{ name: 'Bumthang' }, { name: 'Chhukha' }, { name: 'Dagana' }],
-  Bumthang: [{ name: 'chhokhor' }, { name: 'ura' }, { name: 'chumey' }],
-  Chhukha: [{ name: 'orong' }, { name: 'uzurong' }],
-  Dagana: [{ name: 'wadwad' }, { name: 'wadawd' }],
+  dzongkhag: [
+    { label: 'Bumthang', value: 'Bumthang' },
+    { label: 'Chhukha', value: 'Chhukha' },
+    { label: 'Dagana', value: 'Dagana' },
+    { label: 'Thimphu', value: 'Thimphu' },
+  ],
+  Bumthang: [
+    { label: 'chhokhor', value: 'chhokhor' },
+    { label: 'ura', value: 'ura' },
+    { label: 'chumey', value: 'chumey' },
+  ],
+
+  Chhukha: [
+    { label: 'orong', value: 'orong' },
+    { label: 'uzurong', value: 'uzurong' },
+  ],
+  Dagana: [
+    { label: 'kalikhloa', value: 'kalikhloa' },
+    { label: 'bumdeling', value: 'bumdeling' },
+  ],
+  Thimphu: [
+    { label: 'chang', value: 'chang' },
+    { label: 'mothithang', value: 'mothithang' },
+    { label: 'genekha', value: 'genekha' },
+  ],
 };
