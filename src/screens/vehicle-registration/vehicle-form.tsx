@@ -24,6 +24,7 @@ const VehicleForm: FC = () => {
         {(formik: FormikProps<VehicleInfo>) => (
           <>
             <FMSelectInput
+							icon='car-cog'
               formik={formik as unknown as FormikProps<FormikValues>}
               name="vehicleType"
               options={[...VEHICLE_TYPE_OPTIONS]}
