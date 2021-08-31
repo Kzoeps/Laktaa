@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useContext, useState } from 'react';
 import { TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import { Box, Text, View, Icon } from 'native-base';
 import tailwind from 'tailwind-rn';
@@ -20,11 +20,12 @@ import { PostJobInfo } from './models/models';
 import FMTextInput from '../../shared/components/TextInput';
 import FMSelectInput from '../../shared/components/SelectInput/FMSelectInput';
 import { DZONGKHAG_GEWOG } from '../../shared/models/constants';
+import { AuthContext } from '../auth/auth';
 // import OpenCamera from './Camera';
 
 const PostJob: FC = ({ navigation }) => {
-  const WINDOW_HEIGHT = Dimensions.get('window').height;
-  console.log('window height: ', WINDOW_HEIGHT);
+  const { currentUser } = useContext(AuthContext);
+  // const WINDOW_HEIGHT = Dimensions.get('window').height;
   const validationSchema = POST_JOB_SCHEMA;
   const initialValues = POST_JOB_INITIALIZER;
 

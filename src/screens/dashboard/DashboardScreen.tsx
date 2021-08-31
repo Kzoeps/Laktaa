@@ -26,7 +26,7 @@ const DashboardScreen: FC = ({ navigation }) => {
           <View style={tailwind('my-2')}>
             <SearchInput />
           </View>
-          <JobCard />
+          <JobCard navigation={navigation} />
         </Layout>
       </ScrollView>
 

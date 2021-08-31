@@ -5,7 +5,7 @@ import tailwind from 'tailwind-rn';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import call from 'react-native-phone-call';
 
-const JobCard: FC = () => {
+const JobCard: FC = ({ navigation }) => {
   const data = [
     {
       from_place: 'Thimphu',
@@ -87,7 +87,7 @@ const JobCard: FC = () => {
   ];
   return (
     <>
-      {data.map((item, index) => (
+      {data.map((item) => (
         <View
           style={[
             tailwind('bg-white m-2 flex flex-row rounded-2xl'),
@@ -149,7 +149,15 @@ const JobCard: FC = () => {
                 </Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={tailwind('flex-1 mx-2 w-full px-2')}>
+              <TouchableOpacity
+                style={tailwind('flex-1 mx-2 w-full px-2')}
+                onPress={() =>
+                  navigation.navigate('JobDetails', {
+                    jobcardId: item.id,
+                    imageUrl: item.image,
+                  })
+                }
+              >
                 <Text
                   style={tailwind(
                     'text-center border-gray-200 border rounded-3xl py-1 px-6'
