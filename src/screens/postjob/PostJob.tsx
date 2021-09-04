@@ -36,13 +36,16 @@ const PostJob: FC = ({ navigation }) => {
     setShowCamera(false);
   };
 
-  const saveImage = (uri, base64) => {
+  const saveImage = (
+    uri: React.SetStateAction<string>,
+    base64: React.SetStateAction<string>
+  ) => {
     setImageUri(uri);
     setImageBase64(base64);
     setImageTaken(true);
     console.log(`---> ${uri}`);
   };
-  const postJobs = (values) => {
+  const postJobs = (values: PostJobInfo) => {
     console.log(`values: ${values}`);
   };
 
