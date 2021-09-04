@@ -122,7 +122,7 @@ const PostJob: FC = ({ navigation }) => {
                         <View style={tailwind('my-8')}>
                           <TouchableOpacity onPress={() => setShowCamera(true)}>
                             <Text style={tailwind('text-center text-blue-300')}>
-                              Retake Picture
+                              Retake Picture!
                             </Text>
                           </TouchableOpacity>
                         </View>
