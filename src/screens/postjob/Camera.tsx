@@ -11,7 +11,7 @@ const OpenCamera = (props) => {
   const [isPreview, setIsPreview] = useState(false);
   const [imageInfo, setImageInfo] = useState();
   const cameraRef = useRef();
-  const WINDOW_HEIGHT = Dimensions.get('window').height - 600;
+  const WINDOW_HEIGHT = Dimensions.get('window').height - 180;
 
   const onHandlePermission = async () => {
     const { status } = await Camera.requestPermissionsAsync();
