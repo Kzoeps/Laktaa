@@ -1,6 +1,6 @@
 import React, { FC, useContext, useState } from 'react';
-import { TouchableOpacity, ScrollView, Dimensions } from 'react-native';
-import { Box, Text, View, Icon } from 'native-base';
+import { TouchableOpacity, ScrollView } from 'react-native';
+import { Box, Text, View, Icon, Image } from 'native-base';
 import tailwind from 'tailwind-rn';
 import { Formik, FormikProps, FormikValues } from 'formik';
 import {
@@ -21,20 +21,40 @@ import FMTextInput from '../../shared/components/TextInput';
 import FMSelectInput from '../../shared/components/SelectInput/FMSelectInput';
 import { DZONGKHAG_GEWOG } from '../../shared/models/constants';
 import { AuthContext } from '../auth/auth';
-// import OpenCamera from './Camera';
+import OpenCamera from './Camera';
 
 const PostJob: FC = ({ navigation }) => {
   const { currentUser } = useContext(AuthContext);
-  // const WINDOW_HEIGHT = Dimensions.get('window').height;
+  const [showCamera, setShowCamera] = useState(false);
   const validationSchema = POST_JOB_SCHEMA;
   const initialValues = POST_JOB_INITIALIZER;
+  const [imageUri, setImageUri] = useState('');
+  const [imageBase64, setImageBase64] = useState('');
+  const [imageTaken, setImageTaken] = useState(false);
 
+  const closeCamera = () => {
+    setShowCamera(false);
+  };
+
+  const saveImage = (uri, base64) => {
+    setImageUri(uri);
+    setImageBase64(base64);
+    setImageTaken(true);
+    console.log(`---> ${uri}`);
+  };
   const postJobs = (values) => {
     console.log(`values: ${values}`);
   };
 
   return (
     <>
+      <View>
+        {showCamera ? (
+          <View>
+            <OpenCamera closeCamera={closeCamera} updateImageInfo={saveImage} />
+          </View>
+        ) : undefined}
+      </View>
       <ScrollView>
         <View style={tailwind('-mb-20')}>
           <Pageheader navigation page="Post Job" />
@@ -51,30 +71,63 @@ const PostJob: FC = ({ navigation }) => {
               >
                 {(formik: FormikProps<PostJobInfo>) => (
                   <>
-                    <TouchableOpacity
-                      style={[
-                        tailwind('mx-24 py-16 mb-8'),
-                        {
-                          borderStyle: 'dashed',
-                          borderRadius: 1,
-                          borderWidth: 1,
-                        },
-                      ]}
-                    >
-                      <Text style={tailwind('text-center')}>
-                        Take a picture!
-                      </Text>
-                      <Text style={tailwind('text-center mt-4')}>
-                        <Icon
-                          as={<Entypo name="camera" />}
-                          size="md"
-                          _light={{
-                            color: 'grey',
-                          }}
-                        />
-                      </Text>
-                    </TouchableOpacity>
-
+                    {!imageTaken && (
+                      <>
+                        <TouchableOpacity
+                          onPress={() => setShowCamera(true)}
+                          style={[
+                            tailwind('mx-24 py-16 mb-4'),
+                            {
+                              borderStyle: 'dashed',
+                              borderRadius: 1,
+                              borderWidth: 1,
+                            },
+                          ]}
+                        >
+                          <Text style={tailwind('text-center')}>
+                            Take a picture!
+                          </Text>
+                          <Text style={tailwind('text-center mt-4')}>
+                            <Icon
+                              as={<Entypo name="camera" />}
+                              size="md"
+                              _light={{
+                                color: 'grey',
+                              }}
+                            />
+                          </Text>
+                        </TouchableOpacity>
+                        {/* <TouchableOpacity
+                          style={tailwind(
+                            'mb-8 mx-20 border-b border-gray-200'
+                          )}
+                        >
+                          <Text style={tailwind('text-center')}>
+                            Upload A Pciture
+                          </Text>
+                        </TouchableOpacity> */}
+                      </>
+                    )}
+                    {imageTaken && (
+                      <>
+                        <View style={tailwind('mx-8 h-96')}>
+                          <Image
+                            source={{
+                              uri: imageUri,
+                            }}
+                            alt="image taken"
+                            style={tailwind('h-full')}
+                          />
+                        </View>
+                        <View style={tailwind('my-8')}>
+                          <TouchableOpacity onPress={() => setShowCamera(true)}>
+                            <Text style={tailwind('text-center text-blue-300')}>
+                              Retake Picture
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+                      </>
+                    )}
                     <Box style={tailwind('mx-8 my-2')}>
                       <FMSelectInput
                         formik={formik as unknown as FormikProps<FormikValues>}

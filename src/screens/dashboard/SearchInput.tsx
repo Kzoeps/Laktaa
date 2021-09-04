@@ -62,7 +62,11 @@ const SearchInput: FC = () => {
             onValueChange={(itemValue: string) => setPickDzongkhag(itemValue)}
           >
             {DZONGKHAG_GEWOG.dzongkhag.map((item) => (
-              <Select.Item label={item.label} value={item.value} />
+              <Select.Item
+                label={item.label}
+                value={item.value}
+                key={item.value}
+              />
             ))}
           </Select>
         </View>
@@ -77,7 +81,11 @@ const SearchInput: FC = () => {
             onValueChange={(itemValue: string) => setDropDzongkhag(itemValue)}
           >
             {DZONGKHAG_GEWOG.dzongkhag.map((item) => (
-              <Select.Item label={item.label} value={item.value} />
+              <Select.Item
+                label={item.label}
+                value={item.value}
+                key={item.value}
+              />
             ))}
           </Select>
         </View>
