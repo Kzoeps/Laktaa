@@ -6,3 +6,9 @@ export interface VehicleInfo {
   blueBookNumber: string;
   licenseNumber: string;
 }
+
+export interface DriverInfo {
+  driverName: string;
+  age: number;
+  contactNumber: number;
+}

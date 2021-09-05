@@ -8,6 +8,9 @@ export const VEHICLE_REGISTER_INITIALIZER = {
   numberPlate: '',
   blueBookNumber: '',
   licenseNumber: '',
+  driverName: '',
+  age: '',
+  contactNumber: '',
 };
 
 export const VEHICLE_REGISTRATION_VALIDATION = Yup.object().shape({
@@ -17,6 +20,10 @@ export const VEHICLE_REGISTRATION_VALIDATION = Yup.object().shape({
   numberPlate: Yup.string().required(VALIDATION_MESSAGES.required),
   blueBookNumber: Yup.string().required(VALIDATION_MESSAGES.required),
   licenseNumber: Yup.string().required(VALIDATION_MESSAGES.required),
+  driverName: Yup.string().required(VALIDATION_MESSAGES.required),
+  age: Yup.number().required(VALIDATION_MESSAGES.required),
+  contactNumber: Yup.number().required(VALIDATION_MESSAGES.required).max(100)
+    .mi,
 });
 
 export const DRIVER_DETAILS_INITIALIZER = {
@@ -30,3 +37,7 @@ export const VEHICLE_TYPE_OPTIONS = [
   { label: 'Private', value: 'private' },
   { label: 'Truck', value: 'truck' },
 ];
+
+export enum RegistrationCollections {
+  driverRegistrations = 'driverRegistrations',
+}
