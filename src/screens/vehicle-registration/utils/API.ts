@@ -1,6 +1,5 @@
 import firebase from 'firebase';
 import { DriverInfo, VehicleInfo } from '../models/models';
-// eslint-disable-next-line import/named
 import { RegistrationCollections } from '../models/constants';
 
 export const VEHICLE_REGISTER_CALLS = {

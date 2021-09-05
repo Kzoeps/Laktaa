@@ -1,3 +1,5 @@
+import { APIStatuses } from '../../../shared/models/model';
+
 export interface VehicleInfo {
   vehicleType: string;
   carModel: string;
@@ -11,4 +13,14 @@ export interface DriverInfo {
   driverName: string;
   age: number;
   contactNumber: number;
+}
+
+export interface VehicleSlice {
+  details: (VehicleInfo & DriverInfo) | undefined;
+  status: APIStatuses;
+  error: null | string;
+}
+
+export enum DriverSliceActionTypes {
+  setVehicleRegistration = 'vehicle/setVehicleRegistration',
 }

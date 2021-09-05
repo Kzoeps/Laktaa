@@ -10,19 +10,25 @@ import { getToastConfig } from '../../shared/utils';
 import { ToastTypes } from '../../shared/models/model';
 
 const VehicleRegistration: FC = ({ navigation }) => {
-	const { currentUser } = useContext(AuthContext);
-	const [formValues, setFormValues] = useState<DriverInfo & VehicleInfo>();
+  const { currentUser } = useContext(AuthContext);
+  const [formValues, setFormValues] = useState<DriverInfo & VehicleInfo>();
   const [updateDriverInfo, setUpdateDriverInfo] = useState<boolean>(false);
   const toast = useToast();
   useEffect(() => {
     if (updateDriverInfo) {
-    	const {email} = currentUser;
-    	VEHICLE_REGISTER_CALLS.registerVehicle(formValues as DriverInfo & VehicleInfo, email).then(() => {
-				toast.show(getToastConfig('Registered successfully', ToastTypes.success))
-			})
-			setUpdateDriverInfo(false);
+      const { email } = currentUser;
+      VEHICLE_REGISTER_CALLS.registerVehicle(
+        formValues as DriverInfo & VehicleInfo,
+        email
+      ).then(() => {
+        toast.show(
+          getToastConfig('Registered successfully', ToastTypes.success)
+        );
+      });
+      setUpdateDriverInfo(false);
     }
-  }, [updateDriverInfo, formValues]);
+  }, [updateDriverInfo, formValues, currentUser, toast]);
+
   return (
     <>
       <Box bg="emerald.400">
