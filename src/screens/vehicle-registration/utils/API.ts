@@ -12,5 +12,5 @@ export const VEHICLE_REGISTER_CALLS = {
       .firestore()
       .collection(RegistrationCollections.driverRegistrations)
       .doc(email)
-      .update(info),
+      .set(info),
 };
