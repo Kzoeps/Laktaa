@@ -3,7 +3,6 @@ import { Box, Icon, Select } from 'native-base';
 import tailwind from 'tailwind-rn';
 import { MaterialIcons } from '@expo/vector-icons';
 import { string } from 'yup';
-// import { Picker } from '@react-native-picker/picker';
 
 const SelectInput: FC = ({
   icon,

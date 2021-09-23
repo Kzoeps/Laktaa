@@ -4,7 +4,6 @@ export const VALIDATION_MESSAGES: Record<string, string> = {
   maxLength: 'Max length exceeded',
 };
 
-// export const DZONGKHAG_GEWOG: Record<string, {label: string, value: string}[]>
 export const DZONGKHAG_GEWOG: {
   [key: string]: { label: string; value: string }[];
 } = {
@@ -34,5 +33,4 @@ export const DZONGKHAG_GEWOG: {
     { label: 'mothithang', value: 'mothithang' },
     { label: 'genekha', value: 'genekha' },
   ],
-  SamdrupJongkhar: [{ label: 'yongba', value: 'gumdar' }],
 };

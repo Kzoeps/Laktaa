@@ -22,6 +22,7 @@ import FMSelectInput from '../../shared/components/SelectInput/FMSelectInput';
 import { DZONGKHAG_GEWOG } from '../../shared/models/constants';
 import { AuthContext } from '../auth/auth';
 import OpenCamera from './Camera';
+import { FIREBASE_POSTJOB_CALLS } from './utils/API';
 
 const PostJob: FC = ({ navigation }) => {
   const { currentUser } = useContext(AuthContext);
@@ -30,6 +31,7 @@ const PostJob: FC = ({ navigation }) => {
   const initialValues = POST_JOB_INITIALIZER;
   const [imageUri, setImageUri] = useState('');
   const [imageBase64, setImageBase64] = useState('');
+  const [imageFile, setImageFile] = useState('');
   const [imageTaken, setImageTaken] = useState(false);
 
   const closeCamera = () => {
@@ -38,15 +40,17 @@ const PostJob: FC = ({ navigation }) => {
 
   const saveImage = (
     uri: React.SetStateAction<string>,
-    base64: React.SetStateAction<string>
+    base64: React.SetStateAction<string>,
+    file: File
   ) => {
+    setImageFile(file);
     setImageUri(uri);
     setImageBase64(base64);
     setImageTaken(true);
     console.log(`---> ${uri}`);
   };
-  const postJobs = (values: PostJobInfo) => {
-    console.log(`values: ${values}`);
+  const postJobs = async (values: PostJobInfo) => {
+    await FIREBASE_POSTJOB_CALLS.postJob(values);
   };
 
   return (
@@ -70,7 +74,7 @@ const PostJob: FC = ({ navigation }) => {
               <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={(values) => postJobs(values)}
+                onSubmit={postJobs}
               >
                 {(formik: FormikProps<PostJobInfo>) => (
                   <>
@@ -261,11 +265,21 @@ const PostJob: FC = ({ navigation }) => {
                             formik={
                               formik as unknown as FormikProps<FormikValues>
                             }
-                            name="pickDzongkhag"
+                            name="pickGewog"
                             options={
                               DZONGKHAG_GEWOG[formik.values.pickDzongkhag]
                             }
                             placeholder="Gewog"
+                          />
+                        </Box>
+                        <Box style={tailwind('my-2 ml-8')}>
+                          <FMTextInput
+                            label="Contact Number"
+                            name="pickUpPhone"
+                            variant="outline"
+                            formik={
+                              formik as unknown as FormikProps<FormikValues>
+                            }
                           />
                         </Box>
                       </View>
@@ -312,6 +326,16 @@ const PostJob: FC = ({ navigation }) => {
                             placeholder="Gewog"
                           />
                         </Box>
+                        <Box style={tailwind('my-2 ml-8')}>
+                          <FMTextInput
+                            label="Contact Number"
+                            name="dropOffPhone"
+                            variant="outline"
+                            formik={
+                              formik as unknown as FormikProps<FormikValues>
+                            }
+                          />
+                        </Box>
                       </View>
                     </View>
 
@@ -329,6 +353,7 @@ const PostJob: FC = ({ navigation }) => {
                     </View>
 
                     <TouchableOpacity
+                      onPress={formik.handleSubmit}
                       style={tailwind('bg-green-400 mx-4 my-6 rounded-md')}
                     >
                       <Text

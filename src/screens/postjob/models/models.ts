@@ -9,8 +9,10 @@ export interface PostJobInfo {
   pickPlace: string;
   pickDzongkhag: string;
   pickGewog: string;
+  pickUpPhone: number;
   dropDzongkhag: string;
   dropGewog: string;
   dropPlace: string;
+  dropOffPhone: number;
   remarks: string;
 }

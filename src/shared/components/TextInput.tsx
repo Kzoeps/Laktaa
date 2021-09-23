@@ -2,9 +2,7 @@ import React, { FC } from 'react';
 import { FormikProps, FormikValues } from 'formik';
 import { Box, Icon, Input, Text } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
-import { StyleProp, ViewStyle } from 'react-native';
 import tailwind from 'tailwind-rn';
-import { Picker } from '@react-native-picker/picker';
 
 const loadType = [{ name: 'Perishibale' }, { name: 'Non-perishable' }];
 const FMTextInput: FC<{
@@ -48,7 +46,7 @@ const FMTextInput: FC<{
     />
 
     {formik.touched[name] && formik.errors[name] && (
-      <Text>{formik.errors[name]}</Text>
+      <Text style={tailwind('text-red-400')}>{formik.errors[name]}</Text>
     )}
   </Box>
 );
