@@ -1,3 +1,6 @@
+import { AuthState } from "../../screens/auth/models/models";
+import { VehicleSlice } from '../../screens/vehicle-registration/models/models';
+
 export enum APIStatuses {
   'IDLE' = 'IDLE',
   'LOADING' = 'LOADING',
@@ -15,4 +18,9 @@ export enum ToastTypes {
   warn = 'warning',
   info = 'info',
   error = 'error',
+}
+
+export interface RootState {
+	auth: AuthState;
+	vehicle: VehicleSlice
 }

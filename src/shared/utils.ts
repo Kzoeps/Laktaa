@@ -1,5 +1,5 @@
 import { IToastProps } from 'native-base';
-import { ToastTypes } from './models/model';
+import { APIStatuses, RootState, ToastTypes } from './models/model';
 
 export const getToastConfig = (
   title: string,
@@ -10,3 +10,5 @@ export const getToastConfig = (
   status,
   description,
 });
+
+export const selectStoreStatus = (sliceName: keyof RootState) => (state: RootState): APIStatuses => state[sliceName].status
