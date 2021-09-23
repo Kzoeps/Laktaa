@@ -23,4 +23,5 @@ export interface VehicleSlice {
 
 export enum DriverSliceActionTypes {
   setVehicleRegistration = 'vehicle/setVehicleRegistration',
+	getVehicleRegistration = 'vehicle/vehicleRegistrationDetails'
 }
