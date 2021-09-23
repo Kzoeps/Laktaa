@@ -1,5 +1,6 @@
 import { IToastProps } from 'native-base';
-import { APIStatuses, RootState, ToastTypes } from './models/model';
+import { APIStatuses, ToastTypes } from './models/model';
+import { RootState } from '../store/store';
 
 export const getToastConfig = (
   title: string,

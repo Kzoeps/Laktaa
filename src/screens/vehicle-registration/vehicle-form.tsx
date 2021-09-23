@@ -14,8 +14,9 @@ import FMSelectInput from '../../shared/components/SelectInput/FMSelectInput';
 const VehicleForm: FC<{
   setFormValues: (formVals: DriverInfo & VehicleInfo) => void;
   setUpdateDriverInfo: (update: boolean) => void;
-}> = ({ setFormValues, setUpdateDriverInfo }) => {
-  const initialValues = VEHICLE_REGISTER_INITIALIZER;
+  initialFormValues: DriverInfo & VehicleInfo | undefined
+}> = ({ setFormValues, setUpdateDriverInfo, initialFormValues }) => {
+  const initialValues = initialFormValues ?? VEHICLE_REGISTER_INITIALIZER;
   const validationSchema = VEHICLE_REGISTRATION_VALIDATION;
   return (
     <>

@@ -20,7 +20,7 @@ export enum ToastTypes {
   error = 'error',
 }
 
-export interface RootState {
-	auth: AuthState;
-	vehicle: VehicleSlice
+export enum RootReducersEnum {
+	authSlice = 'auth',
+	vehicleSlice = 'vehicle'
 }
