@@ -47,7 +47,7 @@ const VehicleRegistration: FC = ({ navigation }) => {
 		// eslint-disable-next-line no-void,no-return-assign,consistent-return
 		return (): void => void (updateDriverInfo.current = false);
 
-	}, [dispatch, updateDriverInfo.current, formValues, currentUser, toast]);
+	}, [dispatch, formValues, currentUser, toast]);
 
   if (status === APIStatuses.LOADING) return <Spinner accessibilityLabel="loading vehicle info"/>
   return (
