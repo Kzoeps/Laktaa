@@ -34,3 +34,12 @@ export const DZONGKHAG_GEWOG: {
     { label: 'genekha', value: 'genekha' },
   ],
 };
+export const NAVIGATION_HEADER_CONFIG = {
+  headerStyle: {
+    backgroundColor: '#49C1A4',
+  },
+  headerTitleStyle: {
+    color: '#FAFAFA',
+  },
+  headerTintColor: '#FAFAFA',
+};

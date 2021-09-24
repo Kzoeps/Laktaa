@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 import { DocumentSnapshot } from '@firebase/firestore-types';
-import { UserDetails } from '../models/models';
+import { ProfileUpdatePayload, UserDetails } from '../models/models';
 
 // eslint-disable-next-line import/prefer-default-export
 export const FIREBASE_CALLS = {
@@ -42,4 +42,21 @@ export const FIREBASE_CALLS = {
     firebase.firestore().collection(email).doc('userProfile').get() as Promise<
       DocumentSnapshot<UserDetails>
     >,
+  updateUserProfile: (userDetails: UserDetails): Promise<void> =>
+    firebase
+      .firestore()
+      .collection(userDetails.email)
+      .doc('userProfile')
+      .update({
+        userName: userDetails.userName,
+        location: userDetails.location,
+        phoneNumber: userDetails.phoneNumber,
+      }),
+  updateUserProfileImage: ({
+    email,
+    profileImageUrl,
+  }: ProfileUpdatePayload): Promise<void> =>
+    firebase.firestore().collection(email).doc('userProfile').update({
+      profileImageUrl,
+    }),
 };

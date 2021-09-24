@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, ReactChild, ReactChildren } from 'react';
 import { View } from 'native-base';
 import tailwind from 'tailwind-rn';
 

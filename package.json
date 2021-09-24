@@ -35,6 +35,7 @@
     "commitizen": "^4.2.4",
     "expo": "~41.0.1",
     "expo-camera": "^11.2.2",
+    "expo-document-picker": "~9.1.2",
     "expo-font": "~9.1.0",
     "expo-splash-screen": "~0.10.2",
     "expo-updates": "~0.5.4",
