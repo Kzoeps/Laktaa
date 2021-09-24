@@ -9,7 +9,7 @@ import {
   FontAwesome,
 } from '@expo/vector-icons';
 import Pageheader from '../../shared/components/Pageheader/Pageheader';
-import Layout from '../../shared/layout/dashboard';
+import Layout from '../../shared/layout/layout';
 import {
   POST_JOB_SCHEMA,
   POST_JOB_LOAD_TYPE,
@@ -30,27 +30,24 @@ const PostJob: FC = ({ navigation }) => {
   const validationSchema = POST_JOB_SCHEMA;
   const initialValues = POST_JOB_INITIALIZER;
   const [imageUri, setImageUri] = useState('');
-  const [imageBase64, setImageBase64] = useState('');
-  const [imageFile, setImageFile] = useState('');
   const [imageTaken, setImageTaken] = useState(false);
 
   const closeCamera = () => {
     setShowCamera(false);
   };
 
-  const saveImage = (
-    uri: React.SetStateAction<string>,
-    base64: React.SetStateAction<string>,
-    file: File
-  ) => {
-    setImageFile(file);
+  const saveImage = (uri: React.SetStateAction<string>) => {
     setImageUri(uri);
-    setImageBase64(base64);
     setImageTaken(true);
     console.log(`---> ${uri}`);
   };
   const postJobs = async (values: PostJobInfo) => {
-    await FIREBASE_POSTJOB_CALLS.postJob(values);
+    const uploadedImage = await FIREBASE_POSTJOB_CALLS.postImage(imageUri);
+    // await FIREBASE_POSTJOB_CALLS.postJob(
+    //   values,
+    //   uploadedImage,
+    //   currentUser.email
+    // );
   };
 
   return (

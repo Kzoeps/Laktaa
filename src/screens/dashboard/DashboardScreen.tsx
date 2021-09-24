@@ -6,7 +6,7 @@ import { AuthContext } from '../auth/auth';
 import Pageheader from '../../shared/components/Pageheader/Pageheader';
 import SearchInput from './SearchInput';
 import JobCard from './JobCard';
-import Layout from '../../shared/layout/dashboard';
+import Layout from '../../shared/layout/layout';
 
 const DashboardScreen: FC = ({ navigation }) => {
   const [shouldLogout, setShouldLogout] = useState<boolean>(false);

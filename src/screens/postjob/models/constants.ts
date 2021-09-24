@@ -18,22 +18,22 @@ export const POST_JOB_SCHEMA = Yup.object().shape({
 });
 
 export const POST_JOB_INITIALIZER = {
-  loadType: '',
-  perish: '',
-  price: '',
-  weight: '',
-  height: '',
-  length: '',
-  breath: '',
-  pickPlace: '',
+  loadType: 'Food',
+  perish: 'Perishable',
+  price: '100',
+  weight: '10',
+  height: '1',
+  length: '1',
+  breath: '1',
+  pickPlace: 'Chamkhar',
   pickDzongkhag: 'Bumthang',
-  pickGewog: '',
-  pickUpPhone: '',
+  pickGewog: 'chhokhor',
+  pickUpPhone: '17982323',
   dropDzongkhag: 'Thimphu',
-  dropGewog: '',
-  dropPlace: '',
-  dropOffPhone: '',
-  remarks: '',
+  dropGewog: 'chang',
+  dropPlace: 'olakha',
+  dropOffPhone: '123456234',
+  remarks: 'adad',
 };
 
 export const POST_JOB_LOAD_TYPE = [

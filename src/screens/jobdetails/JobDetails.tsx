@@ -3,7 +3,7 @@ import { Image, ScrollView } from 'react-native';
 import { View, Text, Box } from 'native-base';
 import tailwind from 'tailwind-rn';
 import Pageheader from '../../shared/components/Pageheader/Pageheader';
-import Layout from '../../shared/layout/dashboard';
+import Layout from '../../shared/layout/layout';
 
 const JobDetails = ({ route, naviagtion }) => {
   const { imageUrl, jobcardId } = route.params;
