@@ -10,6 +10,7 @@ import {
 import { DriverInfo, VehicleInfo } from './models/models';
 import FMTextInput from '../../shared/components/TextInput';
 import FMSelectInput from '../../shared/components/SelectInput/FMSelectInput';
+import FMImageUploadDisplay from '../../shared/components/ImageUploadDisplay/ImageUploadDisplay';
 
 const VehicleForm: FC<{
   setFormValues: (formVals: DriverInfo & VehicleInfo) => void;
@@ -18,8 +19,10 @@ const VehicleForm: FC<{
 }> = ({ setFormValues, setUpdateDriverInfo, initialFormValues }) => {
   const initialValues = initialFormValues ?? VEHICLE_REGISTER_INITIALIZER;
   const validationSchema = VEHICLE_REGISTRATION_VALIDATION;
+  const updateMe = () => console.log('updateMe');
   return (
     <>
+			<FMImageUploadDisplay callback={updateMe} label="Photo of car" icon="car"/>
       <Formik
         initialValues={initialValues}
         // validationSchema={validationSchema}
