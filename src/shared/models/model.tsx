@@ -1,5 +1,3 @@
-import { AuthState } from "../../screens/auth/models/models";
-import { VehicleSlice } from '../../screens/vehicle-registration/models/models';
 
 export enum APIStatuses {
   'IDLE' = 'IDLE',
