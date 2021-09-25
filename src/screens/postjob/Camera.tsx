@@ -5,6 +5,12 @@ import { Camera } from 'expo-camera';
 import tailwind from 'tailwind-rn';
 import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons';
 
+/**
+ *
+ * @param showMySelf: is used to conditionally render this component.
+ * since in most cases the camera is only to be shown when some action happens.
+ * @constructor
+ */
 const OpenCamera: FC<{
 	closeCamera?: () => void;
 	updateImageInfo: (uri: string) => void;
@@ -26,13 +32,17 @@ const OpenCamera: FC<{
     onHandlePermission();
   }, []);
 
+	/* return null to hide component until showMySelf is true */
+	if (props.showMySelf === false) return null;
   if (hasPermission === null) {
     return <View />;
   }
   if (hasPermission === false) {
     return <Text>Permission to use the camera has been Denied</Text>;
   }
-  const saveImage = () => {
+
+
+	const saveImage = () => {
     props.updateImageInfo(imageInfo.uri, imageInfo.base64);
     props.closeCamera();
   };
@@ -57,7 +67,6 @@ const OpenCamera: FC<{
 		setIsPreview(false);
 	};
 
-	if (props.showMySelf === false) return null;
 	return (
 		<View>
 			<Camera ref={cameraRef} type={type} style={tailwind('h-full')}>

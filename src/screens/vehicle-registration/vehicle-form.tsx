@@ -28,7 +28,7 @@ const VehicleForm: FC<{
 
   return (
     <>
-			{showCamera && <OpenCamera showMySelf={showCamera} updateImageInfo={setImageInfo}/>}
+			<OpenCamera showMySelf={showCamera} updateImageInfo={setImageInfo}/>
 			<FMImageUploadDisplay callback={openCamera} label="Photo of car" iconPlacement={<FontAwesome5 name="car-alt" size={24} color="black" />}/>
       <Formik
         initialValues={initialFormValues ?? VEHICLE_REGISTER_INITIALIZER}
