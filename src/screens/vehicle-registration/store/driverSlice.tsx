@@ -20,14 +20,14 @@ export const getVehicleRegistrationDetails = createAsyncThunk(
 export const setVehicleRegistration = createAsyncThunk(
   DriverSliceActionTypes.setVehicleRegistration,
   async ({
-    vehicleInfo,
+    registrationDetails,
     email,
   }: {
-    vehicleInfo: VehicleInfo & DriverInfo;
+    registrationDetails: VehicleInfo & DriverInfo;
     email: string;
   }) => {
-    await VEHICLE_REGISTER_CALLS.registerVehicle(vehicleInfo, email);
-    return vehicleInfo;
+    await VEHICLE_REGISTER_CALLS.registerVehicle(registrationDetails, email);
+    return registrationDetails;
   }
 );
 

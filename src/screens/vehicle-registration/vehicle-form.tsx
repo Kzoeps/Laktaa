@@ -2,6 +2,7 @@ import { Formik, FormikProps, FormikValues } from 'formik';
 import React, { FC, useState } from 'react';
 import { Button } from 'native-base';
 import tailwind from 'tailwind-rn';
+import { FontAwesome5 } from '@expo/vector-icons';
 import {
   VEHICLE_REGISTER_INITIALIZER,
   VEHICLE_REGISTRATION_VALIDATION,
@@ -12,13 +13,11 @@ import FMTextInput from '../../shared/components/TextInput';
 import FMSelectInput from '../../shared/components/SelectInput/FMSelectInput';
 import FMImageUploadDisplay from '../../shared/components/ImageUploadDisplay/ImageUploadDisplay';
 import OpenCamera from '../postjob/Camera';
-import { FontAwesome5 } from '@expo/vector-icons';
 
 const VehicleForm: FC<{
-  setFormValues: (formVals: DriverInfo & VehicleInfo) => void;
-  setUpdateDriverInfo: (update: boolean) => void;
+  setRegistrationDetails: (details: { registrationDetails: VehicleInfo & DriverInfo}) => void,
   initialFormValues: DriverInfo & VehicleInfo | undefined
-}> = ({ setFormValues, setUpdateDriverInfo, initialFormValues }) => {
+}> = ({ setRegistrationDetails, initialFormValues }) => {
 	const [showCamera, setShowCamera,] = useState<boolean>(false);
 	const [imageInfo, setImageInfo] = useState<string>('');
   const initialValues = initialFormValues ?? VEHICLE_REGISTER_INITIALIZER;
@@ -38,9 +37,8 @@ const VehicleForm: FC<{
       <Formik
         initialValues={initialValues}
         // validationSchema={validationSchema}
-        onSubmit={(values) => {
-          setFormValues(values);
-          setUpdateDriverInfo(true);
+        onSubmit={(registrationDetails) => {
+        	setRegistrationDetails({registrationDetails})
         }}
       >
         {(formik: FormikProps<VehicleInfo & DriverInfo>) => (
