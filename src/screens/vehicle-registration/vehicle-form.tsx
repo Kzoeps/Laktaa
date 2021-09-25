@@ -22,7 +22,7 @@ const VehicleForm: FC<{
 	const [imageInfo, setImageInfo] = useState<string>('');
   const validationSchema = VEHICLE_REGISTRATION_VALIDATION;
 
-	const openCamera = () => {
+	const openCamera = (): void => {
   	setShowCamera(true);
 	}
 
