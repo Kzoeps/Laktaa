@@ -41,6 +41,7 @@ const PostJob: FC = ({ navigation }) => {
   const initialValues = POST_JOB_INITIALIZER;
   const [imageUri, setImageUri] = useState('');
   const [imageTaken, setImageTaken] = useState(false);
+  const [imageRequired, setImageRequired] = useState(false);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
   const closeCamera = () => {
@@ -52,6 +53,10 @@ const PostJob: FC = ({ navigation }) => {
     setImageTaken(true);
   };
   const postJobs = async (values: PostJobInfo, { resetForm }) => {
+    if (imageTaken) {
+      setImageRequired(true);
+      return;
+    }
     setLoading(true);
     const uploadedImage = await FIREBASE_POSTJOB_CALLS.postImage(imageUri);
     // eslint-disable-next-line no-param-reassign
@@ -135,6 +140,11 @@ const PostJob: FC = ({ navigation }) => {
                             />
                           </Text>
                         </TouchableOpacity>
+                        {imageRequired ? (
+                          <Text style={tailwind('text-red-500 text-center')}>
+                            Image Required
+                          </Text>
+                        ) : undefined}
                       </>
                     )}
                     {imageTaken && (

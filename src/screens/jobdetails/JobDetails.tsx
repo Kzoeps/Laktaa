@@ -17,16 +17,17 @@ const JobDetails = ({ route, naviagtion }) => {
   // console.log(`job card id : ${imageUrl}`);
 
   return (
-    <ScrollView>
-      <View style={tailwind('-mb-20')}>
-        <Pageheader navigation page="Job Details" />
-      </View>
-      <Layout>
-        <View style={tailwind('mx-10')}>
-          <Image
-            style={tailwind('w-full h-2/6 mt-12')}
-            source={{ uri: imageUrl }}
-          />
+    <>
+      <ScrollView>
+        <View style={tailwind('-mb-20')}>
+          <Pageheader navigation page="Job Details" />
+        </View>
+        <Image
+          style={tailwind('w-full h-60 mt-12 absolute top-14')}
+          source={{ uri: imageUrl }}
+        />
+        {/* <View style={tailwind('mt-60')}></View> */}
+        <View style={tailwind('mx-10 mt-72')}>
           <View style={tailwind('flex-row justify-between mt-8 pb-8 ')}>
             <View style={tailwind(styles.measurementParent)}>
               <Text style={tailwind(styles.measurementLabel)}>Weight</Text>
@@ -117,8 +118,8 @@ const JobDetails = ({ route, naviagtion }) => {
             </View>
           </View>
         </View>
-      </Layout>
-    </ScrollView>
+      </ScrollView>
+    </>
   );
 };
 
