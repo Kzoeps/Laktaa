@@ -39,15 +39,15 @@ const PostJob: FC = ({ navigation }) => {
   const saveImage = (uri: string) => {
     setImageUri(uri);
     setImageTaken(true);
-    console.log(`---> ${uri}`);
   };
   const postJobs = async (values: PostJobInfo) => {
     const uploadedImage = await FIREBASE_POSTJOB_CALLS.postImage(imageUri);
-    // await FIREBASE_POSTJOB_CALLS.postJob(
-    //   values,
-    //   uploadedImage,
-    //   currentUser.email
-    // );
+
+    // eslint-disable-next-line no-param-reassign
+    values.poster = currentUser.email;
+    // eslint-disable-next-line no-param-reassign
+    values.imageUri = uploadedImage;
+    await FIREBASE_POSTJOB_CALLS.postJob(values);
   };
 
   return (

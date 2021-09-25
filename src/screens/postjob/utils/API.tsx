@@ -5,17 +5,16 @@ import { PostJobInfo } from '../models/models';
 export const FIREBASE_POSTJOB_CALLS = {
   postImage: (imageUri: string) => {
     const storageRef = firebase.storage().ref().child(`jobImages/hello.jpeg`);
-
     const upload = async () => {
       const file = await fetch(imageUri);
       const blob = await file.blob();
       const firebaseUploadSnapshot = await storageRef.put(blob);
       const fileUri = await firebaseUploadSnapshot.ref.getDownloadURL();
-      console.log(`this is the url: ${fileUri}`);
+      return fileUri;
     };
-    upload();
+    return upload();
   },
-  postJob: (info: PostJobInfo, imageUri: string, currentUser: string) => {
+  postJob: (info: PostJobInfo) => {
     firebase.firestore().collection('jobs').doc().set(info);
   },
 };

@@ -15,4 +15,6 @@ export interface PostJobInfo {
   dropPlace: string;
   dropOffPhone: number;
   remarks: string;
+  poster?: string;
+  imageUri?: string;
 }

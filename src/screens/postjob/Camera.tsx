@@ -32,7 +32,7 @@ const OpenCamera: FC<{
     return <Text>Permission to use the camera has been Denied</Text>;
   }
   const saveImage = () => {
-    props.updateImageInfo(imageInfo.uri, imageInfo.base64);
+    props.updateImageInfo(imageInfo.uri);
     props.closeCamera();
   };
 
