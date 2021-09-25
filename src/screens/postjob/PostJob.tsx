@@ -36,7 +36,7 @@ const PostJob: FC = ({ navigation }) => {
     setShowCamera(false);
   };
 
-  const saveImage = (uri: React.SetStateAction<string>) => {
+  const saveImage = (uri: string) => {
     setImageUri(uri);
     setImageTaken(true);
     console.log(`---> ${uri}`);
@@ -101,15 +101,6 @@ const PostJob: FC = ({ navigation }) => {
                             />
                           </Text>
                         </TouchableOpacity>
-                        {/* <TouchableOpacity
-                          style={tailwind(
-                            'mb-8 mx-20 border-b border-gray-200'
-                          )}
-                        >
-                          <Text style={tailwind('text-center')}>
-                            Upload A Pciture
-                          </Text>
-                        </TouchableOpacity> */}
                       </>
                     )}
                     {imageTaken && (

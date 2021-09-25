@@ -1,11 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, FC } from 'react';
 import { TouchableOpacity, Dimensions } from 'react-native';
 import { View, Text } from 'native-base';
 import { Camera } from 'expo-camera';
 import tailwind from 'tailwind-rn';
 import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons';
 
-const OpenCamera = (props) => {
+const OpenCamera: FC<{
+  closeCamera: () => void;
+  updateImageInfo: (uri: string) => void;
+}> = (props) => {
   const [hasPermission, setHasPermission] = useState(false);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [isPreview, setIsPreview] = useState(false);
