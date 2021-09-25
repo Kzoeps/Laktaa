@@ -1,5 +1,5 @@
 import { Formik, FormikProps, FormikValues } from 'formik';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { Button } from 'native-base';
 import tailwind from 'tailwind-rn';
 import {
@@ -11,18 +11,30 @@ import { DriverInfo, VehicleInfo } from './models/models';
 import FMTextInput from '../../shared/components/TextInput';
 import FMSelectInput from '../../shared/components/SelectInput/FMSelectInput';
 import FMImageUploadDisplay from '../../shared/components/ImageUploadDisplay/ImageUploadDisplay';
+import OpenCamera from '../postjob/Camera';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const VehicleForm: FC<{
   setFormValues: (formVals: DriverInfo & VehicleInfo) => void;
   setUpdateDriverInfo: (update: boolean) => void;
   initialFormValues: DriverInfo & VehicleInfo | undefined
 }> = ({ setFormValues, setUpdateDriverInfo, initialFormValues }) => {
+	const [showCamera, setShowCamera,] = useState<boolean>(false);
+	const [imageInfo, setImageInfo] = useState<string>('');
   const initialValues = initialFormValues ?? VEHICLE_REGISTER_INITIALIZER;
   const validationSchema = VEHICLE_REGISTRATION_VALIDATION;
-  const updateMe = () => console.log('updateMe');
+
+  const closeCamera = () => {
+  	setShowCamera(false);
+	}
+	const openCamera = () => {
+  	setShowCamera(true);
+	}
+
   return (
     <>
-			<FMImageUploadDisplay callback={updateMe} label="Photo of car" icon="car"/>
+			{showCamera && <OpenCamera closeCamera={closeCamera} updateImageInfo={setImageInfo}/>}
+			<FMImageUploadDisplay callback={openCamera} label="Photo of car" iconPlacement={<FontAwesome5 name="car-alt" size={24} color="black" />}/>
       <Formik
         initialValues={initialValues}
         // validationSchema={validationSchema}
