@@ -20,22 +20,18 @@ const VehicleForm: FC<{
 }> = ({ setRegistrationDetails, initialFormValues }) => {
 	const [showCamera, setShowCamera,] = useState<boolean>(false);
 	const [imageInfo, setImageInfo] = useState<string>('');
-  const initialValues = initialFormValues ?? VEHICLE_REGISTER_INITIALIZER;
   const validationSchema = VEHICLE_REGISTRATION_VALIDATION;
 
-  const closeCamera = () => {
-  	setShowCamera(false);
-	}
 	const openCamera = () => {
   	setShowCamera(true);
 	}
 
   return (
     <>
-			{showCamera && <OpenCamera closeCamera={closeCamera} updateImageInfo={setImageInfo}/>}
+			{showCamera && <OpenCamera showMySelf={showCamera} updateImageInfo={setImageInfo}/>}
 			<FMImageUploadDisplay callback={openCamera} label="Photo of car" iconPlacement={<FontAwesome5 name="car-alt" size={24} color="black" />}/>
       <Formik
-        initialValues={initialValues}
+        initialValues={initialFormValues ?? VEHICLE_REGISTER_INITIALIZER}
         // validationSchema={validationSchema}
         onSubmit={(registrationDetails) => {
         	setRegistrationDetails({registrationDetails})
