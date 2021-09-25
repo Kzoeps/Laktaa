@@ -1,6 +1,16 @@
 import React, { FC, useContext, useState } from 'react';
 import { TouchableOpacity, ScrollView } from 'react-native';
-import { Box, Text, View, Icon, Image } from 'native-base';
+import {
+  Box,
+  Text,
+  View,
+  Icon,
+  Image,
+  useToast,
+  Spinner,
+  Heading,
+  HStack,
+} from 'native-base';
 import tailwind from 'tailwind-rn';
 import { Formik, FormikProps, FormikValues } from 'formik';
 import {
@@ -31,7 +41,8 @@ const PostJob: FC = ({ navigation }) => {
   const initialValues = POST_JOB_INITIALIZER;
   const [imageUri, setImageUri] = useState('');
   const [imageTaken, setImageTaken] = useState(false);
-
+  const [loading, setLoading] = useState(false);
+  const toast = useToast();
   const closeCamera = () => {
     setShowCamera(false);
   };
@@ -40,16 +51,39 @@ const PostJob: FC = ({ navigation }) => {
     setImageUri(uri);
     setImageTaken(true);
   };
-  const postJobs = async (values: PostJobInfo) => {
+  const postJobs = async (values: PostJobInfo, { resetForm }) => {
+    setLoading(true);
     const uploadedImage = await FIREBASE_POSTJOB_CALLS.postImage(imageUri);
-
     // eslint-disable-next-line no-param-reassign
     values.poster = currentUser.email;
     // eslint-disable-next-line no-param-reassign
     values.imageUri = uploadedImage;
     await FIREBASE_POSTJOB_CALLS.postJob(values);
+    toast.show({ title: 'done', status: 'success' });
+    setLoading(false);
+    resetForm();
+    setImageTaken(false);
+    setImageUri('');
   };
-
+  if (loading)
+    return (
+      <>
+        <View style={tailwind('my-24')}>
+          <Spinner
+            accessibilityLabel="Loading posts"
+            color="emerald.500"
+            size="lg"
+          />
+          <Heading
+            style={tailwind('text-center')}
+            color="emerald.500"
+            fontSize="xl"
+          >
+            Posting Jobs...
+          </Heading>
+        </View>
+      </>
+    );
   return (
     <>
       <View>
