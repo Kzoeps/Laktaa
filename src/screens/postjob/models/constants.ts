@@ -29,10 +29,12 @@ export const POST_JOB_INITIALIZER = {
   pickDzongkhag: 'Bumthang',
   pickGewog: '',
   pickUpPhone: '',
+  pickDate: '',
   dropDzongkhag: 'Thimphu',
   dropGewog: '',
   dropPlace: '',
   dropOffPhone: '',
+  dropDate: '',
   remarks: '',
 };
 

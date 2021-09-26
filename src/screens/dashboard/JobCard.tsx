@@ -1,11 +1,16 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Image, TouchableOpacity } from 'react-native';
 import { Text, View } from 'native-base';
 import tailwind from 'tailwind-rn';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import call from 'react-native-phone-call';
+import { FIREBASE_FETCHJOB_CALLS } from './utils/API';
 
 const JobCard: FC = ({ navigation }) => {
+  useEffect(() => {
+    const data = FIREBASE_FETCHJOB_CALLS.fetchData();
+    // console.log(data.keys());
+  }, []);
   const data = [
     {
       from_place: 'Thimphu',
