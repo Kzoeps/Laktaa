@@ -10,13 +10,24 @@ import { getToastConfig, selectStoreStatus } from '../../shared/utils';
 import { APIStatuses, RootReducersEnum, ToastTypes } from '../../shared/models/model';
 import { getVehicleRegistrationDetails, setVehicleRegistration } from './store/driverSlice';
 import { RootState } from '../../store/store';
+import OpenCamera from '../postjob/Camera';
 
 const VehicleRegistration: FC = ({ navigation }) => {
+	const [showCamera, setShowCamera] = useState<boolean>(false);
+	const [imageInfo, setImageInfo] = useState<string>('');
 	const { currentUser } = useContext(AuthContext);
 	const vehicleInfo = useSelector((state: RootState) => state.vehicle.details);
 	const status = useSelector(selectStoreStatus(RootReducersEnum.vehicleSlice));
 	const dispatch = useDispatch();
 	const toast = useToast();
+
+	const closeCamera = (): void => {
+		setShowCamera(false);
+	};
+	const openCamera = (): void => {
+		setShowCamera(true);
+	}
+
 
 	useEffect(() => {
 		if (currentUser.email && !vehicleInfo) {
@@ -38,10 +49,12 @@ const VehicleRegistration: FC = ({ navigation }) => {
 	if (status === APIStatuses.LOADING) return <Spinner accessibilityLabel='loading vehicle info' />;
 	return (
 		<>
+			<OpenCamera showMySelf={showCamera} closeCamera={closeCamera} updateImageInfo={setImageInfo} />
 			<Box bg='emerald.400'>
 				<FMHeader header='Vehicle Registration' />
 				<Layout styleProp='h-full'>
 					<VehicleForm
+						openCamera={openCamera}
 						initialFormValues={vehicleInfo}
 						setRegistrationDetails={setRegistrationDetails}
           />

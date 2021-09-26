@@ -1,12 +1,12 @@
 import { Formik, FormikProps, FormikValues } from 'formik';
 import React, { FC, useState } from 'react';
-import { Button } from 'native-base';
+import { Button, ScrollView } from 'native-base';
 import tailwind from 'tailwind-rn';
 import { FontAwesome5 } from '@expo/vector-icons';
 import {
-  VEHICLE_REGISTER_INITIALIZER,
-  VEHICLE_REGISTRATION_VALIDATION,
-  VEHICLE_TYPE_OPTIONS,
+	VEHICLE_REGISTER_INITIALIZER,
+	VEHICLE_REGISTRATION_VALIDATION,
+	VEHICLE_TYPE_OPTIONS,
 } from './models/constants';
 import { DriverInfo, VehicleInfo } from './models/models';
 import FMTextInput from '../../shared/components/TextInput';
@@ -15,30 +15,27 @@ import FMImageUploadDisplay from '../../shared/components/ImageUploadDisplay/Ima
 import OpenCamera from '../postjob/Camera';
 
 const VehicleForm: FC<{
+	openCamera: () => void,
   setRegistrationDetails: (details: { registrationDetails: VehicleInfo & DriverInfo}) => void,
   initialFormValues: DriverInfo & VehicleInfo | undefined
-}> = ({ setRegistrationDetails, initialFormValues }) => {
-	const [showCamera, setShowCamera,] = useState<boolean>(false);
-	const [imageInfo, setImageInfo] = useState<string>('');
-  const validationSchema = VEHICLE_REGISTRATION_VALIDATION;
+}> = ({ setRegistrationDetails, initialFormValues , openCamera}) => {
+	const [showCamera, setShowCamera] = useState<boolean>(false);
+	const validationSchema = VEHICLE_REGISTRATION_VALIDATION;
 
-	const openCamera = (): void => {
-  	setShowCamera(true);
-	}
-
-  return (
-    <>
-			<OpenCamera showMySelf={showCamera} updateImageInfo={setImageInfo}/>
-			<FMImageUploadDisplay callback={openCamera} label="Photo of car" iconPlacement={<FontAwesome5 name="car-alt" size={24} color="black" />}/>
-      <Formik
-        initialValues={(initialFormValues ?? VEHICLE_REGISTER_INITIALIZER) as VehicleInfo & DriverInfo}
-        // validationSchema={validationSchema}
-        onSubmit={(registrationDetails) => {
-        	setRegistrationDetails({registrationDetails})
-        }}
-      >
-        {(formik: FormikProps<VehicleInfo & DriverInfo>) => (
-          <>
+	return (
+		<>
+			<ScrollView>
+				<FMImageUploadDisplay callback={openCamera} label='Photo of car'
+															iconPlacement={<FontAwesome5 name='car-alt' size={24} color='black' />} />
+				<Formik
+					initialValues={(initialFormValues ?? VEHICLE_REGISTER_INITIALIZER) as VehicleInfo & DriverInfo}
+					// validationSchema={validationSchema}
+					onSubmit={(registrationDetails) => {
+						setRegistrationDetails({ registrationDetails });
+					}}
+				>
+					{(formik: FormikProps<VehicleInfo & DriverInfo>) => (
+						<>
             <FMSelectInput
               icon="car-cog"
               formik={formik as unknown as FormikProps<FormikValues>}
@@ -85,16 +82,17 @@ const VehicleForm: FC<{
               label="Contact Number"
               formik={formik as unknown as FormikProps<FormikValues>}
               name="contactNumber"
-            />
-            <Button
-              style={tailwind('flex-auto ml-1')}
-              onPress={formik.handleSubmit}
-            >
-              Register
-            </Button>
-          </>
-        )}
-      </Formik>
+						/>
+							<Button
+								style={tailwind('flex-auto ml-1')}
+								onPress={formik.handleSubmit}
+							>
+								Register
+							</Button>
+						</>
+					)}
+				</Formik>
+			</ScrollView>
     </>
   );
 };

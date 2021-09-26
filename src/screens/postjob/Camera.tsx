@@ -44,7 +44,7 @@ const OpenCamera: FC<{
 
 	const saveImage = () => {
     props.updateImageInfo(imageInfo.uri, imageInfo.base64);
-    props.closeCamera();
+    props.closeCamera && props.closeCamera();
   };
 
   const onSnap = async () => {
@@ -103,7 +103,7 @@ const OpenCamera: FC<{
 								<TouchableOpacity
 									style={tailwind('m-4 mt-5')}
 									onPress={() => {
-										props.closeCamera();
+										props.closeCamera && props.closeCamera();
 									}}
 								>
 									<Text>
