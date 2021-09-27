@@ -8,8 +8,12 @@ import { FIREBASE_FETCHJOB_CALLS } from './utils/API';
 
 const JobCard: FC = ({ navigation }) => {
   useEffect(() => {
-    const data = FIREBASE_FETCHJOB_CALLS.fetchData();
-    // console.log(data.keys());
+    const fetchData = async () => {
+      const info = await FIREBASE_FETCHJOB_CALLS.fetchData();
+      info.forEach((data) => console.log(data.data()));
+      debugger;
+    };
+    fetchData();
   }, []);
   const data = [
     {

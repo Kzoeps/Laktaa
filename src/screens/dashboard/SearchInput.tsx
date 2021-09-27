@@ -6,6 +6,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { FontAwesome } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { DZONGKHAG_GEWOG } from '../../shared/models/constants';
+import Calendar from '../../shared/components/Calendar/calendar';
 
 const SearchInput: FC = () => {
   const [pickDzongkhag, setPickDzongkhag] = useState('');
@@ -50,7 +51,7 @@ const SearchInput: FC = () => {
   };
 
   return (
-    <>
+    <View>
       <View style={tailwind('bg-white mx-2 mt-2 flex flex-row justify-center')}>
         <View alignItems="center">
           <Select
@@ -89,59 +90,21 @@ const SearchInput: FC = () => {
             ))}
           </Select>
         </View>
-
-        {(fromShow || toShow) && (
-          <View alignItems="center">
-            <DateTimePicker
-              value={fromShow ? fromDate : toDate}
-              display="calendar"
-              onChange={fromShow ? fromDateChange : toDateChange}
-            />
-          </View>
-        )}
       </View>
       <View style={tailwind('bg-white m-2 flex flex-row justify-center')}>
-        <View
-          style={[
-            tailwind(
-              'h-10 py-2 px-1 text-sm border border-gray-200 rounded-md'
-            ),
-            { width: searchFieldWidth },
-          ]}
-        >
-          <TouchableOpacity
-            onPress={() => showCal('from')}
-            style={tailwind('flex-row justify-between')}
-          >
-            <Text>{selectFromDate}</Text>
-            <View>
-              <FontAwesome name="calendar" size={20} color="black" />
-            </View>
-          </TouchableOpacity>
+        <View>
+          <Calendar />
         </View>
-
-        <View
-          style={[
-            tailwind(
-              'h-10 py-2 px-1 text-sm border border-gray-200 rounded-md'
-            ),
-            { width: searchFieldWidth },
-          ]}
-        >
-          <TouchableOpacity
-            onPress={() => showCal('to')}
-            style={tailwind('flex-row justify-between')}
-          >
-            <Text>{selectToDate}</Text>
-            <View>
-              <FontAwesome name="calendar" size={20} color="black" />
-            </View>
-          </TouchableOpacity>
+        <View>
+          <Text>---</Text>
+        </View>
+        <View>
+          <Calendar />
         </View>
       </View>
       {/* border for the horizontal divide line */}
       <View style={tailwind('border-b mx-5 border-gray-300 my-2')} />
-    </>
+    </View>
   );
 };
 
