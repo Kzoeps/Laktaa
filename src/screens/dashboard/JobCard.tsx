@@ -1,19 +1,19 @@
 import React, { FC, useEffect } from 'react';
 import { Image, TouchableOpacity } from 'react-native';
-import { Text, View } from 'native-base';
+import { Text, View, useDisclose } from 'native-base';
 import tailwind from 'tailwind-rn';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import call from 'react-native-phone-call';
-import { FIREBASE_FETCHJOB_CALLS } from './utils/API';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchJobs, selectJobs } from './store/dashboardSlice';
+import { RootState } from '../../store/store';
 
 const JobCard: FC = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const jobs = useSelector(selectJobs);
+
   useEffect(() => {
-    const fetchData = async () => {
-      const info = await FIREBASE_FETCHJOB_CALLS.fetchData();
-      info.forEach((data) => console.log(data.data()));
-      debugger;
-    };
-    fetchData();
+    dispatch(fetchJobs());
   }, []);
   const data = [
     {
