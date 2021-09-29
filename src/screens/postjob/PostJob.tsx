@@ -33,6 +33,7 @@ import { DZONGKHAG_GEWOG } from '../../shared/models/constants';
 import { AuthContext } from '../auth/auth';
 import OpenCamera from './Camera';
 import { FIREBASE_POSTJOB_CALLS } from './utils/API';
+import Calendar from '../../shared/components/Calendar/calendar';
 
 const PostJob: FC = ({ navigation }) => {
   const { currentUser } = useContext(AuthContext);
@@ -43,6 +44,18 @@ const PostJob: FC = ({ navigation }) => {
   const [imageTaken, setImageTaken] = useState(false);
   const [imageRequired, setImageRequired] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [fromDate, setFromDate] = useState();
+  const [toDate, setToDate] = useState();
+
+  const changeFromDate = (value: Date) => {
+    setFromDate(value);
+    console.log('this is the FROM date', value);
+  };
+  const changeToDate = (value: Date) => {
+    setToDate(value);
+    console.log('this is the TO date', value);
+  };
+
   const toast = useToast();
   const closeCamera = () => {
     setShowCamera(false);
@@ -53,8 +66,15 @@ const PostJob: FC = ({ navigation }) => {
     setImageTaken(true);
   };
   const postJobs = async (values: PostJobInfo, { resetForm }) => {
-    if (imageTaken) {
+    if (!imageTaken) {
       setImageRequired(true);
+      return;
+    }
+    if (fromDate > toDate) {
+      toast.show({
+        title: 'Pick up date cannot be after drop off date',
+        status: 'error',
+      });
       return;
     }
     setLoading(true);
@@ -63,8 +83,13 @@ const PostJob: FC = ({ navigation }) => {
     values.poster = currentUser.email;
     // eslint-disable-next-line no-param-reassign
     values.imageUri = uploadedImage;
+    // eslint-disable-next-line no-param-reassign
+    values.pickUpDate = fromDate;
+    // eslint-disable-next-line no-param-reassign
+    values.dropOffDate = toDate;
+
     await FIREBASE_POSTJOB_CALLS.postJob(values);
-    toast.show({ title: 'done', status: 'success' });
+    toast.show({ title: 'Job successfully posted!', status: 'success' });
     setLoading(false);
     resetForm();
     setImageTaken(false);
@@ -314,6 +339,14 @@ const PostJob: FC = ({ navigation }) => {
                             }
                           />
                         </Box>
+                        <Box style={tailwind('my-2 ml-8')}>
+                          <View>
+                            <Calendar
+                              value={new Date(Date.now())}
+                              setDate={changeFromDate}
+                            />
+                          </View>
+                        </Box>
                       </View>
                     </View>
                     <View style={tailwind('border m-4 border-gray-200 ')}>
@@ -367,6 +400,14 @@ const PostJob: FC = ({ navigation }) => {
                               formik as unknown as FormikProps<FormikValues>
                             }
                           />
+                        </Box>
+                        <Box style={tailwind('my-2 ml-8')}>
+                          <View>
+                            <Calendar
+                              value={new Date(Date.now())}
+                              setDate={changeToDate}
+                            />
+                          </View>
                         </Box>
                       </View>
                     </View>

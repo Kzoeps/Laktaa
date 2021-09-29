@@ -3,6 +3,7 @@ import { APIStatuses } from '../../../shared/models/model';
 import { DashboardActions } from '../models/enums';
 import { FIREBASE_FETCHJOB_CALLS } from '../utils/API';
 import { DashboardState } from '../models/models';
+// eslint-disable-next-line import/no-cycle
 import { RootState } from '../../../store/store';
 import { PostJobInfo } from '../../postjob/models/models';
 
@@ -14,10 +15,14 @@ const initialState: DashboardState = {
 
 export const fetchJobs = createAsyncThunk(
   DashboardActions.fetchJobs,
-  async () => {
-    const response = await FIREBASE_FETCHJOB_CALLS.fetchData();
-    console.log(`reponse: ${response}`);
-    return response.map((item) => item.data());
+  async (filters) => {
+    const data = [];
+    const response = await FIREBASE_FETCHJOB_CALLS.fetchData(filters);
+    response.forEach((item) => {
+      // console.log('this is the id: ', item.id);
+      data.push(item.data());
+    });
+    return data;
   }
 );
 

@@ -6,7 +6,7 @@ import Pageheader from '../../shared/components/Pageheader/Pageheader';
 import Layout from '../../shared/layout/layout';
 
 const JobDetails = ({ route, naviagtion }) => {
-  const { imageUrl, jobcardId } = route.params;
+  const { imageUrl, data } = route.params;
 
   const styles = {
     measurementParent: 'border-b border-gray-200 pb-1',
@@ -14,8 +14,6 @@ const JobDetails = ({ route, naviagtion }) => {
     numberPrice: 'border-b border-gray-200 pb-1 mr-16',
     location: 'mx-8 my-1 p-2 border-b border-gray-200',
   };
-  // console.log(`job card id : ${imageUrl}`);
-
   return (
     <>
       <ScrollView>
@@ -24,35 +22,35 @@ const JobDetails = ({ route, naviagtion }) => {
         </View>
         <Image
           style={tailwind('w-full h-60 mt-12 absolute top-14')}
-          source={{ uri: imageUrl }}
+          source={{ uri: data.imageUri }}
         />
         {/* <View style={tailwind('mt-60')}></View> */}
         <View style={tailwind('mx-10 mt-72')}>
           <View style={tailwind('flex-row justify-between mt-8 pb-8 ')}>
             <View style={tailwind(styles.measurementParent)}>
               <Text style={tailwind(styles.measurementLabel)}>Weight</Text>
-              <Text>50kg</Text>
+              <Text>{data.weight}</Text>
             </View>
             <View style={tailwind(styles.measurementParent)}>
               <Text style={tailwind(styles.measurementLabel)}>Height</Text>
-              <Text>40m</Text>
+              <Text>{data.height}</Text>
             </View>
             <View style={tailwind(styles.measurementParent)}>
               <Text style={tailwind(styles.measurementLabel)}>Length</Text>
-              <Text>30m</Text>
+              <Text>{data.length}</Text>
             </View>
           </View>
 
           <View style={tailwind('flex-row justify-start')}>
-            <View style={tailwind(styles.numberPrice)}>
+            {/* <View style={tailwind(styles.numberPrice)}>
               <Text style={tailwind(styles.measurementLabel)}>Number</Text>
               <Text>4</Text>
-            </View>
+            </View> */}
             <View style={tailwind(styles.numberPrice)}>
               <Text style={tailwind(styles.measurementLabel)}>
                 Total Price (Nu)
               </Text>
-              <Text>300</Text>
+              <Text>{data.price}</Text>
             </View>
           </View>
           <View>
@@ -67,22 +65,22 @@ const JobDetails = ({ route, naviagtion }) => {
               </Text>
               <View>
                 <Box style={tailwind(styles.location)}>
-                  <Text>Sonam Tshonkhag </Text>
+                  <Text>{data.pickPlace}</Text>
                 </Box>
               </View>
               <View>
                 <Box style={tailwind(styles.location)}>
-                  <Text>17949642</Text>
+                  <Text>{data.pickGewog}</Text>
                 </Box>
               </View>
               <View>
                 <Box style={tailwind(styles.location)}>
-                  <Text>Dekyil Guest House</Text>
+                  <Text>{data.pickDzongkhag}</Text>
                 </Box>
               </View>
               <View>
                 <Box style={tailwind(styles.location)}>
-                  <Text>Bumthang</Text>
+                  <Text>{data.pickUpPhone}</Text>
                 </Box>
               </View>
             </View>
@@ -97,22 +95,22 @@ const JobDetails = ({ route, naviagtion }) => {
               </Text>
               <View>
                 <Box style={tailwind(styles.location)}>
-                  <Text>Penjorla </Text>
+                  <Text>{data.dropPlace} </Text>
                 </Box>
               </View>
               <View>
                 <Box style={tailwind(styles.location)}>
-                  <Text>17554152</Text>
+                  <Text>{data.dropGewog}</Text>
                 </Box>
               </View>
               <View>
                 <Box style={tailwind(styles.location)}>
-                  <Text>Zinthar Tshongkhang</Text>
+                  <Text>{data.dropDzongkhag}</Text>
                 </Box>
               </View>
               <View>
                 <Box style={tailwind(styles.location)}>
-                  <Text>Thimphu</Text>
+                  <Text>{data.dropOffPhone}</Text>
                 </Box>
               </View>
             </View>

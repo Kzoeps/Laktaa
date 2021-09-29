@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from '../screens/auth/store/authSlice';
+// eslint-disable-next-line import/no-cycle
 import dashboardReducer from '../screens/dashboard/store/dashboardSlice';
 
 export const store = configureStore({

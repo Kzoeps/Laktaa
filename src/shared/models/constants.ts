@@ -1,7 +1,8 @@
 export const VALIDATION_MESSAGES: Record<string, string> = {
   required: 'This field is required',
-  minLength: 'Password should be at least 8 characters long',
+  minLength: 'Should be at least 8 characters long',
   maxLength: 'Max length exceeded',
+  phoneNumber: 'Not a valid phone number',
 };
 
 export const DZONGKHAG_GEWOG: {
@@ -12,7 +13,6 @@ export const DZONGKHAG_GEWOG: {
     { label: 'Chhukha', value: 'Chhukha' },
     { label: 'Dagana', value: 'Dagana' },
     { label: 'Thimphu', value: 'Thimphu' },
-    { label: 'Samdrup Jongkhar', value: 'SamdrupJongkhar' },
   ],
   Bumthang: [
     { label: 'chhokhor', value: 'chhokhor' },
@@ -43,3 +43,6 @@ export const NAVIGATION_HEADER_CONFIG = {
   },
   headerTintColor: '#FAFAFA',
 };
+
+export const PHONE_NUMBER_EXPRESSION =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;

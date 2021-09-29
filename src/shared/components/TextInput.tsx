@@ -4,7 +4,6 @@ import { Box, Icon, Input, Text } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import tailwind from 'tailwind-rn';
 
-const loadType = [{ name: 'Perishibale' }, { name: 'Non-perishable' }];
 const FMTextInput: FC<{
   label: string;
   formik: FormikProps<FormikValues>;

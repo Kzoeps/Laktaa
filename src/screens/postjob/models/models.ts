@@ -10,12 +10,12 @@ export interface PostJobInfo {
   pickDzongkhag: string;
   pickGewog: string;
   pickUpPhone: number;
-  pickDate: Date;
+  pickUpDate: Date;
   dropDzongkhag: string;
   dropGewog: string;
   dropPlace: string;
   dropOffPhone: number;
-  dropDate: Date;
+  dropOffDate: Date;
   remarks: string;
   poster?: string;
   imageUri?: string;

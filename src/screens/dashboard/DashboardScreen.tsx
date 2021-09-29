@@ -7,15 +7,26 @@ import Pageheader from '../../shared/components/Pageheader/Pageheader';
 import SearchInput from './SearchInput';
 import JobCard from './JobCard';
 import Layout from '../../shared/layout/layout';
+import { fetchJobs, selectJobs } from './store/dashboardSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const DashboardScreen: FC = ({ navigation }) => {
   const [shouldLogout, setShouldLogout] = useState<boolean>(false);
   const { logout } = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const jobs = useSelector(selectJobs);
+  const [filters, setFilters] = useState({});
+
+  useEffect(() => {
+    dispatch(fetchJobs(filters));
+  }, [dispatch, filters]);
+  // jobs.map((item) => console.log());
+  // console.log(jobs);
 
   useEffect(() => {
     if (shouldLogout) logout();
   }, [shouldLogout, logout]);
-
+  // console.log(jobs);
   return (
     <>
       <ScrollView>
@@ -24,9 +35,9 @@ const DashboardScreen: FC = ({ navigation }) => {
         </View>
         <Layout styleProp="h-full">
           <View style={tailwind('my-2')}>
-            <SearchInput />
+            <SearchInput filters={filters} setFilters={setFilters} />
           </View>
-          <JobCard navigation={navigation} />
+          <JobCard data={jobs} navigation={navigation} />
         </Layout>
       </ScrollView>
 
