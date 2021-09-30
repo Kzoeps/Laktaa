@@ -339,11 +339,16 @@ const PostJob: FC = ({ navigation }) => {
                             }
                           />
                         </Box>
-                        <Box style={tailwind('my-2 ml-8')}>
+                        <Box
+                          style={tailwind(
+                            'p-4 mx-8 my-2 ml-8 border rounded border-gray-300'
+                          )}
+                        >
                           <View>
                             <Calendar
-                              value={new Date(Date.now())}
+                              value=""
                               setDate={changeFromDate}
+                              placeholder="Pick up"
                             />
                           </View>
                         </Box>
@@ -401,11 +406,16 @@ const PostJob: FC = ({ navigation }) => {
                             }
                           />
                         </Box>
-                        <Box style={tailwind('my-2 ml-8')}>
+                        <Box
+                          style={tailwind(
+                            'p-4 mx-8 my-2 ml-8 border rounded border-gray-300'
+                          )}
+                        >
                           <View>
                             <Calendar
-                              value={new Date(Date.now())}
+                              value=""
                               setDate={changeToDate}
+                              placeholder="Drop off"
                             />
                           </View>
                         </Box>

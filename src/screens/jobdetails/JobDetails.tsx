@@ -80,6 +80,11 @@ const JobDetails = ({ route, naviagtion }) => {
               </View>
               <View>
                 <Box style={tailwind(styles.location)}>
+                  <Text>{data.pickUpDate}</Text>
+                </Box>
+              </View>
+              <View>
+                <Box style={tailwind(styles.location)}>
                   <Text>{data.pickUpPhone}</Text>
                 </Box>
               </View>
@@ -106,6 +111,11 @@ const JobDetails = ({ route, naviagtion }) => {
               <View>
                 <Box style={tailwind(styles.location)}>
                   <Text>{data.dropDzongkhag}</Text>
+                </Box>
+              </View>
+              <View>
+                <Box style={tailwind(styles.location)}>
+                  <Text>{data.dropOffDate}</Text>
                 </Box>
               </View>
               <View>

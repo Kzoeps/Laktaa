@@ -1,5 +1,5 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
-import { TouchableOpacity, ScrollView } from 'react-native';
+import { TouchableOpacity, ScrollView, RefreshControl } from 'react-native';
 import { Text, View } from 'native-base';
 import tailwind from 'tailwind-rn';
 import { AuthContext } from '../auth/auth';
@@ -17,16 +17,16 @@ const DashboardScreen: FC = ({ navigation }) => {
   const jobs = useSelector(selectJobs);
   const [filters, setFilters] = useState({});
 
+  console.log('this si the filter:', filters);
+
   useEffect(() => {
     dispatch(fetchJobs(filters));
   }, [dispatch, filters]);
-  // jobs.map((item) => console.log());
-  // console.log(jobs);
 
   useEffect(() => {
     if (shouldLogout) logout();
   }, [shouldLogout, logout]);
-  // console.log(jobs);
+
   return (
     <>
       <ScrollView>

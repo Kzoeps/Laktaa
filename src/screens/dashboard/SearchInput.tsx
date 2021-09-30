@@ -15,17 +15,22 @@ const SearchInput: FC<{ filters: Record<string, unknown>; setFilters: any }> =
     const [pickDzongkhag, setPickDzongkhag] = useState('');
     const [dropDzongkhag, setDropDzongkhag] = useState('');
     const [fromDate, setFromDate] = useState();
-    const [toDate, setToDate] = useState();
 
     const changeFromDate = (value: Date) => {
-      setFromDate(value);
+      // setFromDate(value);
       setFilters({ ...filters, fromDate: value });
-      console.log(value);
+      console.log('FROM date is coming from search input', value);
+    };
+
+    const resetFilters = () => {
+      setPickDzongkhag('');
+      setDropDzongkhag('');
+      console.log('sadasdas');
     };
     const changeToDate = (value: Date) => {
-      setToDate(value);
+      // setToDate(value);
       setFilters({ ...filters, toDate: value });
-      console.log(value);
+      console.log('TO date is coming from search input', value);
     };
 
     return (
@@ -77,16 +82,24 @@ const SearchInput: FC<{ filters: Record<string, unknown>; setFilters: any }> =
             </Select>
           </View>
         </View>
-        <View style={tailwind('bg-white m-2 flex flex-row justify-center')}>
-          <View>
-            <Calendar value="" setDate={changeFromDate} />
+        <View style={tailwind('bg-white mt-2 mx-7 flex-row justify-between')}>
+          <View style={tailwind('w-44 p-1 border border-gray-300 rounded-md')}>
+            <Calendar
+              value=""
+              setDate={changeFromDate}
+              placeholder="Drop off"
+            />
           </View>
-          <View>
-            <Text>---</Text>
+          <View style={tailwind('w-44 p-1 border border-gray-300 rounded-md')}>
+            <Calendar value="" setDate={changeToDate} placeholder="Pick up" />
           </View>
-          <View>
-            <Calendar value="" setDate={changeToDate} />
-          </View>
+          {/* <View style={tailwind('w-44 p-1 border border-gray-300 rounded-md')}>
+            <TouchableOpacity onPress={resetFilters}>
+              <Text style={tailwind('text-green-400 text-center')}>
+                Reset filters
+              </Text>
+            </TouchableOpacity>
+          </View> */}
         </View>
         {/* border for the horizontal divide line */}
         <View style={tailwind('border-b mx-5 border-gray-300 my-2')} />

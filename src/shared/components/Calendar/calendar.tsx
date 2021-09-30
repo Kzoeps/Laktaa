@@ -15,6 +15,10 @@ import tailwind from 'tailwind-rn';
 const Calendar = (props) => {
   const [isPickerShow, setIsPickerShow] = useState(false);
   const [date, setDate] = useState(new Date(Date.now()));
+  const [showPlaceholder, setShowPlaceholder] = useState(true);
+  if (props.value !== '') {
+    setShowPlaceholder(false);
+  }
 
   const showPicker = () => {
     setIsPickerShow(true);
@@ -26,6 +30,7 @@ const Calendar = (props) => {
       setIsPickerShow(false);
     }
     props.setDate(value);
+    setShowPlaceholder(false);
   };
 
   return (
@@ -39,10 +44,13 @@ const Calendar = (props) => {
               style={tailwind('flex-row justify-between')}
             >
               <Text>
-                {`${date.getDate()}/${
-                  date.getMonth() + 1
-                }/${date.getFullYear()}`}
+                {showPlaceholder
+                  ? props.placeholder
+                  : `${date.getDate()}/${
+                      date.getMonth() + 1
+                    }/${date.getFullYear()}`}
               </Text>
+
               <View>
                 <FontAwesome name="calendar" size={20} color="black" />
               </View>

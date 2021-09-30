@@ -10,7 +10,6 @@ import { PostJobInfo } from '../../postjob/models/models';
 const initialState: DashboardState = {
   jobs: [],
   status: APIStatuses.IDLE,
-  //   need to make a interface and use that as a type.
 };
 
 export const fetchJobs = createAsyncThunk(
@@ -19,8 +18,11 @@ export const fetchJobs = createAsyncThunk(
     const data = [];
     const response = await FIREBASE_FETCHJOB_CALLS.fetchData(filters);
     response.forEach((item) => {
-      // console.log('this is the id: ', item.id);
-      data.push(item.data());
+      data.push({
+        ...item.data(),
+        pickUpDate: item.data().pickUpDate.toDate().toString(),
+        dropOffDate: item.data().dropOffDate.toDate().toString(),
+      });
     });
     return data;
   }

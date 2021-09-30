@@ -1,3 +1,5 @@
+import { StringSchema } from 'yup';
+
 export interface PostJobInfo {
   loadType: string;
   perish: string;
@@ -10,12 +12,12 @@ export interface PostJobInfo {
   pickDzongkhag: string;
   pickGewog: string;
   pickUpPhone: number;
-  pickUpDate: Date;
+  pickUpDate: { nanoseconds: number; seconds: number };
   dropDzongkhag: string;
   dropGewog: string;
   dropPlace: string;
   dropOffPhone: number;
-  dropOffDate: Date;
+  dropOffDate: { nanoseconds: number; seconds: number };
   remarks: string;
   poster?: string;
   imageUri?: string;
