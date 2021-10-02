@@ -12,12 +12,12 @@ import { Entypo } from '@expo/vector-icons';
  * @param iconPlacement: Icon JSX Element. Eg: <MaterialIcon name='camera'>
  * @constructor
  */
-const FMImageUploadDisplay: FC<{ label?: string, callback: () => any, icon?: string,iconPlacement?: JSX.Element }> = ({ label ,callback: callbackFunction, icon, iconPlacement}) => {
+const FMImageUploadDisplay: FC<{ label?: string, callback: () => any, icon?: string,iconPlacement?: JSX.Element, styleProp?: string }> = ({ label ,callback: callbackFunction, icon, iconPlacement, styleProp }) => {
 	return (
 		<TouchableOpacity
 			onPress={callbackFunction}
 			style={[
-				tailwind('mx-24 py-16 mb-4'),
+				tailwind(`mx-24 py-16 mb-4 ${styleProp || ''}`),
 				{
 					borderStyle: 'dashed',
 					borderRadius: 1,
