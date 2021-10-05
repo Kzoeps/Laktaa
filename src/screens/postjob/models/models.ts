@@ -1,6 +1,7 @@
 import { StringSchema } from 'yup';
 
 export interface PostJobInfo {
+  called: string[];
   loadType: string;
   perish: string;
   price: number;

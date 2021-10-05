@@ -88,6 +88,8 @@ const PostJob: FC = ({ navigation }) => {
     values.pickUpDate = fromDate;
     // eslint-disable-next-line no-param-reassign
     values.dropOffDate = toDate;
+    // eslint-disable-next-line no-param-reassign
+    values.called = [];
 
     await FIREBASE_POSTJOB_CALLS.postJob(values);
     toast.show({ title: 'Job successfully posted!', status: 'success' });
@@ -116,7 +118,7 @@ const PostJob: FC = ({ navigation }) => {
       </>
     );
   return (
-    <>
+    <>.6
       <View>
         {showCamera ? (
           <View>

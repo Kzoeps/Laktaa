@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import { FieldValue } from '@firebase/firestore-types';
 
 // eslint-disable-next-line import/prefer-default-export
 export const FIREBASE_FETCHJOB_CALLS = {
@@ -20,5 +21,18 @@ export const FIREBASE_FETCHJOB_CALLS = {
     }
     const data = await query.get();
     return data;
+  },
+};
+
+export const FIREBASE_TRACK_USER = {
+  trackUser: async (values): Promise<any> => {
+    firebase
+      .firestore()
+      .collection('jobs')
+      .doc(values.docId)
+      .update([
+        'called',
+        firebase.firestore.FieldValue.arrayUnion(values.currentUser),
+      ]);
   },
 };
