@@ -4,7 +4,11 @@ import { PostJobInfo } from '../models/models';
 // eslint-disable-next-line import/prefer-default-export
 export const FIREBASE_POSTJOB_CALLS = {
   postImage: (imageUri: string) => {
-    const storageRef = firebase.storage().ref().child(`jobImages/hello.jpeg`);
+    const randomString = Math.random().toString(36).substr(2, 18);
+    const storageRef = firebase
+      .storage()
+      .ref()
+      .child(`jobImages/${randomString}`);
     const upload = async () => {
       const file = await fetch(imageUri);
       const blob = await file.blob();

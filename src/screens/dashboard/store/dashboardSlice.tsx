@@ -22,6 +22,7 @@ export const fetchJobs = createAsyncThunk(
         ...item.data(),
         pickUpDate: item.data().pickUpDate.toDate().toString(),
         dropOffDate: item.data().dropOffDate.toDate().toString(),
+        id: item.id,
       });
     });
     return data;

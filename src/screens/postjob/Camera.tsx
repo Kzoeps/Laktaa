@@ -32,8 +32,9 @@ const OpenCamera: FC<{
 
   const onSnap = async () => {
     if (cameraRef.current) {
-      const options = { quality: 0.7 };
+      const options = { quality: 0.7, skipProcessing: true };
       const data = await cameraRef.current.takePictureAsync(options);
+      console.log('this is the camera data: ', data);
       props.updateImageInfo(data.uri);
       props.closeCamera();
     }

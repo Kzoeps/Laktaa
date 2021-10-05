@@ -17,6 +17,7 @@ import {
   MaterialCommunityIcons,
   Entypo,
   FontAwesome,
+  FontAwesome5,
 } from '@expo/vector-icons';
 import Pageheader from '../../shared/components/Pageheader/Pageheader';
 import Layout from '../../shared/layout/layout';
@@ -240,6 +241,17 @@ const PostJob: FC = ({ navigation }) => {
                         iconPlacement={
                           <MaterialCommunityIcons name="weight-kilogram" />
                         }
+                        variant="outline"
+                      />
+                    </Box>
+                    <Box style={tailwind('my-2 ml-8')}>
+                      <FMTextInput
+                        label="Pieces"
+                        name="pieces"
+                        formik={formik as unknown as FormikProps<FormikValues>}
+                        icon="cubes"
+                        inputColor="grey"
+                        iconPlacement={<FontAwesome5 name="cubes" />}
                         variant="outline"
                       />
                     </Box>

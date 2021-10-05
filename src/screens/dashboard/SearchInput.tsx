@@ -1,37 +1,34 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, forwardRef, useImperativeHandle } from 'react';
 import { Dimensions } from 'react-native';
-import { Select, View, Text } from 'native-base';
+import { Select, View } from 'native-base';
 import tailwind from 'tailwind-rn';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import { FontAwesome } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { DZONGKHAG_GEWOG } from '../../shared/models/constants';
 import Calendar from '../../shared/components/Calendar/calendar';
 
 const SearchInput: FC<{ filters: Record<string, unknown>; setFilters: any }> =
-  ({ filters, setFilters }) => {
+  forwardRef(({ filters, setFilters }, ref) => {
     const searchFieldWidth = Dimensions.get('window').width / 2.3;
 
     const [pickDzongkhag, setPickDzongkhag] = useState('');
     const [dropDzongkhag, setDropDzongkhag] = useState('');
-    const [fromDate, setFromDate] = useState();
+    // const [fromDate, setFromDate] = useState();
+    // const [toDate, setToDate] = useState();
 
-    const changeFromDate = (value: Date) => {
-      // setFromDate(value);
-      setFilters({ ...filters, fromDate: value });
-      console.log('FROM date is coming from search input', value);
-    };
+    // const changeFromDate = (value: Date) => {
+    //   setFromDate(value);
+    //   setFilters({ ...filters, fromDate: value });
+    // };
 
-    const resetFilters = () => {
-      setPickDzongkhag('');
+    // const changeToDate = (value: Date) => {
+    //   setToDate(value);
+    //   setFilters({ ...filters, toDate: value });
+    // };
+    const initializeFilters = () => {
       setDropDzongkhag('');
-      console.log('sadasdas');
+      setPickDzongkhag('');
     };
-    const changeToDate = (value: Date) => {
-      // setToDate(value);
-      setFilters({ ...filters, toDate: value });
-      console.log('TO date is coming from search input', value);
-    };
+
+    useImperativeHandle(ref, () => ({ initializeFilters }));
 
     return (
       <View>
@@ -82,29 +79,27 @@ const SearchInput: FC<{ filters: Record<string, unknown>; setFilters: any }> =
             </Select>
           </View>
         </View>
-        <View style={tailwind('bg-white mt-2 mx-7 flex-row justify-between')}>
+
+        {/* <View style={tailwind('bg-white mt-2 mx-7 flex-row justify-between')}>
           <View style={tailwind('w-44 p-1 border border-gray-300 rounded-md')}>
             <Calendar
               value=""
               setDate={changeFromDate}
-              placeholder="Drop off"
+              placeholder="From (drop date) "
             />
           </View>
           <View style={tailwind('w-44 p-1 border border-gray-300 rounded-md')}>
-            <Calendar value="" setDate={changeToDate} placeholder="Pick up" />
+            <Calendar
+              value=""
+              setDate={changeToDate}
+              placeholder="To (drop date)"
+            />
           </View>
-          {/* <View style={tailwind('w-44 p-1 border border-gray-300 rounded-md')}>
-            <TouchableOpacity onPress={resetFilters}>
-              <Text style={tailwind('text-green-400 text-center')}>
-                Reset filters
-              </Text>
-            </TouchableOpacity>
-          </View> */}
-        </View>
+        </View> */}
         {/* border for the horizontal divide line */}
         <View style={tailwind('border-b mx-5 border-gray-300 my-2')} />
       </View>
     );
-  };
+  });
 
 export default SearchInput;

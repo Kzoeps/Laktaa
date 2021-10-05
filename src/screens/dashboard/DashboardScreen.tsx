@@ -1,14 +1,14 @@
-import React, { FC, useContext, useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect, useState, useRef } from 'react';
 import { TouchableOpacity, ScrollView, RefreshControl } from 'react-native';
 import { Text, View } from 'native-base';
 import tailwind from 'tailwind-rn';
+import { useDispatch, useSelector } from 'react-redux';
 import { AuthContext } from '../auth/auth';
 import Pageheader from '../../shared/components/Pageheader/Pageheader';
 import SearchInput from './SearchInput';
 import JobCard from './JobCard';
 import Layout from '../../shared/layout/layout';
 import { fetchJobs, selectJobs } from './store/dashboardSlice';
-import { useDispatch, useSelector } from 'react-redux';
 
 const DashboardScreen: FC = ({ navigation }) => {
   const [shouldLogout, setShouldLogout] = useState<boolean>(false);
@@ -16,12 +16,18 @@ const DashboardScreen: FC = ({ navigation }) => {
   const dispatch = useDispatch();
   const jobs = useSelector(selectJobs);
   const [filters, setFilters] = useState({});
-
-  console.log('this si the filter:', filters);
+  const [refreshing, setRefreshing] = React.useState(false);
+  const ref = useRef(null);
 
   useEffect(() => {
     dispatch(fetchJobs(filters));
   }, [dispatch, filters]);
+
+  const onRefresh = () => {
+    setFilters({});
+    dispatch(fetchJobs(filters));
+    ref.current.initializeFilters();
+  };
 
   useEffect(() => {
     if (shouldLogout) logout();
@@ -29,13 +35,17 @@ const DashboardScreen: FC = ({ navigation }) => {
 
   return (
     <>
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <View style={tailwind('-mb-20')}>
           <Pageheader navigation page="dashboard" />
         </View>
         <Layout styleProp="h-full">
           <View style={tailwind('my-2')}>
-            <SearchInput filters={filters} setFilters={setFilters} />
+            <SearchInput filters={filters} setFilters={setFilters} ref={ref} />
           </View>
           <JobCard data={jobs} navigation={navigation} />
         </Layout>

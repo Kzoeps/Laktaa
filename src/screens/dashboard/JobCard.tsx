@@ -22,7 +22,7 @@ const JobCard: FC = ({ data, navigation }) => (
             elevation: 4,
           },
         ]}
-        key={Math.random()}
+        key={item.id}
       >
         <Image
           style={tailwind('w-24 rounded-l-2xl')}
@@ -47,7 +47,7 @@ const JobCard: FC = ({ data, navigation }) => (
               </View>
               <View style={tailwind('flex-1 border-gray-200')}>
                 <Text style={tailwind('text-center')}>Nos: {item.pieces}</Text>
-                <Text style={tailwind('text-center')}>{item.weight}</Text>
+                <Text style={tailwind('text-center')}>Kg:{item.weight}</Text>
               </View>
             </View>
           </View>
