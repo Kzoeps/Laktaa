@@ -74,6 +74,14 @@ const VehicleForm: FC<{
 																								iconPlacement={<FontAwesome5 name='car-alt' size={24}
 																																						 color='black' />} />
 											}
+											{ !!carImageInfo && (
+												<View style={tailwind('ml-24 my-4 w-full -mb-4')}>
+												<TouchableOpacity onPress={openCamera}>
+													<Text style={tailwind('text-center text-blue-300')}>
+														Retake Picture!
+													</Text>
+												</TouchableOpacity>
+											</View>)}
 										</View>
 									</View>
 									<View style={tailwind('w-full items-center mb-4')}>
@@ -121,13 +129,21 @@ const VehicleForm: FC<{
 									<View style={tailwind('-ml-20 w-5/12')}>
 										{
 											!!driverImageInfo ?
-												<View style={tailwind('ml-20 w-full h-36')}>
+												<View style={tailwind('ml-24 w-full h-36')}>
 													<Image style={tailwind('h-full')} source={{ uri: driverImageInfo }} />
 												</View> :
 												<FMImageUploadDisplay callback={openDriverCamera} label='Photo of Driver'
 																							styleProp='w-full'
 																							iconPlacement={<Ionicons name='person' size={24} color='black' />} />
 										}
+										{ !!driverImageInfo && (
+											<View style={tailwind('ml-24 my-4 w-full -mb-4')}>
+												<TouchableOpacity onPress={openDriverCamera}>
+													<Text style={tailwind('text-center text-blue-300')}>
+														Retake Picture!
+													</Text>
+												</TouchableOpacity>
+											</View>)}
 									</View>
 								</View>
 							</Box>
