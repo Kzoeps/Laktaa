@@ -118,7 +118,7 @@ const PostJob: FC = ({ navigation }) => {
       </>
     );
   return (
-    <>.6
+    <>
       <View>
         {showCamera ? (
           <View>

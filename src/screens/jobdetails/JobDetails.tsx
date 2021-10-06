@@ -21,38 +21,43 @@ const JobDetails = ({ route, naviagtion }) => {
           <Pageheader navigation page="Job Details" />
         </View>
         <Image
-          style={tailwind('w-full h-60 mt-12 absolute top-14')}
+          style={tailwind('w-full h-80 mt-12 absolute top-14')}
           source={{ uri: data.imageUri }}
         />
         {/* <View style={tailwind('mt-60')}></View> */}
-        <View style={tailwind('mx-10 mt-72')}>
-          <View style={tailwind('flex-row justify-between mt-8 pb-8 ')}>
+        <View style={tailwind('mx-10 mt-96')}>
+          <View style={tailwind('flex-row justify-between pb-8 mt-8')}>
             <View style={tailwind(styles.measurementParent)}>
-              <Text style={tailwind(styles.measurementLabel)}>Weight</Text>
+              <Text style={tailwind(styles.measurementLabel)}>Pieces</Text>
+              <Text>{data.pieces}</Text>
+            </View>
+            <View style={tailwind(styles.measurementParent)}>
+              <Text style={tailwind(styles.measurementLabel)}>Weight (Kg)</Text>
               <Text>{data.weight}</Text>
             </View>
             <View style={tailwind(styles.measurementParent)}>
-              <Text style={tailwind(styles.measurementLabel)}>Height</Text>
-              <Text>{data.height}</Text>
-            </View>
-            <View style={tailwind(styles.measurementParent)}>
-              <Text style={tailwind(styles.measurementLabel)}>Length</Text>
-              <Text>{data.length}</Text>
-            </View>
-          </View>
-
-          <View style={tailwind('flex-row justify-start')}>
-            {/* <View style={tailwind(styles.numberPrice)}>
-              <Text style={tailwind(styles.measurementLabel)}>Number</Text>
-              <Text>4</Text>
-            </View> */}
-            <View style={tailwind(styles.numberPrice)}>
               <Text style={tailwind(styles.measurementLabel)}>
                 Total Price (Nu)
               </Text>
               <Text>{data.price}</Text>
             </View>
           </View>
+
+          <View style={tailwind('flex-row justify-between pb-8 ')}>
+            <View style={tailwind(styles.measurementParent)}>
+              <Text style={tailwind(styles.measurementLabel)}>Height (M)</Text>
+              <Text>{data.height}</Text>
+            </View>
+            <View style={tailwind(styles.measurementParent)}>
+              <Text style={tailwind(styles.measurementLabel)}>Length</Text>
+              <Text>{data.length}</Text>
+            </View>
+            <View style={tailwind(styles.measurementParent)}>
+              <Text style={tailwind(styles.measurementLabel)}>Length (M)</Text>
+              <Text>{data.length}</Text>
+            </View>
+          </View>
+
           <View>
             <Text style={tailwind('mt-8 text-xl ')}>Location Details</Text>
             <View style={tailwind('border my-4 border-gray-200')}>
