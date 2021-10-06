@@ -64,6 +64,8 @@ const VehicleRegistration: FC = ({ navigation }) => {
 				<Layout styleProp='h-full'>
 					<VehicleForm
 						openDriverCamera={openDriverCamera}
+						carImageInfo={imageInfo}
+						driverImageInfo={driverImageInfo}
 						openCamera={openCamera}
 						initialFormValues={vehicleInfo}
 						setRegistrationDetails={setRegistrationDetails}
