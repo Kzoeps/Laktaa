@@ -2,7 +2,7 @@ import { Formik, FormikProps, FormikValues } from 'formik';
 import React, { FC, useState } from 'react';
 import { Box, Button, ScrollView } from 'native-base';
 import tailwind from 'tailwind-rn';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import { View } from 'react-native';
 import {
 	VEHICLE_REGISTER_INITIALIZER,
@@ -66,37 +66,54 @@ const VehicleForm: FC<{
 																						iconPlacement={<FontAwesome5 name='car-alt' size={24} color='black' />} />
 										</View>
 									</View>
-									<FMTextInput
+									<View style={tailwind('w-full items-center mb-4')}>
+										<FMTextInput
 										label='BP-A-1234'
 										formik={formik as unknown as FormikProps<FormikValues>}
 										name='numberPlate'
 									/>
-									<FMTextInput
-										label='Blue Book number'
-										formik={formik as unknown as FormikProps<FormikValues>}
-										name='blueBookNumber'
-									/>
-									<FMTextInput
-										label='License Number'
-										formik={formik as unknown as FormikProps<FormikValues>}
-										name='licenseNumber'
-									/>
+										<FMTextInput
+											label='Blue Book number'
+											formik={formik as unknown as FormikProps<FormikValues>}
+											name='blueBookNumber'
+										/>
+										<FMTextInput
+											label='License Number'
+											formik={formik as unknown as FormikProps<FormikValues>}
+											name='licenseNumber'
+										/></View>
 								</Box>
-							<FMTextInput
-								label='Driver Name'
-								formik={formik as unknown as FormikProps<FormikValues>}
-								name='driverName'
-							/>
-							<FMTextInput
-								label='Age'
-								formik={formik as unknown as FormikProps<FormikValues>}
-								name='age'
-							/>
-            <FMTextInput
-              label="Contact Number"
-              formik={formik as unknown as FormikProps<FormikValues>}
-              name="contactNumber"
-						/>
+							<Box
+								style={tailwind('w-11/12 items-center ml-4 my-5')}
+								shadow={3}
+								_light={{ backgroundColor: 'gray.50' }}
+								_dark={{ backgroundColor: 'gray.50' }}
+							>
+								<View style={tailwind('w-11/12 flex-row my-5')}>
+									<View style={tailwind('w-1/2 m-0')}>
+										<FMTextInput
+										label='Driver Name'
+										formik={formik as unknown as FormikProps<FormikValues>}
+										name='driverName'
+									/>
+										<FMTextInput
+											label='Age'
+											formik={formik as unknown as FormikProps<FormikValues>}
+											name='age'
+										/>
+										<FMTextInput
+											label='Contact Number'
+											formik={formik as unknown as FormikProps<FormikValues>}
+											name='contactNumber'
+										/>
+									</View>
+									<View style={tailwind('-ml-20 w-5/12')}>
+										<FMImageUploadDisplay callback={openCamera} label='Photo of Driver'
+																					styleProp='w-full'
+																					iconPlacement={<Ionicons name="person" size={24} color="black" />} />
+									</View>
+								</View>
+							</Box>
 							<Button
 								style={tailwind('flex-auto ml-1')}
 								onPress={formik.handleSubmit}
