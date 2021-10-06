@@ -30,9 +30,8 @@ export const FIREBASE_TRACK_USER = {
       .firestore()
       .collection('jobs')
       .doc(values.docId)
-      .update([
-        'called',
-        firebase.firestore.FieldValue.arrayUnion(values.currentUser),
-      ]);
+      .update({
+        called: firebase.firestore.FieldValue.arrayUnion(values.currentUser),
+      });
   },
 };
