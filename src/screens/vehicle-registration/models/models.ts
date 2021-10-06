@@ -7,12 +7,14 @@ export interface VehicleInfo {
   numberPlate: string;
   blueBookNumber: string;
   licenseNumber: string;
+  carImageUri?: string;
 }
 
 export interface DriverInfo {
   driverName: string;
   age: number;
   contactNumber: number;
+  driverImageUri?: string;
 }
 
 export interface VehicleSlice {
@@ -23,5 +25,6 @@ export interface VehicleSlice {
 
 export enum DriverSliceActionTypes {
   setVehicleRegistration = 'vehicle/setVehicleRegistration',
+  updateVehicleRegistration = 'vehicle/updateVehicleRegistration',
 	getVehicleRegistration = 'vehicle/vehicleRegistrationDetails'
 }

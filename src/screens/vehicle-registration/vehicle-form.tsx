@@ -149,7 +149,7 @@ const VehicleForm: FC<{
 								</View>
 							</Box>
 							<Button style={tailwind('w-11/12 my-4')} onPress={() => formik.handleSubmit()}>
-								Register
+								{initialFormValues?.carModel ? 'Update' : 'Register'}
 							</Button>
 						</View>
 					)}
