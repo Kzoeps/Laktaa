@@ -16,9 +16,10 @@ import FMImageUploadDisplay from '../../shared/components/ImageUploadDisplay/Ima
 
 const VehicleForm: FC<{
 	openCamera: () => void,
+	openDriverCamera: () => void,
   setRegistrationDetails: (details: { registrationDetails: VehicleInfo & DriverInfo}) => void,
   initialFormValues: DriverInfo & VehicleInfo | undefined
-}> = ({ setRegistrationDetails, initialFormValues , openCamera}) => {
+}> = ({ setRegistrationDetails, initialFormValues , openCamera, openDriverCamera }) => {
 	const [showCamera, setShowCamera] = useState<boolean>(false);
 	const validationSchema = VEHICLE_REGISTRATION_VALIDATION;
 
@@ -108,7 +109,7 @@ const VehicleForm: FC<{
 										/>
 									</View>
 									<View style={tailwind('-ml-20 w-5/12')}>
-										<FMImageUploadDisplay callback={openCamera} label='Photo of Driver'
+										<FMImageUploadDisplay callback={openDriverCamera} label='Photo of Driver'
 																					styleProp='w-full'
 																					iconPlacement={<Ionicons name="person" size={24} color="black" />} />
 									</View>

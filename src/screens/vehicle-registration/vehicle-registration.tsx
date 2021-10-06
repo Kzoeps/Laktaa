@@ -14,7 +14,9 @@ import OpenCamera from '../postjob/Camera';
 
 const VehicleRegistration: FC = ({ navigation }) => {
 	const [showCamera, setShowCamera] = useState<boolean>(false);
+	const [showDriverCamera, setShowDriverCamera] = useState<boolean>(false);
 	const [imageInfo, setImageInfo] = useState<string>('');
+	const [driverImageInfo, setDriverImageInfo] = useState<string>('');
 	const { currentUser } = useContext(AuthContext);
 	const vehicleInfo = useSelector((state: RootState) => state.vehicle.details);
 	const status = useSelector(selectStoreStatus(RootReducersEnum.vehicleSlice));
@@ -26,6 +28,12 @@ const VehicleRegistration: FC = ({ navigation }) => {
 	};
 	const openCamera = (): void => {
 		setShowCamera(true);
+	}
+	const openDriverCamera = (): void => {
+		setShowDriverCamera(true);
+	}
+	const closeDriverCamera = (): void => {
+		setShowDriverCamera(false);
 	}
 
 
@@ -50,10 +58,12 @@ const VehicleRegistration: FC = ({ navigation }) => {
 	return (
 		<>
 			<OpenCamera showMySelf={showCamera} closeCamera={closeCamera} updateImageInfo={setImageInfo} />
+			<OpenCamera showMySelf={showDriverCamera} closeCamera={closeDriverCamera} updateImageInfo={setDriverImageInfo} />
 			<Box bg='emerald.400'>
 				<FMHeader header='Vehicle Registration' />
 				<Layout styleProp='h-full'>
 					<VehicleForm
+						openDriverCamera={openDriverCamera}
 						openCamera={openCamera}
 						initialFormValues={vehicleInfo}
 						setRegistrationDetails={setRegistrationDetails}
