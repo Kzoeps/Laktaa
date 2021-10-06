@@ -34,8 +34,9 @@ const VehicleForm: FC<{
 					}}
 				>
 					{(formik: FormikProps<VehicleInfo & DriverInfo>) => (
-						<>
+						<View style={tailwind('h-full')}>
 								<Box
+									rounded='lg'
 									style={tailwind('w-11/12 items-center ml-4 my-10')}
 									shadow={3}
 									_light={{ backgroundColor: 'gray.50' }}
@@ -85,6 +86,7 @@ const VehicleForm: FC<{
 										/></View>
 								</Box>
 							<Box
+								rounded='lg'
 								style={tailwind('w-11/12 items-center ml-4 my-5')}
 								shadow={3}
 								_light={{ backgroundColor: 'gray.50' }}
@@ -111,17 +113,17 @@ const VehicleForm: FC<{
 									<View style={tailwind('-ml-20 w-5/12')}>
 										<FMImageUploadDisplay callback={openDriverCamera} label='Photo of Driver'
 																					styleProp='w-full'
-																					iconPlacement={<Ionicons name="person" size={24} color="black" />} />
+																					iconPlacement={<Ionicons name='person' size={24} color='black' />} />
 									</View>
 								</View>
 							</Box>
 							<Button
-								style={tailwind('flex-auto ml-1')}
+								style={tailwind('w-full ml-1')}
 								onPress={formik.handleSubmit}
 							>
 								Register
 							</Button>
-						</>
+						</View>
 					)}
 				</Formik>
 			</ScrollView>
