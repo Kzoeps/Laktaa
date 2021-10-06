@@ -11,19 +11,21 @@ const FMTextInput: FC<{
   icon?: string;
   doNotShow?: boolean;
   styleProp?: string;
-  disableInput?: boolean;
   inputColor?: string;
   iconPlacement?: JSX.Element;
+  variant?: string;
+  disableInput?: boolean;
 }> = ({
   label,
   formik,
   name,
   icon,
   doNotShow,
-  styleProp,
-  disableInput,
-  iconPlacement,
   inputColor,
+  styleProp,
+  iconPlacement,
+  variant,
+  disableInput,
 }) => (
   <Box w="90%" style={tailwind(styleProp ?? '')}>
     <Input
@@ -41,13 +43,13 @@ const FMTextInput: FC<{
       isDisabled={!!disableInput}
       value={formik.values[name]}
       type={doNotShow ? 'password' : 'text'}
-      variant="underlined"
+      variant={variant || 'outline'}
       bg="transparent"
       placeholder={label}
       onChangeText={formik.handleChange(name)}
     />
     {formik.touched[name] && formik.errors[name] && (
-      <Text>{formik.errors[name]}</Text>
+      <Text style={tailwind('text-red-400')}>{formik.errors[name]}</Text>
     )}
   </Box>
 );

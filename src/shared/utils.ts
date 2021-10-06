@@ -12,4 +12,7 @@ export const getToastConfig = (
   description,
 });
 
-export const selectStoreStatus = (sliceName: keyof RootState) => (state: RootState): APIStatuses => state[sliceName].status
+export const selectStoreStatus =
+  (sliceName: keyof RootState) =>
+  (state: RootState): APIStatuses =>
+    state[sliceName].status;

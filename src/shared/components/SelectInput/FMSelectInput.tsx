@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
-import { Select } from 'native-base';
+import { Select, Icon, Text } from 'native-base';
 import { FormikProps, FormikValues } from 'formik';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { BasicOption } from '../../models/model';
+import tailwind from 'tailwind-rn';
 
 const FMSelectInput: FC<{
   formik: FormikProps<FormikValues>;
@@ -11,25 +12,45 @@ const FMSelectInput: FC<{
   placeholder: string;
   icon?: string;
   iconPlacement?: JSX.Element;
-}> = ({ formik, name, options, placeholder, icon, iconPlacement }) => (
-  <Select
-    dropdownIcon={
-      icon || iconPlacement
-        ? iconPlacement || <MaterialCommunityIcons name={icon} size={24} />
-        : undefined
-    }
-    selectedValue={formik.values[name]}
-    placeholder={placeholder}
-    onValueChange={formik.handleChange(name)}
-  >
-    {options.map((option) => (
-      <Select.Item
-        label={option.label}
-        value={option.value}
-        key={option.value}
-      />
-    ))}
-  </Select>
+  inputColor?: string;
+}> = ({
+  formik,
+  name,
+  options,
+  placeholder,
+  icon,
+  iconPlacement,
+  inputColor,
+}) => (
+  <>
+    <Select
+      selectedValue={formik.values[name]}
+      placeholder={placeholder}
+      onValueChange={formik.handleChange(name)}
+      InputLeftElement={
+        icon ? (
+          <Icon
+            as={iconPlacement || <MaterialIcons name={icon} />}
+            size="md"
+            _light={{
+              color: inputColor || 'white',
+            }}
+          />
+        ) : undefined
+      }
+    >
+      {options.map((option) => (
+        <Select.Item
+          label={option.label}
+          value={option.value}
+          key={option.value}
+        />
+      ))}
+    </Select>
+    {formik.touched[name] && formik.errors[name] && (
+      <Text style={tailwind('text-red-400')}>{formik.errors[name]}</Text>
+    )}
+  </>
 );
 
 export default FMSelectInput;

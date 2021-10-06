@@ -1,4 +1,3 @@
-
 export enum APIStatuses {
   'IDLE' = 'IDLE',
   'LOADING' = 'LOADING',
@@ -19,6 +18,6 @@ export enum ToastTypes {
 }
 
 export enum RootReducersEnum {
-	authSlice = 'auth',
-	vehicleSlice = 'vehicle'
+  authSlice = 'auth',
+  vehicleSlice = 'vehicle',
 }

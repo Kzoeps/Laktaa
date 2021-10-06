@@ -1,7 +1,7 @@
 import { TouchableOpacity } from 'react-native';
 import tailwind from 'tailwind-rn';
 import React, { FC } from 'react';
-import { Icon , Text} from 'native-base';
+import { Icon, Text } from 'native-base';
 import { Entypo } from '@expo/vector-icons';
 
 /**
@@ -12,33 +12,43 @@ import { Entypo } from '@expo/vector-icons';
  * @param iconPlacement: Icon JSX Element. Eg: <MaterialIcon name='camera'>
  * @constructor
  */
-const FMImageUploadDisplay: FC<{ label?: string, callback: () => any, icon?: string,iconPlacement?: JSX.Element, styleProp?: string }> = ({ label ,callback: callbackFunction, icon, iconPlacement, styleProp }) => {
-	return (
-		<TouchableOpacity
-			onPress={callbackFunction}
-			style={[
-				tailwind(`mx-24 py-16 mb-4 ${styleProp || ''}`),
-				{
-					borderStyle: 'dashed',
-					borderRadius: 1,
-					borderWidth: 1,
-				},
-			]}
-		>
-			<Text style={tailwind('text-center')}>
-				{label || 'Take a picture!'}
-			</Text>
-			<Text style={tailwind('text-center mt-4')}>
-				<Icon
-					as={ iconPlacement || <Entypo name={icon || 'camera'} />}
-					size='md'
-					_light={{
-						color: 'grey',
-					}}
-				/>
-			</Text>
-		</TouchableOpacity>
-	);
+const FMImageUploadDisplay: FC<{
+  label?: string;
+  callback: () => any;
+  icon?: string;
+  iconPlacement?: JSX.Element;
+  styleProp?: string;
+}> = ({
+  label,
+  callback: callbackFunction,
+  icon,
+  iconPlacement,
+  styleProp,
+}) => {
+  return (
+    <TouchableOpacity
+      onPress={callbackFunction}
+      style={[
+        tailwind(`mx-24 py-16 mb-4 ${styleProp || ''}`),
+        {
+          borderStyle: 'dashed',
+          borderRadius: 1,
+          borderWidth: 1,
+        },
+      ]}
+    >
+      <Text style={tailwind('text-center')}>{label || 'Take a picture!'}</Text>
+      <Text style={tailwind('text-center mt-4')}>
+        <Icon
+          as={iconPlacement || <Entypo name={icon || 'camera'} />}
+          size="md"
+          _light={{
+            color: 'grey',
+          }}
+        />
+      </Text>
+    </TouchableOpacity>
+  );
 };
 
 export default FMImageUploadDisplay;
