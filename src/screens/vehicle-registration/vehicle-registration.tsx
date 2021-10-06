@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect, useRef, useState } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import { Box, Button, Spinner, useToast } from 'native-base';
 import { useDispatch, useSelector } from 'react-redux';
 import FMHeader from '../../shared/components/FMHeader/FMHeader';
@@ -7,15 +7,8 @@ import VehicleForm from './vehicle-form';
 import { DriverInfo, VehicleInfo } from './models/models';
 import { AuthContext } from '../auth/auth';
 import { getToastConfig, selectStoreStatus } from '../../shared/utils';
-import {
-  APIStatuses,
-  RootReducersEnum,
-  ToastTypes,
-} from '../../shared/models/model';
-import {
-  getVehicleRegistrationDetails,
-  setVehicleRegistration,
-} from './store/driverSlice';
+import { APIStatuses, RootReducersEnum, ToastTypes } from '../../shared/models/model';
+import { getVehicleRegistrationDetails, setVehicleRegistration } from './store/driverSlice';
 import { RootState } from '../../store/store';
 import OpenCamera from '../postjob/Camera';
 

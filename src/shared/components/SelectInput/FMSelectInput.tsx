@@ -30,7 +30,7 @@ const FMSelectInput: FC<{
       InputLeftElement={
         icon ? (
           <Icon
-            as={iconPlacement || <MaterialIcons name={icon} />}
+            as={iconPlacement || <MaterialCommunityIcons name={icon} />}
             size="md"
             _light={{
               color: inputColor || 'white',

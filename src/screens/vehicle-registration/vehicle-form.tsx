@@ -1,9 +1,9 @@
 import { Formik, FormikProps, FormikValues } from 'formik';
 import React, { FC, useState } from 'react';
-import { Box, Button, ScrollView } from 'native-base';
+import { Box, Button, ScrollView, Text } from 'native-base';
 import tailwind from 'tailwind-rn';
 import { FontAwesome5, Ionicons } from '@expo/vector-icons';
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import {
   VEHICLE_REGISTER_INITIALIZER,
   VEHICLE_REGISTRATION_VALIDATION,
@@ -31,7 +31,7 @@ const VehicleForm: FC<{
   const validationSchema = VEHICLE_REGISTRATION_VALIDATION;
 
   return (
-    <>
+    <View style={tailwind('h-full')}>
       <ScrollView>
         <Formik
           initialValues={
@@ -138,17 +138,16 @@ const VehicleForm: FC<{
                   </View>
                 </View>
               </Box>
-              <Button
-                style={tailwind('w-full ml-1')}
-                onPress={formik.handleSubmit}
-              >
-                Register
-              </Button>
+							<TouchableOpacity onPress={formik.handleSubmit}>
+								<Text style={tailwind('text-white text-center font-semibold')}>
+									Register
+								</Text>
+							</TouchableOpacity>
             </View>
           )}
         </Formik>
       </ScrollView>
-    </>
+    </View>
   );
 };
 export default VehicleForm;
