@@ -1,34 +1,32 @@
 import React, { FC } from 'react';
+import { Select, Icon, Text } from 'native-base';
 import { FormikProps, FormikValues } from 'formik';
-import { Box, Icon, Input, Text } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
+import { BasicOption } from '../../models/model';
 import tailwind from 'tailwind-rn';
 
-const FMTextInput: FC<{
-  label: string;
+const FMSelectInput: FC<{
   formik: FormikProps<FormikValues>;
   name: string;
+  options: BasicOption[];
+  placeholder: string;
   icon?: string;
-  doNotShow?: boolean;
-  styleProp?: string;
-  inputColor?: string;
   iconPlacement?: JSX.Element;
-  variant?: string;
-  disableInput?: boolean;
+  inputColor?: string;
 }> = ({
-  label,
   formik,
   name,
+  options,
+  placeholder,
   icon,
-  doNotShow,
-  inputColor,
-  styleProp,
   iconPlacement,
-  variant,
-  disableInput,
+  inputColor,
 }) => (
-  <Box w="90%" style={tailwind(styleProp ?? '')}>
-    <Input
+  <>
+    <Select
+      selectedValue={formik.values[name]}
+      placeholder={placeholder}
+      onValueChange={formik.handleChange(name)}
       InputLeftElement={
         icon ? (
           <Icon
@@ -40,19 +38,19 @@ const FMTextInput: FC<{
           />
         ) : undefined
       }
-      isDisabled={!!disableInput}
-      value={formik.values[name]}
-      type={doNotShow ? 'password' : 'text'}
-      variant={variant || 'outline'}
-      bg="transparent"
-      placeholder={label}
-      onChangeText={formik.handleChange(name)}
-    />
-
+    >
+      {options.map((option) => (
+        <Select.Item
+          label={option.label}
+          value={option.value}
+          key={option.value}
+        />
+      ))}
+    </Select>
     {formik.touched[name] && formik.errors[name] && (
       <Text style={tailwind('text-red-400')}>{formik.errors[name]}</Text>
     )}
-  </Box>
+  </>
 );
 
-export default FMTextInput;
+export default FMSelectInput;

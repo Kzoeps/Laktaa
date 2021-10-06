@@ -4,3 +4,8 @@ export enum APIStatuses {
   'SUCCEEDED' = 'SUCCEEDED',
   'FAILED' = 'FAILED',
 }
+
+export interface BasicOption {
+  label: string;
+  value: string;
+}
