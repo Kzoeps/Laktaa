@@ -1,5 +1,5 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { TouchableOpacity, View, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Button, Icon, Spinner } from 'native-base';
 import { Formik, FormikProps, FormikValues } from 'formik';
@@ -9,11 +9,11 @@ import { DocumentResult } from 'expo-document-picker';
 import tailwind from 'tailwind-rn';
 import { NavigationScreenProp } from 'react-navigation';
 import {
-  fetchUserProfile,
-  selectStoreStatus,
-  selectUserDetails,
-  updateUserProfile as updateUserProfileStore,
-  updateUserProfileImage,
+	fetchUserProfile,
+	selectStoreStatus,
+	selectUserDetails,
+	updateUserProfile as updateUserProfileStore,
+	updateUserProfileImage,
 } from '../auth/store/authSlice';
 import { EDIT_PROFILE_SCHEMA } from './models/constants';
 import FMTextInput from '../../shared/components/TextInput';
@@ -100,7 +100,7 @@ const UserProfile: FC<{ navigation: NavigationScreenProp<any> }> = ({
               imageUrl={userDetails.profileImageUrl}
             />
           </View>
-          <View style={tailwind('items-center w-full h-full')}>
+          <View style={tailwind('items-center w-full h-1/2')}>
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
@@ -178,25 +178,24 @@ const UserProfile: FC<{ navigation: NavigationScreenProp<any> }> = ({
                           onPress={() => {
                             formik.resetForm();
                             setInputsDisabled(true);
-                          }}
-                        >
-                          Cancel
-                        </Button>
-                      </View>
-                    )}
-                  </View>
-                </>
-              )}
-            </Formik>
-            <View>
-              <Button
-                style={tailwind('w-full items-center h-10')}
-                onPress={logout}
-              >
-                Logout
-              </Button>
-            </View>
-          </View>
+													}}
+												>
+													Cancel
+												</Button>
+											</View>
+										)}
+									</View>
+								</>
+							)}
+						</Formik>
+					</View>
+					<TouchableOpacity style={tailwind('')} onPress={logout}>
+						<Text
+							style={tailwind('w-full font-bold underline items-center h-10')}
+						>
+							Logout
+						</Text>
+					</TouchableOpacity>
         </View>
       </Layout>
     </Box>
