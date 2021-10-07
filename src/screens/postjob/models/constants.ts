@@ -30,23 +30,23 @@ export const POST_JOB_SCHEMA = Yup.object().shape({
 });
 
 export const POST_JOB_INITIALIZER = {
-  loadType: 'Documents',
-  perish: 'Perishable',
-  price: '900',
-  weight: '12',
-  pieces: '1',
+  loadType: '',
+  perish: '',
+  price: '',
+  weight: '',
+  pieces: '',
   height: '',
   length: '',
   breath: '',
-  pickPlace: 'Funglung',
+  pickPlace: '',
   pickDzongkhag: 'Bumthang',
   pickGewog: '',
-  pickUpPhone: '17989645',
+  pickUpPhone: '',
   dropDzongkhag: 'Thimphu',
   dropGewog: '',
-  dropPlace: 'Bajo',
-  dropOffPhone: '17898989',
-  remarks: 'yoyoyyoy',
+  dropPlace: '',
+  dropOffPhone: '',
+  remarks: '',
 };
 
 export const POST_JOB_LOAD_TYPE = [
