@@ -9,11 +9,11 @@ import { DocumentResult } from 'expo-document-picker';
 import tailwind from 'tailwind-rn';
 import { NavigationScreenProp } from 'react-navigation';
 import {
-  fetchUserProfile,
-  selectStoreStatus,
-  selectUserDetails,
-  updateUserProfile as updateUserProfileStore,
-  updateUserProfileImage,
+	fetchUserProfile,
+	selectStoreStatus,
+	selectUserDetails,
+	updateUserProfile as updateUserProfileStore,
+	updateUserProfileImage,
 } from '../auth/store/authSlice';
 import { EDIT_PROFILE_SCHEMA } from './models/constants';
 import FMTextInput from '../../shared/components/TextInput';
@@ -32,9 +32,9 @@ const UserProfile: FC<{ navigation: NavigationScreenProp<any> }> = ({
   const userDetails = useSelector(selectUserDetails);
   const storeStatus = useSelector(selectStoreStatus);
   const [file, setFile] = useState<DocumentResult | undefined>(undefined);
-  const [userInitials, setUserInitials] = useState<string>('');
-  const { currentUser } = useContext(AuthContext);
-  const dispatch = useDispatch();
+	const [userInitials, setUserInitials] = useState<string>('');
+	const { currentUser, logout } = useContext(AuthContext);
+	const dispatch = useDispatch();
   const uploadImage = useFirestoreUpload(
     `profileImages/${userDetails?.email}`,
     file,
@@ -149,26 +149,20 @@ const UserProfile: FC<{ navigation: NavigationScreenProp<any> }> = ({
                   </Box>
 
                   <View style={tailwind('mt-8 items-center')}>
-                    <Button
-                      onPress={() =>
-                        navigation.navigate('Vehicle Registration')
-                      }
-                    >
-                      ROUTE TO REGI
-                    </Button>
                     {inputsDisabled ? (
-                      <Button
-                        endIcon={
-                          <Icon
-                            as={<MaterialIcons name="arrow-forward" size="4" />}
-                          />
-                        }
-                        onPress={() => setInputsDisabled(false)}
-                        light
-                      >
-                        Edit
-                      </Button>
-                    ) : (
+											<><Button
+												endIcon={
+													<Icon
+														as={<MaterialIcons name='arrow-forward' size='4' />}
+													/>
+												}
+												onPress={() => setInputsDisabled(false)}
+												light
+											>
+												Edit
+											</Button>
+											</>
+										) : (
                       <View style={tailwind('w-10/12 flex flex-row')}>
                         <Button
                           style={tailwind('flex-auto mr-3')}
@@ -183,17 +177,22 @@ const UserProfile: FC<{ navigation: NavigationScreenProp<any> }> = ({
                             setInputsDisabled(true);
                           }}
                         >
-                          Cancel
-                        </Button>
-                      </View>
-                    )}
-                  </View>
-                </>
-              )}
-            </Formik>
-          </View>
-        </View>
-      </Layout>
+													Cancel
+												</Button>
+											</View>
+										)}
+									</View>
+								</>
+							)}
+						</Formik>
+						<View>
+							<Button style={tailwind('w-full items-center h-10')} onPress={logout}>
+								Logout
+							</Button>
+						</View>
+					</View>
+				</View>
+			</Layout>
     </Box>
   );
 };
