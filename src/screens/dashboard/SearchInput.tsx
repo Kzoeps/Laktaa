@@ -11,18 +11,7 @@ const SearchInput: FC<{ filters: Record<string, unknown>; setFilters: any }> =
 
     const [pickDzongkhag, setPickDzongkhag] = useState('');
     const [dropDzongkhag, setDropDzongkhag] = useState('');
-    // const [fromDate, setFromDate] = useState();
-    // const [toDate, setToDate] = useState();
 
-    // const changeFromDate = (value: Date) => {
-    //   setFromDate(value);
-    //   setFilters({ ...filters, fromDate: value });
-    // };
-
-    // const changeToDate = (value: Date) => {
-    //   setToDate(value);
-    //   setFilters({ ...filters, toDate: value });
-    // };
     const initializeFilters = () => {
       setDropDzongkhag('');
       setPickDzongkhag('');
@@ -79,23 +68,6 @@ const SearchInput: FC<{ filters: Record<string, unknown>; setFilters: any }> =
             </Select>
           </View>
         </View>
-
-        {/* <View style={tailwind('bg-white mt-2 mx-7 flex-row justify-between')}>
-          <View style={tailwind('w-44 p-1 border border-gray-300 rounded-md')}>
-            <Calendar
-              value=""
-              setDate={changeFromDate}
-              placeholder="From (drop date) "
-            />
-          </View>
-          <View style={tailwind('w-44 p-1 border border-gray-300 rounded-md')}>
-            <Calendar
-              value=""
-              setDate={changeToDate}
-              placeholder="To (drop date)"
-            />
-          </View>
-        </View> */}
         {/* border for the horizontal divide line */}
         <View style={tailwind('border-b mx-5 border-gray-300 my-2')} />
       </View>
