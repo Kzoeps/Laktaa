@@ -18,9 +18,9 @@ const FMNavHeaderProfile: FC<{
       <FMAvatar
         size="md"
         onBadgeClick={() => undefined}
-        fallbackText={userInitials}
+				imageUrl={imageUri}
+				fallbackText={userInitials}
         showBadge={false}
-        imageUrl={imageUri}
       />
     </TouchableOpacity>
   );

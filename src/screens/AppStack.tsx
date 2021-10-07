@@ -23,6 +23,16 @@ const AppStack = (): JSX.Element => {
       if (currentUser.email) dispatch(fetchUserProfile(currentUser.email));
     }
   }, [userDetails.userName]);
+	useEffect(() => {
+		setUserInitials(
+			userDetails?.userName
+				.split(' ')
+				.map((name) => name[0])
+				.join('')
+				.toUpperCase()
+		);
+		return () => setUserInitials('');
+	}, [userDetails?.userName]);
 
   return (
     <Stack.Navigator>

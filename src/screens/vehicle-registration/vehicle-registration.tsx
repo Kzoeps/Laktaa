@@ -98,6 +98,12 @@ const VehicleRegistration: FC = ({ navigation }) => {
     setShowLoader(false);
     toast.show(getToastConfig('Registered successfully', ToastTypes.success));
   };
+  useEffect(() => {
+  	return () => {
+  		setShowCamera(false);
+  		setShowDriverCamera(false);
+		}
+	}, [])
 
   if (status === APIStatuses.LOADING || showLoader)
     return <Spinner accessibilityLabel="loading vehicle info" />;
