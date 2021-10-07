@@ -25,7 +25,6 @@ const AppStack = (): JSX.Element => (
       }}
       component={VehicleRegistration}
     />
-    <Stack.Screen name="Dashboard" component={DashboardScreen} />
     <Stack.Screen name="PostJob" component={PostJob} />
     <Stack.Screen name="JobDetails" component={JobDetails} />
   </Stack.Navigator>
