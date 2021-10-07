@@ -1,7 +1,7 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Button, Icon, Spinner } from 'native-base';
+import { Box, Button, Heading, Icon, Spinner } from 'native-base';
 import { Formik, FormikProps, FormikValues } from 'formik';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as DocumentPicker from 'expo-document-picker';
@@ -85,8 +85,24 @@ const UserProfile: FC<{ navigation: NavigationScreenProp<any> }> = ({
     );
   }, [userDetails?.userName]);
 
-  if (storeStatus === APIStatuses.LOADING || uploadImage === 'pending')
-    return <Spinner accessibilityLabel="loading profile" />;
+  if (storeStatus === APIStatuses.LOADING || uploadImage === 'pending') {
+  	return (
+			<View style={tailwind('my-24')}>
+				<Spinner
+					accessibilityLabel="Loading posts"
+					color="emerald.500"
+					size="lg"
+				/>
+				<Heading
+					style={tailwind('text-center')}
+					color="emerald.500"
+					fontSize="xl"
+				>
+					Loading ...
+				</Heading>
+			</View>
+		)
+	}
   return (
     <Box bg="emerald.400">
       <FMHeader header="My Profile" />
