@@ -24,8 +24,8 @@ const LoginScreen = ({ navigation }): JSX.Element => {
   useEffect(() => {
     if (updateUserProfile) {
       dispatch(fetchUserProfile(userEmail));
-      setUpdateUserProfile(false);
     }
+    return () => setUpdateUserProfile(false);
   }, [
     updateUserProfile,
     userEmail,

@@ -48,7 +48,6 @@ const FMTextInput: FC<{
       placeholder={label}
       onChangeText={formik.handleChange(name)}
     />
-
     {formik.touched[name] && formik.errors[name] && (
       <Text style={tailwind('text-red-400')}>{formik.errors[name]}</Text>
     )}

@@ -1,13 +1,15 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Avatar, Box, Button, Icon, Spinner } from 'native-base';
+import { Box, Button, Icon, Spinner } from 'native-base';
 import { Formik, FormikProps, FormikValues } from 'formik';
-import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import * as DocumentPicker from 'expo-document-picker';
 import { DocumentResult } from 'expo-document-picker';
 import tailwind from 'tailwind-rn';
+import { NavigationScreenProp } from 'react-navigation';
 import {
+  fetchUserProfile,
   selectStoreStatus,
   selectUserDetails,
   updateUserProfile as updateUserProfileStore,
@@ -21,14 +23,18 @@ import useFirestoreUpload from '../../shared/components/useFirestoreUpload';
 import Layout from '../../shared/layout/layout';
 import FMAvatar from '../../shared/components/FMAvatar/FMAvatar';
 import FMHeader from '../../shared/components/FMHeader/FMHeader';
+import { AuthContext } from '../auth/auth';
 
-const UserProfile: FC = () => {
+const UserProfile: FC<{ navigation: NavigationScreenProp<any> }> = ({
+  navigation,
+}) => {
   const [inputsDisabled, setInputsDisabled] = useState<boolean>(true);
   const userDetails = useSelector(selectUserDetails);
   console.log("user details ")
   const storeStatus = useSelector(selectStoreStatus);
   const [file, setFile] = useState<DocumentResult | undefined>(undefined);
   const [userInitials, setUserInitials] = useState<string>('');
+  const { currentUser, logout } = useContext(AuthContext);
   const dispatch = useDispatch();
   const uploadImage = useFirestoreUpload(
     `profileImages/${userDetails?.email}`,
@@ -50,6 +56,12 @@ const UserProfile: FC = () => {
     const fileRef = await DocumentPicker.getDocumentAsync({ type: 'image/*' });
     if (fileRef.type === 'success') setFile(fileRef);
   };
+
+  useEffect(() => {
+    if (!userDetails.userName) {
+      currentUser.email && dispatch(fetchUserProfile(currentUser.email));
+    }
+  });
 
   useEffect(() => {
     if (!['idle', 'pending'].includes(uploadImage)) {
@@ -139,17 +151,21 @@ const UserProfile: FC = () => {
 
                   <View style={tailwind('mt-8 items-center')}>
                     {inputsDisabled ? (
-                      <Button
-                        endIcon={
-                          <Icon
-                            as={<MaterialIcons name="arrow-forward" size="4" />}
-                          />
-                        }
-                        onPress={() => setInputsDisabled(false)}
-                        light
-                      >
-                        Edit
-                      </Button>
+                      <>
+                        <Button
+                          endIcon={
+                            <Icon
+                              as={
+                                <MaterialIcons name="arrow-forward" size="4" />
+                              }
+                            />
+                          }
+                          onPress={() => setInputsDisabled(false)}
+                          light
+                        >
+                          Edit
+                        </Button>
+                      </>
                     ) : (
                       <View style={tailwind('w-10/12 flex flex-row')}>
                         <Button
@@ -173,6 +189,14 @@ const UserProfile: FC = () => {
                 </>
               )}
             </Formik>
+            <View>
+              <Button
+                style={tailwind('w-full items-center h-10')}
+                onPress={logout}
+              >
+                Logout
+              </Button>
+            </View>
           </View>
         </View>
       </Layout>

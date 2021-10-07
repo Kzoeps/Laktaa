@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Select, Icon, Text } from 'native-base';
 import { FormikProps, FormikValues } from 'formik';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { BasicOption } from '../../models/model';
 import tailwind from 'tailwind-rn';
 
@@ -30,7 +30,7 @@ const FMSelectInput: FC<{
       InputLeftElement={
         icon ? (
           <Icon
-            as={iconPlacement || <MaterialIcons name={icon} />}
+            as={iconPlacement || <MaterialCommunityIcons name={icon} />}
             size="md"
             _light={{
               color: inputColor || 'white',
