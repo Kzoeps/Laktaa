@@ -3,17 +3,11 @@ import { Text, View } from 'react-native';
 import tailwind from 'tailwind-rn';
 import HeaderLayout from '../../layout/header';
 
-const Pageheader = ({ navigation, page }): JSX.Element => {
-  const [customer, setCustomer] = useState(true);
-  const [driver, setDriver] = useState(false);
-
+const Pageheader = ({ navigation, page, activeTab }): JSX.Element => {
   const toggleCustomer = () => {
-    setCustomer(true);
-    setDriver(false);
+    navigation.navigate('Dashboard');
   };
   const toggleDriver = () => {
-    setCustomer(false);
-    setDriver(true);
     navigation.navigate('Vehicle Registration');
   };
 
@@ -27,7 +21,7 @@ const Pageheader = ({ navigation, page }): JSX.Element => {
         <Text
           onPress={toggleCustomer}
           style={
-            customer
+           	activeTab === 'customer'
               ? tailwind(
                   'text-green-400 bg-white font-semibold px-2 py-1 rounded-full w-6/12 text-center '
                 )
@@ -41,7 +35,7 @@ const Pageheader = ({ navigation, page }): JSX.Element => {
         <Text
           onPress={toggleDriver}
           style={
-            driver
+           	activeTab === 'driver'
               ? tailwind(
                   'text-green-400 bg-white font-semibold px-2 py-1 rounded-full w-6/12 text-center '
                 )

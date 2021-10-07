@@ -1,5 +1,5 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
-import { Box, Button, Spinner, useToast } from 'native-base';
+import { Box, Button, Spinner, useToast, View } from 'native-base';
 import { useDispatch, useSelector } from 'react-redux';
 import firebase from 'firebase';
 import FMHeader from '../../shared/components/FMHeader/FMHeader';
@@ -20,6 +20,8 @@ import {
 } from './store/driverSlice';
 import { RootState } from '../../store/store';
 import OpenCamera from '../postjob/Camera';
+import Pageheader from '../../shared/components/Pageheader/Pageheader';
+import tailwind from 'tailwind-rn';
 
 const VehicleRegistration: FC = ({ navigation }) => {
   const [showCamera, setShowCamera] = useState<boolean>(false);
@@ -112,7 +114,9 @@ const VehicleRegistration: FC = ({ navigation }) => {
         updateImageInfo={setDriverImageInfo}
       />
       <Box bg="emerald.400">
-        <FMHeader header="Vehicle Registration" />
+				<View style={tailwind('-mb-20')}>
+					<Pageheader navigation={navigation} page="dashboard" activeTab='driver' />
+				</View>
         <Layout styleProp="h-full">
           <VehicleForm
             openDriverCamera={openDriverCamera}
