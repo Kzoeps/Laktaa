@@ -1,0 +1,10 @@
+#Folders
+android
+ios
+# Artifacts
+build
+coverage
+# File Types To Ignore
+*.yml
+*.html
+*.md

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "52636116402",
+    "project_id": "first-mile-7bd71",
+    "storage_bucket": "first-mile-7bd71.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:52636116402:android:e67f3d041802ce919630ab",
+        "android_client_info": {
+          "package_name": "com.firstmile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "52636116402-f8fuqkcvdi39k4n7tsse17bc54m1ltj0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8i4ZT-HeS9i8X2B_4lQpXuOb1zLFLxJo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "52636116402-f8fuqkcvdi39k4n7tsse17bc54m1ltj0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

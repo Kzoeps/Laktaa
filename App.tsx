@@ -1,19 +1,32 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React, { FC } from 'react';
+import 'react-native-gesture-handler';
+import { Provider } from 'react-redux';
+import firebase from 'firebase';
+import { extendTheme, NativeBaseProvider } from 'native-base';
+import { AuthProvider } from './src/screens/auth/auth';
+import Routes from './src/Routes';
+import store from './src/store/store';
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-})
+const firebaseConfig = {
+  apiKey: 'AIzaSyA-2HCXx0jV5d9OIyTPOO1Xk6kLZubxm2M',
+  authDomain: 'first-mile-7bd71.firebaseapp.com',
+  projectId: 'first-mile-7bd71',
+  storageBucket: 'first-mile-7bd71.appspot.com',
+  messagingSenderId: '52636116402',
+  appId: '1:52636116402:web:31ce398c0fa3d7909630ab',
+  measurementId: 'G-EH7G5V096G',
+};
+
+firebase.apps.length ? firebase.app() : firebase.initializeApp(firebaseConfig);
 
 export default function App() {
-    return (
-        <View style={styles.container}>
-            <Text>Open up App.tsx to start working on your app!</Text>
-        </View>
-    )
+  return (
+    <NativeBaseProvider>
+      <Provider store={store}>
+        <AuthProvider>
+          <Routes />
+        </AuthProvider>
+      </Provider>
+    </NativeBaseProvider>
+  );
 }
