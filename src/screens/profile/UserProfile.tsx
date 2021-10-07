@@ -30,7 +30,7 @@ const UserProfile: FC<{ navigation: NavigationScreenProp<any> }> = ({
 }) => {
   const [inputsDisabled, setInputsDisabled] = useState<boolean>(true);
   const userDetails = useSelector(selectUserDetails);
-  console.log("user details ")
+  console.log('user details ');
   const storeStatus = useSelector(selectStoreStatus);
   const [file, setFile] = useState<DocumentResult | undefined>(undefined);
   const [userInitials, setUserInitials] = useState<string>('');

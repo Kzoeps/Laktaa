@@ -19,7 +19,7 @@ export const FIREBASE_FETCHJOB_CALLS = {
       const end = firebase.firestore.Timestamp.fromDate(filters.toDate);
       query = query.where('dropOffDate', '<=', end);
     }
-    const data = await query.get();
+    const data = await query.orderBy('dropOffDate', 'desc').get();
     return data;
   },
 };

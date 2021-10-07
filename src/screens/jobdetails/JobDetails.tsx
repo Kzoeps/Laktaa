@@ -1,4 +1,4 @@
-  import React from 'react';
+import React from 'react';
 import { Image, ScrollView } from 'react-native';
 import { View, Text, Box } from 'native-base';
 import tailwind from 'tailwind-rn';
