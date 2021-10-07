@@ -21,7 +21,7 @@ const Pageheader = ({ navigation, page, activeTab }): JSX.Element => {
         <Text
           onPress={toggleCustomer}
           style={
-           	activeTab === 'customer'
+            activeTab === 'customer'
               ? tailwind(
                   'text-green-400 bg-white font-semibold px-2 py-1 rounded-full w-6/12 text-center '
                 )
@@ -35,7 +35,7 @@ const Pageheader = ({ navigation, page, activeTab }): JSX.Element => {
         <Text
           onPress={toggleDriver}
           style={
-           	activeTab === 'driver'
+            activeTab === 'driver'
               ? tailwind(
                   'text-green-400 bg-white font-semibold px-2 py-1 rounded-full w-6/12 text-center '
                 )

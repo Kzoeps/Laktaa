@@ -41,7 +41,11 @@ const DashboardScreen: FC = ({ navigation }) => {
         }
       >
         <View style={tailwind('-mb-20')}>
-          <Pageheader navigation={navigation} page="dashboard" activeTab='customer' />
+          <Pageheader
+            navigation={navigation}
+            page="dashboard"
+            activeTab="customer"
+          />
         </View>
         <Layout styleProp="h-full">
           <View style={tailwind('my-2')}>

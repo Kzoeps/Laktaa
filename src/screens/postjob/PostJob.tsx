@@ -18,6 +18,7 @@ import {
   Entypo,
   FontAwesome,
   FontAwesome5,
+  MaterialIcons,
 } from '@expo/vector-icons';
 import Pageheader from '../../shared/components/Pageheader/Pageheader';
 import Layout from '../../shared/layout/layout';
@@ -202,6 +203,13 @@ const PostJob: FC = ({ navigation }) => {
                         options={POST_JOB_LOAD_TYPE}
                         placeholder="Load Type"
                         icon="luggage"
+                        iconPlacement={
+                          <MaterialIcons
+                            name="luggage"
+                            size={24}
+                            color="black"
+                          />
+                        }
                         inputColor="grey"
                       />
                     </Box>

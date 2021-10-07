@@ -13,52 +13,85 @@ import { AuthContext } from './auth/auth';
 const Stack = createStackNavigator();
 
 const AppStack = (): JSX.Element => {
-	const [userInitials, setUserInitials] = useState('');
-	const userDetails = useSelector(selectUserDetails);
-	const { currentUser } = useContext(AuthContext)
-	const dispatch = useDispatch();
+  const [userInitials, setUserInitials] = useState('');
+  const userDetails = useSelector(selectUserDetails);
+  const { currentUser } = useContext(AuthContext);
+  const dispatch = useDispatch();
 
-	useEffect(() => {
-		if (!userDetails.userName) {
-			if (currentUser.email) dispatch(fetchUserProfile(currentUser.email));
-		}
-	}, [userDetails.userName]);
+  useEffect(() => {
+    if (!userDetails.userName) {
+      if (currentUser.email) dispatch(fetchUserProfile(currentUser.email));
+    }
+  }, [userDetails.userName]);
 
-	return (
-		<Stack.Navigator>
-			{/* <Stack.Screen name="Calendar" component={Calendar} /> */}
-			<Stack.Screen name='Dashboard' component={DashboardScreen} options={({ navigation }) => ({
-				headerTitle: 'Dashboard',
-				headerRight: props => <FMNavHeaderProfile imageUri={userDetails?.profileImageUrl} userInitials={userInitials} navigation={navigation} />,
-			})} />
-			<Stack.Screen
-				name='User Profile'
-				component={UserProfile}
-				options={{
-					title: 'My Profile'
-				}}
-			/>
-			<Stack.Screen
-				name='Vehicle Registration'
-				options={({ navigation }) => ({
-					headerTitle: 'Vehicle Registration',
-					headerRight: props => <FMNavHeaderProfile imageUri={userDetails?.profileImageUrl} userInitials={userInitials} navigation={navigation} />,
-				})}
-				component={VehicleRegistration}
-			/>
-			<Stack.Screen name='PostJob' component={PostJob}
-										options={({ navigation }) => ({
-											headerTitle: 'Post Jobs',
-											headerRight: props => <FMNavHeaderProfile imageUri={userDetails?.profileImageUrl} userInitials={userInitials} navigation={navigation} />,
-										})}
-			/>
-			<Stack.Screen name='JobDetails' component={JobDetails}
-										options={({ navigation }) => ({
-											headerTitle: 'Job Details',
-											headerRight: props => <FMNavHeaderProfile imageUri={userDetails?.profileImageUrl} userInitials={userInitials} navigation={navigation} />,
-										})}
-			/>
-		</Stack.Navigator>);
+  return (
+    <Stack.Navigator>
+      {/* <Stack.Screen name="Calendar" component={Calendar} /> */}
+      <Stack.Screen
+        name="Dashboard"
+        component={DashboardScreen}
+        options={({ navigation }) => ({
+          headerTitle: 'Dashboard',
+          headerRight: (props) => (
+            <FMNavHeaderProfile
+              imageUri={userDetails?.profileImageUrl}
+              userInitials={userInitials}
+              navigation={navigation}
+            />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="User Profile"
+        component={UserProfile}
+        options={{
+          title: 'My Profile',
+        }}
+      />
+      <Stack.Screen
+        name="Vehicle Registration"
+        options={({ navigation }) => ({
+          headerTitle: 'Vehicle Registration',
+          headerRight: (props) => (
+            <FMNavHeaderProfile
+              imageUri={userDetails?.profileImageUrl}
+              userInitials={userInitials}
+              navigation={navigation}
+            />
+          ),
+        })}
+        component={VehicleRegistration}
+      />
+      <Stack.Screen
+        name="PostJob"
+        component={PostJob}
+        options={({ navigation }) => ({
+          headerTitle: 'Post Jobs',
+          headerRight: (props) => (
+            <FMNavHeaderProfile
+              imageUri={userDetails?.profileImageUrl}
+              userInitials={userInitials}
+              navigation={navigation}
+            />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="JobDetails"
+        component={JobDetails}
+        options={({ navigation }) => ({
+          headerTitle: 'Job Details',
+          headerRight: (props) => (
+            <FMNavHeaderProfile
+              imageUri={userDetails?.profileImageUrl}
+              userInitials={userInitials}
+              navigation={navigation}
+            />
+          ),
+        })}
+      />
+    </Stack.Navigator>
+  );
 };
 
 export default AppStack;

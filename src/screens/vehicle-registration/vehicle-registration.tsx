@@ -1,8 +1,9 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
-import { Box, Button, Spinner, useToast, View } from 'native-base';
+import { Box, Spinner, useToast, View } from 'native-base';
 import { useDispatch, useSelector } from 'react-redux';
 import firebase from 'firebase';
-import FMHeader from '../../shared/components/FMHeader/FMHeader';
+import { ScrollView } from 'react-native';
+import tailwind from 'tailwind-rn';
 import Layout from '../../shared/layout/layout';
 import VehicleForm from './vehicle-form';
 import { DriverInfo, VehicleInfo } from './models/models';
@@ -21,7 +22,6 @@ import {
 import { RootState } from '../../store/store';
 import OpenCamera from '../postjob/Camera';
 import Pageheader from '../../shared/components/Pageheader/Pageheader';
-import tailwind from 'tailwind-rn';
 
 const VehicleRegistration: FC = ({ navigation }) => {
   const [showCamera, setShowCamera] = useState<boolean>(false);
@@ -114,22 +114,25 @@ const VehicleRegistration: FC = ({ navigation }) => {
         updateImageInfo={setDriverImageInfo}
       />
       <Box bg="emerald.400">
-				<View style={tailwind('-mb-20')}>
-					<Pageheader navigation={navigation} page="dashboard" activeTab='driver' />
-				</View>
-        <Layout styleProp="h-full">
-          <VehicleForm
-            openDriverCamera={openDriverCamera}
-            carImageInfo={imageInfo || vehicleInfo?.carImageUri}
-            driverImageInfo={driverImageInfo || vehicleInfo?.driverImageUri}
-            openCamera={openCamera}
-            initialFormValues={vehicleInfo}
-            setRegistrationDetails={setRegistrationDetails}
-          />
-          <Button onPress={() => navigation.navigate('User Profile')}>
-            ROUTE TO USER
-          </Button>
-        </Layout>
+        <ScrollView>
+          <View style={tailwind('-mb-20')}>
+            <Pageheader
+              navigation={navigation}
+              page="dashboard"
+              activeTab="driver"
+            />
+          </View>
+          <Layout styleProp="h-full">
+            <VehicleForm
+              openDriverCamera={openDriverCamera}
+              carImageInfo={imageInfo || vehicleInfo?.carImageUri}
+              driverImageInfo={driverImageInfo || vehicleInfo?.driverImageUri}
+              openCamera={openCamera}
+              initialFormValues={vehicleInfo}
+              setRegistrationDetails={setRegistrationDetails}
+            />
+          </Layout>
+        </ScrollView>
       </Box>
     </>
   );

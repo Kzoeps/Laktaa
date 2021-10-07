@@ -11,9 +11,9 @@ const JobCard: FC = ({ data, navigation }) => {
   const { currentUser } = useContext(AuthContext);
   const values = { poster: '', docId: '', currentUser: '' };
   const recordCall = async (docId: string, poster: string) => {
-    // if (poster === currentUser.email) {
-    //   return;
-    // }
+    if (poster === currentUser.email) {
+      return;
+    }
     values.poster = poster;
     values.docId = docId;
     values.currentUser = currentUser.email;

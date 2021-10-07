@@ -9,7 +9,7 @@ const FMAvatar: FC<{
   avatarClasses?: string;
   badgeClasses?: string;
   size?: string;
-	fallbackText: string;
+  fallbackText: string;
   showBadge: boolean;
   onBadgeClick: (...args: any[]) => any;
   imageUrl: string | undefined;
@@ -17,7 +17,7 @@ const FMAvatar: FC<{
   fallbackText,
   showBadge,
   onBadgeClick,
-	size: avatarSize,
+  size: avatarSize,
   imageUrl,
   avatarClasses,
   badgeClasses,
@@ -26,7 +26,7 @@ const FMAvatar: FC<{
   <Avatar
     style={tailwind(avatarClasses || 'items-center')}
     bg="tomato"
-    size={avatarSize|| 'xl'}
+    size={avatarSize || 'xl'}
     source={{
       uri: imageUrl || 'brokenLink',
     }}
@@ -34,7 +34,7 @@ const FMAvatar: FC<{
     {fallbackText}
     {showBadge && (
       <Avatar.Badge
-				borderWidth={0}
+        borderWidth={0}
         style={tailwind(badgeClasses || 'w-2/6 h-2/6')}
         bg="transparent"
       >

@@ -24,31 +24,29 @@ const FMImageUploadDisplay: FC<{
   icon,
   iconPlacement,
   styleProp,
-}) => {
-  return (
-    <TouchableOpacity
-      onPress={callbackFunction}
-      style={[
-        tailwind(`mx-24 py-16 mb-4 ${styleProp || ''}`),
-        {
-          borderStyle: 'dashed',
-          borderRadius: 1,
-          borderWidth: 1,
-        },
-      ]}
-    >
-      <Text style={tailwind('text-center')}>{label || 'Take a picture!'}</Text>
-      <Text style={tailwind('text-center mt-4')}>
-        <Icon
-          as={iconPlacement || <Entypo name={icon || 'camera'} />}
-          size="md"
-          _light={{
-            color: 'grey',
-          }}
-        />
-      </Text>
-    </TouchableOpacity>
-  );
-};
+}) => (
+  <TouchableOpacity
+    onPress={callbackFunction}
+    style={[
+      tailwind(`${styleProp || ''}`),
+      {
+        borderStyle: 'dashed',
+        borderRadius: 1,
+        borderWidth: 1,
+      },
+    ]}
+  >
+    <Text style={tailwind('text-center')}>{label || 'Take a picture!'}</Text>
+    <Text style={tailwind('text-center mt-4')}>
+      <Icon
+        as={iconPlacement || <Entypo name={icon || 'camera'} />}
+        size="md"
+        _light={{
+          color: 'grey',
+        }}
+      />
+    </Text>
+  </TouchableOpacity>
+);
 
 export default FMImageUploadDisplay;

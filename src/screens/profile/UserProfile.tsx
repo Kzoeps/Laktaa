@@ -1,5 +1,5 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
-import { TouchableOpacity, View, Text } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Button, Icon, Spinner } from 'native-base';
 import { Formik, FormikProps, FormikValues } from 'formik';
@@ -9,11 +9,11 @@ import { DocumentResult } from 'expo-document-picker';
 import tailwind from 'tailwind-rn';
 import { NavigationScreenProp } from 'react-navigation';
 import {
-	fetchUserProfile,
-	selectStoreStatus,
-	selectUserDetails,
-	updateUserProfile as updateUserProfileStore,
-	updateUserProfileImage,
+  fetchUserProfile,
+  selectStoreStatus,
+  selectUserDetails,
+  updateUserProfile as updateUserProfileStore,
+  updateUserProfileImage,
 } from '../auth/store/authSlice';
 import { EDIT_PROFILE_SCHEMA } from './models/constants';
 import FMTextInput from '../../shared/components/TextInput';
@@ -30,6 +30,7 @@ const UserProfile: FC<{ navigation: NavigationScreenProp<any> }> = ({
 }) => {
   const [inputsDisabled, setInputsDisabled] = useState<boolean>(true);
   const userDetails = useSelector(selectUserDetails);
+  console.log('user details ');
   const storeStatus = useSelector(selectStoreStatus);
   const [file, setFile] = useState<DocumentResult | undefined>(undefined);
   const [userInitials, setUserInitials] = useState<string>('');
@@ -67,23 +68,23 @@ const UserProfile: FC<{ navigation: NavigationScreenProp<any> }> = ({
       const updateUserProfileImageUrl = async () => {
         await dispatch(
           updateUserProfileImage({
-            email: userDetails.email,
+            email: userDetails?.email,
             profileImageUrl: uploadImage,
           })
         );
       };
       updateUserProfileImageUrl();
     }
-  }, [uploadImage, userDetails.email, dispatch]);
+  }, [uploadImage, userDetails?.email, dispatch]);
   useEffect(() => {
     setUserInitials(
-      userDetails.userName
+      userDetails?.userName
         .split(' ')
         .map((name) => name[0])
         .join('')
         .toUpperCase()
     );
-  }, [userDetails.userName]);
+  }, [userDetails?.userName]);
 
   if (storeStatus === APIStatuses.LOADING || uploadImage === 'pending')
     return <Spinner accessibilityLabel="loading profile" />;
@@ -97,7 +98,7 @@ const UserProfile: FC<{ navigation: NavigationScreenProp<any> }> = ({
               fallbackText={userInitials}
               showBadge={true}
               onBadgeClick={openFilePicker}
-              imageUrl={userDetails.profileImageUrl}
+              imageUrl={userDetails?.profileImageUrl}
             />
           </View>
           <View style={tailwind('items-center w-full h-1/2')}>
@@ -109,7 +110,7 @@ const UserProfile: FC<{ navigation: NavigationScreenProp<any> }> = ({
                   userName,
                   phoneNumber,
                   location,
-                  email: userDetails.email,
+                  email: userDetails?.email,
                 });
               }}
               onReset={() => {
@@ -178,24 +179,24 @@ const UserProfile: FC<{ navigation: NavigationScreenProp<any> }> = ({
                           onPress={() => {
                             formik.resetForm();
                             setInputsDisabled(true);
-													}}
-												>
-													Cancel
-												</Button>
-											</View>
-										)}
-									</View>
-								</>
-							)}
-						</Formik>
-					</View>
-					<TouchableOpacity style={tailwind('')} onPress={logout}>
-						<Text
-							style={tailwind('w-full font-bold underline items-center h-10')}
-						>
-							Logout
-						</Text>
-					</TouchableOpacity>
+                          }}
+                        >
+                          Cancel
+                        </Button>
+                      </View>
+                    )}
+                  </View>
+                </>
+              )}
+            </Formik>
+          </View>
+          <TouchableOpacity style={tailwind('')} onPress={logout}>
+            <Text
+              style={tailwind('w-full font-bold underline items-center h-10')}
+            >
+              Logout
+            </Text>
+          </TouchableOpacity>
         </View>
       </Layout>
     </Box>
