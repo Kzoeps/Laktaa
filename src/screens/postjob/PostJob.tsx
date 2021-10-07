@@ -51,11 +51,9 @@ const PostJob: FC = ({ navigation }) => {
 
   const changeFromDate = (value: Date) => {
     setFromDate(value);
-    console.log('this is the FROM date', value);
   };
   const changeToDate = (value: Date) => {
     setToDate(value);
-    console.log('this is the TO date', value);
   };
 
   const toast = useToast();
