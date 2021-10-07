@@ -19,10 +19,10 @@ const AppStack = (): JSX.Element => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!userDetails.userName) {
+    if (!userDetails?.userName) {
       if (currentUser.email) dispatch(fetchUserProfile(currentUser.email));
     }
-  }, [userDetails.userName]);
+  }, [userDetails?.userName]);
 	useEffect(() => {
 		setUserInitials(
 			userDetails?.userName
