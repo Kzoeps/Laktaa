@@ -33,7 +33,7 @@ export const FIREBASE_CALLS = {
     location: string;
     userName: string;
   }): Promise<void> =>
-    firebase.firestore().collection(email).doc('userProfile').set({
+    firebase.firestore().collection(email.toLowerCase()).doc('userProfile').set({
       email,
       userName,
       location,

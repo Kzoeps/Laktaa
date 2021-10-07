@@ -57,7 +57,7 @@ const UserProfile: FC<{ navigation: NavigationScreenProp<any> }> = ({
   };
 
   useEffect(() => {
-    if (!userDetails.userName) {
+    if (!userDetails?.userName) {
       if (currentUser.email) dispatch(fetchUserProfile(currentUser.email));
     }
   });
