@@ -48,6 +48,7 @@ export const fetchUserProfile = createAsyncThunk(
   AuthStoreActionTypes.fetchUserProfile,
   async (email: string) => {
     const response = await FIREBASE_CALLS.getUserProfile(email);
+    console.log('this is the resonse: ', response.data());
     return response.data();
   }
 );

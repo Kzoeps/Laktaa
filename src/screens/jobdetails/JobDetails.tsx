@@ -1,4 +1,4 @@
-import React from 'react';
+  import React from 'react';
 import { Image, ScrollView } from 'react-native';
 import { View, Text, Box } from 'native-base';
 import tailwind from 'tailwind-rn';
@@ -13,6 +13,13 @@ const JobDetails = ({ route, naviagtion }) => {
     measurementLabel: 'text-gray-300',
     numberPrice: 'border-b border-gray-200 pb-1 mr-16',
     location: 'mx-8 my-1 p-2 border-b border-gray-200',
+  };
+
+  const returnDate = (dateStr: string) => {
+    const date = new Date(dateStr);
+    const month = `0${date.getMonth() + 1}`.slice(-2);
+    const day = `0${date.getDate()}`.slice(-2);
+    return [day, month, date.getFullYear()].join('-');
   };
   return (
     <>
@@ -85,7 +92,7 @@ const JobDetails = ({ route, naviagtion }) => {
               </View>
               <View>
                 <Box style={tailwind(styles.location)}>
-                  <Text>{data.pickUpDate}</Text>
+                  <Text>{returnDate(data.pickUpDate)}</Text>
                 </Box>
               </View>
               <View>
@@ -120,7 +127,7 @@ const JobDetails = ({ route, naviagtion }) => {
               </View>
               <View>
                 <Box style={tailwind(styles.location)}>
-                  <Text>{data.dropOffDate}</Text>
+                  <Text>{returnDate(data.dropOffDate)}</Text>
                 </Box>
               </View>
               <View>

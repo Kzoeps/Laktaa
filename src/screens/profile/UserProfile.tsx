@@ -25,6 +25,7 @@ import FMHeader from '../../shared/components/FMHeader/FMHeader';
 const UserProfile: FC = () => {
   const [inputsDisabled, setInputsDisabled] = useState<boolean>(true);
   const userDetails = useSelector(selectUserDetails);
+  console.log("user details ")
   const storeStatus = useSelector(selectStoreStatus);
   const [file, setFile] = useState<DocumentResult | undefined>(undefined);
   const [userInitials, setUserInitials] = useState<string>('');
@@ -55,23 +56,23 @@ const UserProfile: FC = () => {
       const updateUserProfileImageUrl = async () => {
         await dispatch(
           updateUserProfileImage({
-            email: userDetails.email,
+            email: userDetails?.email,
             profileImageUrl: uploadImage,
           })
         );
       };
       updateUserProfileImageUrl();
     }
-  }, [uploadImage, userDetails.email, dispatch]);
+  }, [uploadImage, userDetails?.email, dispatch]);
   useEffect(() => {
     setUserInitials(
-      userDetails.userName
+      userDetails?.userName
         .split(' ')
         .map((name) => name[0])
         .join('')
         .toUpperCase()
     );
-  }, [userDetails.userName]);
+  }, [userDetails?.userName]);
 
   if (storeStatus === APIStatuses.LOADING || uploadImage === 'pending')
     return <Spinner accessibilityLabel="loading profile" />;
@@ -85,7 +86,7 @@ const UserProfile: FC = () => {
               fallbackText={userInitials}
               showBadge={true}
               onBadgeClick={openFilePicker}
-              imageUrl={userDetails.profileImageUrl}
+              imageUrl={userDetails?.profileImageUrl}
             />
           </View>
           <View style={tailwind('items-center w-full h-full')}>
@@ -97,7 +98,7 @@ const UserProfile: FC = () => {
                   userName,
                   phoneNumber,
                   location,
-                  email: userDetails.email,
+                  email: userDetails?.email,
                 });
               }}
               onReset={() => {
