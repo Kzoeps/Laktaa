@@ -20,6 +20,8 @@ import {
 } from './store/driverSlice';
 import { RootState } from '../../store/store';
 import OpenCamera from '../postjob/Camera';
+import { ScrollView, View } from 'react-native';
+import tailwind from 'tailwind-rn';
 
 const VehicleRegistration: FC = ({ navigation }) => {
   const [showCamera, setShowCamera] = useState<boolean>(false);
@@ -112,20 +114,19 @@ const VehicleRegistration: FC = ({ navigation }) => {
         updateImageInfo={setDriverImageInfo}
       />
       <Box bg="emerald.400">
-        <FMHeader header="Vehicle Registration" />
-        <Layout styleProp="h-full">
-          <VehicleForm
-            openDriverCamera={openDriverCamera}
-            carImageInfo={imageInfo || vehicleInfo?.carImageUri}
-            driverImageInfo={driverImageInfo || vehicleInfo?.driverImageUri}
-            openCamera={openCamera}
-            initialFormValues={vehicleInfo}
-            setRegistrationDetails={setRegistrationDetails}
-          />
-          <Button onPress={() => navigation.navigate('User Profile')}>
-            ROUTE TO USER
-          </Button>
-        </Layout>
+        <ScrollView>
+          <FMHeader header="Vehicle Registration" />
+          <Layout styleProp="h-full">
+            <VehicleForm
+              openDriverCamera={openDriverCamera}
+              carImageInfo={imageInfo || vehicleInfo?.carImageUri}
+              driverImageInfo={driverImageInfo || vehicleInfo?.driverImageUri}
+              openCamera={openCamera}
+              initialFormValues={vehicleInfo}
+              setRegistrationDetails={setRegistrationDetails}
+            />
+          </Layout>
+        </ScrollView>
       </Box>
     </>
   );
