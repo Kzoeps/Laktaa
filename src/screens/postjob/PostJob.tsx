@@ -292,7 +292,7 @@ const PostJob: FC = ({ navigation }) => {
                       </Box>
                       <Box style={tailwind('mx-2 w-28 my-2')}>
                         <FMTextInput
-                          label="Breath"
+                          label="Breadth"
                           name="breath"
                           formik={
                             formik as unknown as FormikProps<FormikValues>

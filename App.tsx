@@ -20,6 +20,8 @@ const firebaseConfig = {
 firebase.apps.length ? firebase.app() : firebase.initializeApp(firebaseConfig);
 
 export default function App() {
+  // eslint-disable-next-line no-console
+  console.disableYellowBox = true;
   return (
     <NativeBaseProvider>
       <Provider store={store}>
