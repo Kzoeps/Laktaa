@@ -46,7 +46,7 @@ const OpenCamera: FC<{
       const options = { quality: 0.7, skipProcessing: true };
       const data = await cameraRef.current.takePictureAsync(options);
       props.updateImageInfo(data.uri);
-      props.closeCamera();
+      props.closeCamera && props.closeCamera();
     }
   };
 

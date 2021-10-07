@@ -13,15 +13,6 @@ const Stack = createStackNavigator();
 const AppStack = (): JSX.Element => (
   <Stack.Navigator>
     {/* <Stack.Screen name="Calendar" component={Calendar} /> */}
-		<Stack.Screen
-			name="Vehicle Registration"
-			options={{
-				title: 'Vehicle Registration',
-				// ...NAVIGATION_HEADER_CONFIG,
-			}}
-			component={VehicleRegistration}
-		/>
-    {/*<Stack.Screen name="Dashboard" component={DashboardScreen} />*/}
     <Stack.Screen
       name="User Profile"
       component={UserProfile}
@@ -29,6 +20,15 @@ const AppStack = (): JSX.Element => (
         title: 'User Profile',
         // ...NAVIGATION_HEADER_CONFIG,
       }}
+    />
+    {/*<Stack.Screen name="Dashboard" component={DashboardScreen} />*/}
+    <Stack.Screen
+      name="Vehicle Registration"
+      options={{
+        title: 'Vehicle Registration',
+        // ...NAVIGATION_HEADER_CONFIG,
+      }}
+      component={VehicleRegistration}
     />
     <Stack.Screen name="PostJob" component={PostJob} />
     <Stack.Screen name="JobDetails" component={JobDetails} />

@@ -36,6 +36,23 @@ export const setVehicleRegistration = createAsyncThunk(
   }
 );
 
+export const updateVehicleRegistration = createAsyncThunk(
+  DriverSliceActionTypes.updateVehicleRegistration,
+  async ({
+    registrationDetails,
+    email,
+  }: {
+    registrationDetails: VehicleInfo & DriverInfo;
+    email: string;
+  }) => {
+    await VEHICLE_REGISTER_CALLS.updateVehicleRegistration(
+      registrationDetails,
+      email
+    );
+    return registrationDetails;
+  }
+);
+
 /* eslint-disable no-param-reassign */
 export const vehicleSlice = createSlice({
   name: 'vehicle',
@@ -55,6 +72,23 @@ export const vehicleSlice = createSlice({
       state.status = APIStatuses.LOADING;
     },
     [setVehicleRegistration.rejected as unknown as string]: (
+      state: VehicleSlice
+    ) => {
+      state.status = APIStatuses.FAILED;
+    },
+    [updateVehicleRegistration.fulfilled as unknown as string]: (
+      state: VehicleSlice,
+      action: PayloadAction<VehicleInfo & DriverInfo>
+    ) => {
+      state.details = action.payload;
+      state.status = APIStatuses.SUCCEEDED;
+    },
+    [updateVehicleRegistration.pending as unknown as string]: (
+      state: VehicleSlice
+    ) => {
+      state.status = APIStatuses.LOADING;
+    },
+    [updateVehicleRegistration.rejected as unknown as string]: (
       state: VehicleSlice
     ) => {
       state.status = APIStatuses.FAILED;

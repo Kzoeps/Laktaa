@@ -14,7 +14,7 @@ const Pageheader = ({ navigation, page }): JSX.Element => {
   const toggleDriver = () => {
     setCustomer(false);
     setDriver(true);
-    navigation.navigate('Vehicle Registration')
+    navigation.navigate('Vehicle Registration');
   };
 
   return page === 'dashboard' ? (

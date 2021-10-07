@@ -33,7 +33,7 @@ const UserProfile: FC<{ navigation: NavigationScreenProp<any> }> = ({
   const storeStatus = useSelector(selectStoreStatus);
   const [file, setFile] = useState<DocumentResult | undefined>(undefined);
   const [userInitials, setUserInitials] = useState<string>('');
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, logout } = useContext(AuthContext);
   const dispatch = useDispatch();
   const uploadImage = useFirestoreUpload(
     `profileImages/${userDetails?.email}`,
@@ -149,25 +149,22 @@ const UserProfile: FC<{ navigation: NavigationScreenProp<any> }> = ({
                   </Box>
 
                   <View style={tailwind('mt-8 items-center')}>
-                    <Button
-                      onPress={() =>
-                        navigation.navigate('Vehicle Registration')
-                      }
-                    >
-                      ROUTE TO REGI
-                    </Button>
                     {inputsDisabled ? (
-                      <Button
-                        endIcon={
-                          <Icon
-                            as={<MaterialIcons name="arrow-forward" size="4" />}
-                          />
-                        }
-                        onPress={() => setInputsDisabled(false)}
-                        light
-                      >
-                        Edit
-                      </Button>
+                      <>
+                        <Button
+                          endIcon={
+                            <Icon
+                              as={
+                                <MaterialIcons name="arrow-forward" size="4" />
+                              }
+                            />
+                          }
+                          onPress={() => setInputsDisabled(false)}
+                          light
+                        >
+                          Edit
+                        </Button>
+                      </>
                     ) : (
                       <View style={tailwind('w-10/12 flex flex-row')}>
                         <Button
@@ -191,6 +188,14 @@ const UserProfile: FC<{ navigation: NavigationScreenProp<any> }> = ({
                 </>
               )}
             </Formik>
+            <View>
+              <Button
+                style={tailwind('w-full items-center h-10')}
+                onPress={logout}
+              >
+                Logout
+              </Button>
+            </View>
           </View>
         </View>
       </Layout>

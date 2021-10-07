@@ -32,7 +32,6 @@ const FMAvatar: FC<{
     {showBadge && (
       <Avatar.Badge
         style={tailwind(badgeClasses || 'w-2/6 h-2/6')}
-        border={0}
         bg="transparent"
       >
         <Icon
@@ -45,5 +44,7 @@ const FMAvatar: FC<{
     )}
   </Avatar>
 );
+
+// border={0}
 
 export default FMAvatar;

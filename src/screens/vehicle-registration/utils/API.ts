@@ -13,6 +13,15 @@ export const VEHICLE_REGISTER_CALLS = {
       .collection(RegistrationCollections.driverRegistrations)
       .doc(email)
       .set(info),
+  updateVehicleRegistration: (
+    info: VehicleInfo & DriverInfo,
+    email: string
+  ): Promise<void> =>
+    firebase
+      .firestore()
+      .collection(RegistrationCollections.driverRegistrations)
+      .doc(email)
+      .update(info),
   getVehicleRegistration: (
     email: string
   ): Promise<DocumentSnapshot<VehicleInfo & DriverInfo>> =>
