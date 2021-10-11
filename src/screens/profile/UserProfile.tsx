@@ -51,7 +51,6 @@ const UserProfile: FC<UserProfileNavProps> = ({
   const validationSchema = EDIT_PROFILE_SCHEMA;
   const updateUserProfile = async (userDetailsPayload: UserDetails) => {
     await dispatch(updateUserProfileStore(userDetailsPayload));
-    setInputsDisabled(true);
   };
   const openFilePicker = async () => {
     const fileRef = await DocumentPicker.getDocumentAsync({ type: 'image/*' });
@@ -61,6 +60,12 @@ const UserProfile: FC<UserProfileNavProps> = ({
   useEffect(() => {
   	dispatch(fetchUserProfile(userEmail));
   }, [userEmail, dispatch]);
+
+  useEffect(() => {
+  	if (userEmail === currentUser.email) setInputsDisabled(false);
+  	else setInputsDisabled(true)
+
+	},[userEmail, currentUser.email])
 
   useEffect(() => {
     if (!['idle', 'pending'].includes(uploadImage)) {
@@ -128,9 +133,6 @@ const UserProfile: FC<UserProfileNavProps> = ({
                   email: userDetails?.email,
                 });
               }}
-              onReset={() => {
-                setInputsDisabled(true);
-              }}
             >
               {(
                 formik: FormikProps<{
@@ -165,23 +167,7 @@ const UserProfile: FC<UserProfileNavProps> = ({
                   </Box>
 
                   <View style={tailwind('mt-8 items-center')}>
-                    {inputsDisabled ? (
-                      <>
-                        <Button
-                          endIcon={
-                            <Icon
-                              as={
-                                <MaterialIcons name="arrow-forward" size="4" />
-                              }
-                            />
-                          }
-                          onPress={() => setInputsDisabled(false)}
-                          light
-                        >
-                          Edit
-                        </Button>
-                      </>
-                    ) : (
+                    {!inputsDisabled && (
                       <View style={tailwind('w-10/12 flex flex-row')}>
                         <Button
                           style={tailwind('flex-auto mr-3')}
@@ -193,7 +179,6 @@ const UserProfile: FC<UserProfileNavProps> = ({
                           style={tailwind('flex-auto ml-1')}
                           onPress={() => {
                             formik.resetForm();
-                            setInputsDisabled(true);
                           }}
                         >
                           Cancel
