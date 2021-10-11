@@ -47,9 +47,9 @@ const AppStack = (): JSX.Element => {
           headerRight: (props) => (
             <FMNavHeaderProfile
 							userEmail={currentUser.email}
-              imageUri={userDetails?.profileImageUrl}
-              userInitials={userInitials}
-              navigation={navigation}
+							userInitials={userDetails?.profileImageUrl ? '' : userInitials}
+							imageUri={userDetails.profileImageUrl}
+							navigation={navigation}
 							route={route}
             />
           ),
