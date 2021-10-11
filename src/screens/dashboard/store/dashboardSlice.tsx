@@ -1,11 +1,10 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { APIStatuses } from '../../../shared/models/model';
+import { APIStatuses, PostJobInfo } from '../../../shared/models/model';
 import { DashboardActions } from '../models/enums';
 import { FIREBASE_FETCHJOB_CALLS } from '../utils/API';
 import { DashboardState } from '../models/models';
 // eslint-disable-next-line import/no-cycle
 import { RootState } from '../../../store/store';
-import { PostJobInfo } from '../../postjob/models/models';
 
 const initialState: DashboardState = {
   jobs: [],

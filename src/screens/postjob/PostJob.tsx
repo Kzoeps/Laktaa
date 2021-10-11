@@ -28,7 +28,6 @@ import {
   POST_JOB_INITIALIZER,
   POST_JOB_PERISH,
 } from './models/constants';
-import { PostJobInfo } from './models/models';
 import FMTextInput from '../../shared/components/TextInput';
 import FMSelectInput from '../../shared/components/SelectInput/FMSelectInput';
 import { DZONGKHAG_GEWOG } from '../../shared/models/constants';
@@ -36,8 +35,10 @@ import { AuthContext } from '../auth/auth';
 import OpenCamera from './Camera';
 import { FIREBASE_POSTJOB_CALLS } from './utils/API';
 import Calendar from '../../shared/components/Calendar/calendar';
+import { NavigationProps, RoutePaths, PostJobInfo } from '../../shared/models/model';
 
-const PostJob: FC = ({ navigation }) => {
+type PostJobNavProps = NavigationProps<RoutePaths.postJob>;
+const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
   const { currentUser } = useContext(AuthContext);
   const [showCamera, setShowCamera] = useState(false);
   const validationSchema = POST_JOB_SCHEMA;

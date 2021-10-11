@@ -9,13 +9,14 @@ import VehicleForm from './vehicle-form';
 import { DriverInfo, VehicleInfo } from './models/models';
 import { AuthContext } from '../auth/auth';
 import { getToastConfig, selectStoreStatus } from '../../shared/utils';
-import { APIStatuses, RootReducersEnum, ToastTypes } from '../../shared/models/model';
+import { APIStatuses, NavigationProps, RootReducersEnum, RoutePaths, ToastTypes } from '../../shared/models/model';
 import { getVehicleRegistrationDetails, setVehicleRegistration, updateVehicleRegistration } from './store/driverSlice';
 import { RootState } from '../../store/store';
 import OpenCamera from '../postjob/Camera';
 import Pageheader from '../../shared/components/Pageheader/Pageheader';
 
-const VehicleRegistration: FC = ({ navigation }) => {
+type VehicleRegistrationNavProps = NavigationProps<RoutePaths.vehicleRegistration>
+const VehicleRegistration: FC<VehicleRegistrationNavProps> = ({ navigation }) => {
 	const [showCamera, setShowCamera] = useState<boolean>(false);
 	const [showDriverCamera, setShowDriverCamera] = useState<boolean>(false);
 	const [imageInfo, setImageInfo] = useState<string>('');

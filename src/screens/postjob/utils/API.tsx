@@ -1,5 +1,5 @@
 import firebase from 'firebase';
-import { PostJobInfo } from '../models/models';
+import { PostJobInfo } from '../../../shared/models/model';
 
 // eslint-disable-next-line import/prefer-default-export
 export const FIREBASE_POSTJOB_CALLS = {

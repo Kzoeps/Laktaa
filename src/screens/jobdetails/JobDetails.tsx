@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Image, ScrollView } from 'react-native';
 import { View, Text, Box } from 'native-base';
 import tailwind from 'tailwind-rn';
 import Pageheader from '../../shared/components/Pageheader/Pageheader';
 import Layout from '../../shared/layout/layout';
+import { NavigationProps, RoutePaths } from '../../shared/models/model';
 
-const JobDetails = ({ route, naviagtion }) => {
+type JobDetailsNavProps = NavigationProps<RoutePaths.jobDetails>
+const JobDetails: FC<JobDetailsNavProps> = ({ route, navigation}) => {
   const { imageUrl, data } = route.params;
 
   const styles = {
