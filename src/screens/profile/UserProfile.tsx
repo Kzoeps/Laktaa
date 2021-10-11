@@ -17,7 +17,7 @@ import {
 } from '../auth/store/authSlice';
 import { EDIT_PROFILE_SCHEMA } from './models/constants';
 import FMTextInput from '../../shared/components/TextInput';
-import { APIStatuses } from '../../shared/models/model';
+import { APIStatuses, NavigationProps, RoutePaths } from '../../shared/models/model';
 import { UserDetails } from '../auth/models/models';
 import useFirestoreUpload from '../../shared/components/useFirestoreUpload';
 import Layout from '../../shared/layout/layout';
@@ -25,12 +25,14 @@ import FMAvatar from '../../shared/components/FMAvatar/FMAvatar';
 import FMHeader from '../../shared/components/FMHeader/FMHeader';
 import { AuthContext } from '../auth/auth';
 
-const UserProfile: FC<{ navigation: NavigationScreenProp<any> }> = ({
-  navigation,
+type UserProfileNavProps = NavigationProps<RoutePaths.userProfile>;
+const UserProfile: FC<UserProfileNavProps> = ({
+  route, navigation,
 }) => {
   const [inputsDisabled, setInputsDisabled] = useState<boolean>(true);
   const userDetails = useSelector(selectUserDetails);
   const storeStatus = useSelector(selectStoreStatus);
+  const { userEmail } = route.params;
   const [file, setFile] = useState<DocumentResult | undefined>(undefined);
   const [userInitials, setUserInitials] = useState<string>('');
   const { currentUser, logout } = useContext(AuthContext);
@@ -57,10 +59,8 @@ const UserProfile: FC<{ navigation: NavigationScreenProp<any> }> = ({
   };
 
   useEffect(() => {
-    if (!userDetails?.userName) {
-      if (currentUser.email) dispatch(fetchUserProfile(currentUser.email));
-    }
-  });
+  	dispatch(fetchUserProfile(userEmail));
+  }, [userEmail, dispatch]);
 
   useEffect(() => {
     if (!['idle', 'pending'].includes(uploadImage)) {
@@ -111,7 +111,7 @@ const UserProfile: FC<{ navigation: NavigationScreenProp<any> }> = ({
           <View style={tailwind('mt-10 mb-4')}>
             <FMAvatar
               fallbackText={userInitials}
-              showBadge={true}
+              showBadge
               onBadgeClick={openFilePicker}
               imageUrl={userDetails?.profileImageUrl}
             />

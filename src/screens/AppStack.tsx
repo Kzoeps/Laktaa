@@ -9,8 +9,10 @@ import VehicleRegistration from './vehicle-registration/vehicle-registration';
 import FMNavHeaderProfile from '../shared/components/HeaderProfileDisplay/FMNavHeaderProfile';
 import { fetchUserProfile, selectUserDetails } from './auth/store/authSlice';
 import { AuthContext } from './auth/auth';
+// eslint-disable-next-line import/named
+import { AppStackParamList, RoutePaths } from '../shared/models/model';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<AppStackParamList>();
 
 const AppStack = (): JSX.Element => {
   const [userInitials, setUserInitials] = useState('');
@@ -38,47 +40,53 @@ const AppStack = (): JSX.Element => {
     <Stack.Navigator>
       {/* <Stack.Screen name="Calendar" component={Calendar} /> */}
       <Stack.Screen
-        name="Dashboard"
+        name={RoutePaths.dashboard}
         component={DashboardScreen}
-        options={({ navigation }) => ({
+        options={({ navigation,route }) => ({
           headerTitle: 'Dashboard',
           headerRight: (props) => (
             <FMNavHeaderProfile
+							userEmail={currentUser.email}
               imageUri={userDetails?.profileImageUrl}
               userInitials={userInitials}
               navigation={navigation}
+							route={route}
             />
           ),
         })}
       />
       <Stack.Screen
-        name="User Profile"
+        name={RoutePaths.userProfile}
         component={UserProfile}
         options={{
           title: 'My Profile',
         }}
       />
       <Stack.Screen
-        name="Vehicle Registration"
-        options={({ navigation }) => ({
+        name={RoutePaths.vehicleRegistration}
+        options={({ navigation, route }) => ({
           headerTitle: 'Vehicle Registration',
           headerRight: (props) => (
             <FMNavHeaderProfile
+							userEmail={currentUser.email}
               imageUri={userDetails?.profileImageUrl}
               userInitials={userInitials}
               navigation={navigation}
+							route={route}
             />
           ),
         })}
         component={VehicleRegistration}
       />
       <Stack.Screen
-        name="PostJob"
+        name={RoutePaths.postJob}
         component={PostJob}
-        options={({ navigation }) => ({
+        options={({ navigation,route }) => ({
           headerTitle: 'Post Jobs',
           headerRight: (props) => (
             <FMNavHeaderProfile
+							route={route}
+							userEmail={currentUser.email}
               imageUri={userDetails?.profileImageUrl}
               userInitials={userInitials}
               navigation={navigation}
@@ -87,15 +95,17 @@ const AppStack = (): JSX.Element => {
         })}
       />
       <Stack.Screen
-        name="JobDetails"
+        name={RoutePaths.jobDetails}
         component={JobDetails}
-        options={({ navigation }) => ({
+        options={({ navigation, route }) => ({
           headerTitle: 'Job Details',
           headerRight: (props) => (
             <FMNavHeaderProfile
+							userEmail={currentUser.email}
               imageUri={userDetails?.profileImageUrl}
               userInitials={userInitials}
               navigation={navigation}
+							route={route}
             />
           ),
         })}

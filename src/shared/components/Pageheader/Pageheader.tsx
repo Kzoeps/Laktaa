@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 import tailwind from 'tailwind-rn';
 import HeaderLayout from '../../layout/header';
+import { RoutePaths } from '../../models/model';
 
 const Pageheader = ({ navigation, page, activeTab }): JSX.Element => {
   const toggleCustomer = () => {
-    navigation.navigate('Dashboard');
+    navigation.navigate(RoutePaths.dashboard);
   };
   const toggleDriver = () => {
-    navigation.navigate('Vehicle Registration');
+    navigation.navigate(RoutePaths.vehicleRegistration);
   };
 
   return page === 'dashboard' ? (
