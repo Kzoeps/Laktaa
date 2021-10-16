@@ -7,11 +7,13 @@ import FMAvatar from '../FMAvatar/FMAvatar';
 import { NavigationProps, RoutePaths } from '../../models/model';
 
 type NavHeaderNavProps = NavigationProps<RoutePaths>;
-const FMNavHeaderProfile: FC<{
-  imageUri: string | undefined;
-  userInitials: string;
-  userEmail: string;
-} & NavHeaderNavProps> = ({ navigation, imageUri, userInitials, userEmail }) => {
+const FMNavHeaderProfile: FC<
+  {
+    imageUri: string | undefined;
+    userInitials: string;
+    userEmail: string;
+  } & NavHeaderNavProps
+> = ({ navigation, imageUri, userInitials, userEmail }) => {
   return (
     <TouchableOpacity
       style={tailwind('mr-4')}
@@ -20,8 +22,8 @@ const FMNavHeaderProfile: FC<{
       <FMAvatar
         size="md"
         onBadgeClick={() => undefined}
-				imageUrl={imageUri}
-				fallbackText={userInitials}
+        imageUrl={imageUri}
+        fallbackText={userInitials}
         showBadge={false}
       />
     </TouchableOpacity>

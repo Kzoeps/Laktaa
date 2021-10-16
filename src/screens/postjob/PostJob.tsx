@@ -35,7 +35,11 @@ import { AuthContext } from '../auth/auth';
 import OpenCamera from './Camera';
 import { FIREBASE_POSTJOB_CALLS } from './utils/API';
 import Calendar from '../../shared/components/Calendar/calendar';
-import { NavigationProps, RoutePaths, PostJobInfo } from '../../shared/models/model';
+import {
+  NavigationProps,
+  RoutePaths,
+  PostJobInfo,
+} from '../../shared/models/model';
 
 type PostJobNavProps = NavigationProps<RoutePaths.postJob>;
 const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
