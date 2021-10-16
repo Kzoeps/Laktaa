@@ -77,7 +77,7 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
     }
     if (fromDate > toDate) {
       toast.show({
-        title: 'Pick up date cannot be after drop off date',
+        title: 'Pick up date cannot be after the drop off \n date',
         status: 'error',
       });
       return;
