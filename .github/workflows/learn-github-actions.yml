@@ -7,6 +7,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: echo "__-_-__ Jobs seem to work, current repo ${{github.repository}}"
       - name: lists files in the repository
+        run: |
           ls ${{ github.workspace }}
       - uses: actions/setup-node@v2
         with:
