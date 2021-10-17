@@ -12,6 +12,11 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
+      - name: global install yarn
+        run:
+          npm install yarn
+      - run: echo "the yarn version is"
+      - run: yarn --version
       - name: checkout to workspace
         run:
           cd ${{ github.workspace }}
