@@ -22,6 +22,12 @@ jobs:
           cd ${{ github.workspace }}
       - run:
           ls
+      - name: install required packages
+        run:
+          yarn install
+      - name: run yarn lint
+        run:
+          yarn lint
       - run: npm install -g bats
       - run: bats -v
 #  Explore-GitHub-Actions:
