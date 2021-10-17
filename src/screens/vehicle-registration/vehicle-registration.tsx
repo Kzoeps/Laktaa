@@ -9,19 +9,32 @@ import VehicleForm from './vehicle-form';
 import { DriverInfo, VehicleInfo } from './models/models';
 import { AuthContext } from '../auth/auth';
 import { getToastConfig, selectStoreStatus } from '../../shared/utils';
-import { APIStatuses, NavigationProps, RootReducersEnum, RoutePaths, ToastTypes } from '../../shared/models/model';
-import { getVehicleRegistrationDetails, setVehicleRegistration, updateVehicleRegistration } from './store/driverSlice';
+import {
+  APIStatuses,
+  NavigationProps,
+  RootReducersEnum,
+  RoutePaths,
+  ToastTypes,
+} from '../../shared/models/model';
+import {
+  getVehicleRegistrationDetails,
+  setVehicleRegistration,
+  updateVehicleRegistration,
+} from './store/driverSlice';
 import { RootState } from '../../store/store';
 import OpenCamera from '../postjob/Camera';
 import Pageheader from '../../shared/components/Pageheader/Pageheader';
 
-type VehicleRegistrationNavProps = NavigationProps<RoutePaths.vehicleRegistration>
-const VehicleRegistration: FC<VehicleRegistrationNavProps> = ({ navigation }) => {
-	const [showCamera, setShowCamera] = useState<boolean>(false);
-	const [showDriverCamera, setShowDriverCamera] = useState<boolean>(false);
-	const [imageInfo, setImageInfo] = useState<string>('');
-	const [driverImageInfo, setDriverImageInfo] = useState<string>('');
-	const [showLoader, setShowLoader] = useState<boolean>(false);
+type VehicleRegistrationNavProps =
+  NavigationProps<RoutePaths.vehicleRegistration>;
+const VehicleRegistration: FC<VehicleRegistrationNavProps> = ({
+  navigation,
+}) => {
+  const [showCamera, setShowCamera] = useState<boolean>(false);
+  const [showDriverCamera, setShowDriverCamera] = useState<boolean>(false);
+  const [imageInfo, setImageInfo] = useState<string>('');
+  const [driverImageInfo, setDriverImageInfo] = useState<string>('');
+  const [showLoader, setShowLoader] = useState<boolean>(false);
   const { currentUser } = useContext(AuthContext);
   const vehicleInfo = useSelector((state: RootState) => state.vehicle.details);
   const status = useSelector(selectStoreStatus(RootReducersEnum.vehicleSlice));
@@ -88,43 +101,46 @@ const VehicleRegistration: FC<VehicleRegistrationNavProps> = ({ navigation }) =>
         setVehicleRegistration({ registrationDetails: payload, email })
       );
     }
-		setShowLoader(false);
-		toast.show(getToastConfig('Registered successfully', ToastTypes.success));
-	};
+    setShowLoader(false);
+    toast.show(getToastConfig('Registered successfully', ToastTypes.success));
+  };
 
-	useEffect(() => () => {
-			setShowCamera(false);
-			setShowDriverCamera(false);
-		}, []);
+  useEffect(
+    () => () => {
+      setShowCamera(false);
+      setShowDriverCamera(false);
+    },
+    []
+  );
 
-	if (status === APIStatuses.LOADING || showLoader) {
-		return (
-			<View style={tailwind('my-24')}>
-				<Spinner
-					accessibilityLabel='Loading posts'
-					color='emerald.500'
-					size='lg'
-				/>
-				<Heading
-					style={tailwind('text-center')}
-					color='emerald.500'
-					fontSize='xl'
-				>
-					Loading ...
-				</Heading>
-			</View>
-		);
-	}
-	return (
-		<>
-			<OpenCamera
-				showMySelf={showCamera}
-				closeCamera={closeCamera}
-				updateImageInfo={setImageInfo}
-			/>
-			<OpenCamera
-				showMySelf={showDriverCamera}
-				closeCamera={closeDriverCamera}
+  if (status === APIStatuses.LOADING || showLoader) {
+    return (
+      <View style={tailwind('my-24')}>
+        <Spinner
+          accessibilityLabel="Loading posts"
+          color="emerald.500"
+          size="lg"
+        />
+        <Heading
+          style={tailwind('text-center')}
+          color="emerald.500"
+          fontSize="xl"
+        >
+          Loading ...
+        </Heading>
+      </View>
+    );
+  }
+  return (
+    <>
+      <OpenCamera
+        showMySelf={showCamera}
+        closeCamera={closeCamera}
+        updateImageInfo={setImageInfo}
+      />
+      <OpenCamera
+        showMySelf={showDriverCamera}
+        closeCamera={closeDriverCamera}
         updateImageInfo={setDriverImageInfo}
       />
       <Box bg="emerald.400">

@@ -33,11 +33,15 @@ export const FIREBASE_CALLS = {
     location: string;
     userName: string;
   }): Promise<void> =>
-    firebase.firestore().collection(email.toLowerCase()).doc('userProfile').set({
-      email,
-      userName,
-      location,
-    }),
+    firebase
+      .firestore()
+      .collection(email.toLowerCase())
+      .doc('userProfile')
+      .set({
+        email,
+        userName,
+        location,
+      }),
   getUserProfile: (email: string): Promise<DocumentSnapshot<UserDetails>> =>
     firebase.firestore().collection(email).doc('userProfile').get() as Promise<
       DocumentSnapshot<UserDetails>
