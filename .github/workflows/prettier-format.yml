@@ -24,4 +24,5 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Format code with prettier
+          commit_options: '--no-verify'
           branch: ${{ github.head_ref }}
