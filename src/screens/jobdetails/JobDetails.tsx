@@ -6,8 +6,8 @@ import Pageheader from '../../shared/components/Pageheader/Pageheader';
 import Layout from '../../shared/layout/layout';
 import { NavigationProps, RoutePaths } from '../../shared/models/model';
 
-type JobDetailsNavProps = NavigationProps<RoutePaths.jobDetails>
-const JobDetails: FC<JobDetailsNavProps> = ({ route, navigation}) => {
+type JobDetailsNavProps = NavigationProps<RoutePaths.jobDetails>;
+const JobDetails: FC<JobDetailsNavProps> = ({ route, navigation }) => {
   const { imageUrl, data } = route.params;
 
   const styles = {

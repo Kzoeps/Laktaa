@@ -17,7 +17,11 @@ import {
 } from '../auth/store/authSlice';
 import { EDIT_PROFILE_SCHEMA } from './models/constants';
 import FMTextInput from '../../shared/components/TextInput';
-import { APIStatuses, NavigationProps, RoutePaths } from '../../shared/models/model';
+import {
+  APIStatuses,
+  NavigationProps,
+  RoutePaths,
+} from '../../shared/models/model';
 import { UserDetails } from '../auth/models/models';
 import useFirestoreUpload from '../../shared/components/useFirestoreUpload';
 import Layout from '../../shared/layout/layout';
@@ -26,9 +30,7 @@ import FMHeader from '../../shared/components/FMHeader/FMHeader';
 import { AuthContext } from '../auth/auth';
 
 type UserProfileNavProps = NavigationProps<RoutePaths.userProfile>;
-const UserProfile: FC<UserProfileNavProps> = ({
-  route, navigation,
-}) => {
+const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
   const [inputsDisabled, setInputsDisabled] = useState<boolean>(true);
   const userDetails = useSelector(selectUserDetails);
   const storeStatus = useSelector(selectStoreStatus);
@@ -58,14 +60,13 @@ const UserProfile: FC<UserProfileNavProps> = ({
   };
 
   useEffect(() => {
-  	dispatch(fetchUserProfile(userEmail));
+    dispatch(fetchUserProfile(userEmail));
   }, [userEmail, dispatch]);
 
   useEffect(() => {
-  	if (userEmail === currentUser.email) setInputsDisabled(false);
-  	else setInputsDisabled(true)
-
-	},[userEmail, currentUser.email])
+    if (userEmail === currentUser.email) setInputsDisabled(false);
+    else setInputsDisabled(true);
+  }, [userEmail, currentUser.email]);
 
   useEffect(() => {
     if (!['idle', 'pending'].includes(uploadImage)) {
@@ -91,23 +92,23 @@ const UserProfile: FC<UserProfileNavProps> = ({
   }, [userDetails?.userName]);
 
   if (storeStatus === APIStatuses.LOADING || uploadImage === 'pending') {
-  	return (
-			<View style={tailwind('my-24')}>
-				<Spinner
-					accessibilityLabel="Loading posts"
-					color="emerald.500"
-					size="lg"
-				/>
-				<Heading
-					style={tailwind('text-center')}
-					color="emerald.500"
-					fontSize="xl"
-				>
-					Loading ...
-				</Heading>
-			</View>
-		)
-	}
+    return (
+      <View style={tailwind('my-24')}>
+        <Spinner
+          accessibilityLabel="Loading posts"
+          color="emerald.500"
+          size="lg"
+        />
+        <Heading
+          style={tailwind('text-center')}
+          color="emerald.500"
+          fontSize="xl"
+        >
+          Loading ...
+        </Heading>
+      </View>
+    );
+  }
   return (
     <Box bg="emerald.400">
       <FMHeader header="My Profile" />

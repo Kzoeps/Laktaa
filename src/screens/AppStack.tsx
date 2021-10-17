@@ -25,31 +25,31 @@ const AppStack = (): JSX.Element => {
       if (currentUser.email) dispatch(fetchUserProfile(currentUser.email));
     }
   }, [userDetails?.userName]);
-	useEffect(() => {
-		setUserInitials(
-			userDetails?.userName
-				.split(' ')
-				.map((name) => name[0])
-				.join('')
-				.toUpperCase()
-		);
-		return () => setUserInitials('');
-	}, [userDetails?.userName]);
+  useEffect(() => {
+    setUserInitials(
+      userDetails?.userName
+        .split(' ')
+        .map((name) => name[0])
+        .join('')
+        .toUpperCase()
+    );
+    return () => setUserInitials('');
+  }, [userDetails?.userName]);
 
   return (
     <Stack.Navigator>
       <Stack.Screen
         name={RoutePaths.dashboard}
         component={DashboardScreen}
-        options={({ navigation,route }) => ({
+        options={({ navigation, route }) => ({
           headerTitle: 'Dashboard',
           headerRight: (props) => (
             <FMNavHeaderProfile
-							userEmail={currentUser.email}
-							userInitials={userDetails?.profileImageUrl ? '' : userInitials}
-							imageUri={userDetails.profileImageUrl}
-							navigation={navigation}
-							route={route}
+              userEmail={currentUser.email}
+              userInitials={userDetails?.profileImageUrl ? '' : userInitials}
+              imageUri={userDetails.profileImageUrl}
+              navigation={navigation}
+              route={route}
             />
           ),
         })}
@@ -67,11 +67,11 @@ const AppStack = (): JSX.Element => {
           headerTitle: 'Vehicle Registration',
           headerRight: (props) => (
             <FMNavHeaderProfile
-							userEmail={currentUser.email}
+              userEmail={currentUser.email}
               imageUri={userDetails?.profileImageUrl}
               userInitials={userInitials}
               navigation={navigation}
-							route={route}
+              route={route}
             />
           ),
         })}
@@ -80,12 +80,12 @@ const AppStack = (): JSX.Element => {
       <Stack.Screen
         name={RoutePaths.postJob}
         component={PostJob}
-        options={({ navigation,route }) => ({
+        options={({ navigation, route }) => ({
           headerTitle: 'Post Jobs',
           headerRight: (props) => (
             <FMNavHeaderProfile
-							route={route}
-							userEmail={currentUser.email}
+              route={route}
+              userEmail={currentUser.email}
               imageUri={userDetails?.profileImageUrl}
               userInitials={userInitials}
               navigation={navigation}
@@ -100,11 +100,11 @@ const AppStack = (): JSX.Element => {
           headerTitle: 'Job Details',
           headerRight: (props) => (
             <FMNavHeaderProfile
-							userEmail={currentUser.email}
+              userEmail={currentUser.email}
               imageUri={userDetails?.profileImageUrl}
               userInitials={userInitials}
               navigation={navigation}
-							route={route}
+              route={route}
             />
           ),
         })}

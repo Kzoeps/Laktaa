@@ -52,29 +52,28 @@ const SignUpScreen: FC = () => {
       />
       <View style={tailwind('h-full w-11/12 items-center')}>
         <Formik
-					initialValues={initialValues}
-					validationSchema={validationSchema}
-					onSubmit={({ email, password, name, location }) => {
-						signUpWithEmail(email, password)
-							.then(() => {
-								setDisplayName(name);
-								setUserDetails({ email, userName: name, location });
-								setShouldUpdateProfile(true);
-							})
-							.catch((error: firebase.FirebaseError) => {
-								console.error(error.message);
-							});
-					}
-					}
-				>
-					{(
-						formik: FormikProps<{
-							email: string;
-							password: string;
-							name: string;
-							location: string;
-						}>,
-					) => (
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={({ email, password, name, location }) => {
+            signUpWithEmail(email, password)
+              .then(() => {
+                setDisplayName(name);
+                setUserDetails({ email, userName: name, location });
+                setShouldUpdateProfile(true);
+              })
+              .catch((error: firebase.FirebaseError) => {
+                console.error(error.message);
+              });
+          }}
+        >
+          {(
+            formik: FormikProps<{
+              email: string;
+              password: string;
+              name: string;
+              location: string;
+            }>
+          ) => (
             <>
               <Box style={tailwind('mt-10 w-full items-center')}>
                 <FMTextInput
