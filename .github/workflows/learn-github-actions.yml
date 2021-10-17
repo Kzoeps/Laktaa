@@ -1,4 +1,4 @@
-name: learn-github-actions
+name: lint-files
 on:
   push:
     branches:
@@ -9,31 +9,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: echo "__-_-__ Jobs seem to work, current repo ${{github.repository}}"
-      - name: lists files in the repository
-        run:
-          ls ${{ github.workspace }}
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
       - name: global install yarn
         run:
           npm install yarn
-      - run: echo "the yarn version is"
-      - run: yarn --version
       - name: checkout to workspace
         run:
           cd ${{ github.workspace }}
-      - run:
-          ls
       - name: install required packages
         run:
           yarn install
       - name: run yarn lint
         run:
           yarn lint
-      - run: npm install -g bats
-      - run: bats -v
 #  Explore-GitHub-Actions:
 #    runs-on: ubuntu-latest
 #    steps:
