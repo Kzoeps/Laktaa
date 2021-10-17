@@ -38,7 +38,6 @@ const AppStack = (): JSX.Element => {
 
   return (
     <Stack.Navigator>
-      {/* <Stack.Screen name="Calendar" component={Calendar} /> */}
       <Stack.Screen
         name={RoutePaths.dashboard}
         component={DashboardScreen}
