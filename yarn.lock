@@ -5932,15 +5932,15 @@ escape-html@~1.0.3:
   resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
   integrity sha1-Aljq5NPQwJdN4cFpGI7wBR0dGYg=
 
+escape-string-regexp@2.0.0, escape-string-regexp@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-2.0.0.tgz#a30304e99daa32e23b2fd20f51babd07cffca344"
+  integrity sha512-UpzcLCXolUWcNu5HtVMHYdXJjArjsF9C0aNnquZYY4uW/Vu0miy5YoWvbV345HauVvcAUnpRuhMMcqTcGOY2+w==
+
 escape-string-regexp@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
-
-escape-string-regexp@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-2.0.0.tgz#a30304e99daa32e23b2fd20f51babd07cffca344"
-  integrity sha512-UpzcLCXolUWcNu5HtVMHYdXJjArjsF9C0aNnquZYY4uW/Vu0miy5YoWvbV345HauVvcAUnpRuhMMcqTcGOY2+w==
 
 escape-string-regexp@^4.0.0:
   version "4.0.0"
@@ -6351,6 +6351,18 @@ expo-file-system@~11.0.2:
   dependencies:
     "@expo/config-plugins" "^1.0.18"
     uuid "^3.4.0"
+
+expo-firebase-core@~3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/expo-firebase-core/-/expo-firebase-core-3.1.0.tgz#2fc14fa6e0c4154d8dc288be494e17c4ce48d359"
+  integrity sha512-M/3rXlU/lCFwNX8O9izViAESY2oAsYJVfN3SFbEUbCSvfkJh5t7p3if4vuxQ4V1Dfg4Up/I8MZhdJDy7SPJHGg==
+
+expo-firebase-recaptcha@^1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/expo-firebase-recaptcha/-/expo-firebase-recaptcha-1.4.2.tgz#648f11c735611a3f4a81506e50c4574ec93a3781"
+  integrity sha512-eAq1tDQ+LrooFxQN8YnMYl+7KG6uNlK8Dr25HsJakMzEhkuN168VQUsqpwjkCx74o3RNAev1MStdh3N0hcFasg==
+  dependencies:
+    expo-firebase-core "~3.1.0"
 
 expo-font@~9.1.0:
   version "9.1.0"
@@ -10698,6 +10710,14 @@ react-native-web@~0.13.12:
     normalize-css-color "^1.0.2"
     prop-types "^15.6.0"
     react-timer-mixin "^0.13.4"
+
+react-native-webview@11.2.3:
+  version "11.2.3"
+  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-11.2.3.tgz#1b82685ab60645d4161f2e25e98286493cdffa5d"
+  integrity sha512-r/K+Lf/O5aij72gRndMX2qsyQ/WLtDPiO75SS57y6JjqSKxedGASVL9Jwl1TM7fCXqUq8dgiwik/LuBHbJXAEg==
+  dependencies:
+    escape-string-regexp "2.0.0"
+    invariant "2.2.4"
 
 react-native@~0.63.4:
   version "0.63.4"
