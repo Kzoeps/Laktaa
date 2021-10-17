@@ -7,6 +7,11 @@ export interface AuthState {
   error: string | null;
 }
 
+export interface LoginFormValues {
+	phoneNumber: number
+	verificationCode: number
+}
+
 export interface UserDetails {
   userName: string;
   userId?: string;

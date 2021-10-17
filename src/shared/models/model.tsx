@@ -36,6 +36,8 @@ export interface BasicOption {
   value: string;
 }
 
+export type GenericFunction = (...args: unknown[]) => unknown;
+
 export enum ToastTypes {
   success = 'success',
   warn = 'warning',

@@ -113,7 +113,7 @@ const SignUpScreen: FC = () => {
                 <Button
                   endIcon={
                     <Icon
-                      as={<MaterialIcons name="arrow-forward" size="4" />}
+                      as={<MaterialIcons name="arrow-forward" size={4} />}
                     />
                   }
                   onPress={formik.handleSubmit}
