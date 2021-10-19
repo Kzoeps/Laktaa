@@ -7,6 +7,7 @@ import JobDetails from './jobdetails/JobDetails';
 import UserProfile from './profile/UserProfile';
 import VehicleRegistration from './vehicle-registration/vehicle-registration';
 import FMNavHeaderProfile from '../shared/components/HeaderProfileDisplay/FMNavHeaderProfile';
+import HomeNavigation from '../shared/components/HeaderHomeNavigation/FMHomeNavigation';
 import { fetchUserProfile, selectUserDetails } from './auth/store/authSlice';
 import { AuthContext } from './auth/auth';
 // eslint-disable-next-line import/named
@@ -58,9 +59,10 @@ const AppStack = (): JSX.Element => {
       <Stack.Screen
         name={RoutePaths.userProfile}
         component={UserProfile}
-        options={{
+        options={({ navigation }) => ({
           title: 'My Profile',
-        }}
+          headerLeft: (props) => <HomeNavigation navigation={navigation} />,
+        })}
       />
       <Stack.Screen
         name={RoutePaths.vehicleRegistration}
@@ -75,6 +77,7 @@ const AppStack = (): JSX.Element => {
               route={route}
             />
           ),
+          headerLeft: (props) => <HomeNavigation navigation={navigation} />,
         })}
         component={VehicleRegistration}
       />
@@ -92,6 +95,7 @@ const AppStack = (): JSX.Element => {
               navigation={navigation}
             />
           ),
+          headerLeft: (props) => <HomeNavigation navigation={navigation} />,
         })}
       />
       <Stack.Screen
@@ -108,6 +112,7 @@ const AppStack = (): JSX.Element => {
               route={route}
             />
           ),
+          headerLeft: (props) => <HomeNavigation navigation={navigation} />,
         })}
       />
     </Stack.Navigator>
