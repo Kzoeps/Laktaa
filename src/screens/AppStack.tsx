@@ -39,7 +39,6 @@ const AppStack = (): JSX.Element => {
 
   return (
     <Stack.Navigator>
-      {/* <Stack.Screen name="Calendar" component={Calendar} /> */}
       <Stack.Screen
         name={RoutePaths.dashboard}
         component={DashboardScreen}
@@ -48,8 +47,8 @@ const AppStack = (): JSX.Element => {
           headerRight: (props) => (
             <FMNavHeaderProfile
               userEmail={currentUser.email}
-              imageUri={userDetails?.profileImageUrl}
-              userInitials={userInitials}
+              userInitials={userDetails?.profileImageUrl ? '' : userInitials}
+              imageUri={userDetails.profileImageUrl}
               navigation={navigation}
               route={route}
             />
