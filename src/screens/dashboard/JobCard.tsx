@@ -1,13 +1,14 @@
 import React, { FC, useContext } from 'react';
 import { Image, TouchableOpacity } from 'react-native';
-import { Text, View } from 'native-base';
+import { Text, View, useToast } from 'native-base';
 import tailwind from 'tailwind-rn';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import call from 'react-native-phone-call';
 import { AuthContext } from '../auth/auth';
 import { FIREBASE_TRACK_USER } from './utils/API';
 
-const JobCard: FC = ({ data, navigation }) => {
+const JobCard: FC = ({ data, navigation, registeredDriver }) => {
+  const toast = useToast();
   const { currentUser } = useContext(AuthContext);
   const values = { poster: '', docId: '', currentUser: '' };
   const recordCall = async (docId: string, poster: string) => {
@@ -18,8 +19,35 @@ const JobCard: FC = ({ data, navigation }) => {
     values.docId = docId;
     values.currentUser = currentUser.email;
     await FIREBASE_TRACK_USER.trackUser(values);
-    console.log('hello world');
   };
+
+  const showRegiterAsDriverError = () => {
+    toast.show({
+      title: 'You need to be registered as a driver first!',
+      status: 'error',
+    });
+  };
+
+  const pressCall = (id: string, poster: string, phoneNumber: number) => {
+    if (registeredDriver === true) {
+      recordCall(id, poster);
+      call({ number: phoneNumber, prompt: true });
+    } else {
+      showRegiterAsDriverError();
+    }
+  };
+
+  const navigateToJobDetails = (page: string, data, imageUrl: string) => {
+    if (registeredDriver === true) {
+      navigation.navigate(page, {
+        data,
+        imageUrl,
+      });
+    } else {
+      showRegiterAsDriverError();
+    }
+  };
+
   return (
     <>
       {data.map((item) => (
@@ -77,8 +105,7 @@ const JobCard: FC = ({ data, navigation }) => {
               <TouchableOpacity
                 style={tailwind('flex-1 mx-2 w-full')}
                 onPress={() => {
-                  recordCall(item.id, item.poster);
-                  call({ number: item.pickUpPhone, prompt: true });
+                  pressCall(item.id, item.poster, item.pickUpPhone);
                 }}
               >
                 <Text
@@ -94,10 +121,7 @@ const JobCard: FC = ({ data, navigation }) => {
               <TouchableOpacity
                 style={tailwind('flex-1 w-full px-2')}
                 onPress={() =>
-                  navigation.navigate('JobDetails', {
-                    data: item,
-                    imageUrl: item.image,
-                  })
+                  navigateToJobDetails('JobDetails', item, item.image)
                 }
               >
                 <Text

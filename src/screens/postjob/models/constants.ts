@@ -8,9 +8,7 @@ export const POST_JOB_SCHEMA = Yup.object().shape({
   price: Yup.number().required(VALIDATION_MESSAGES.required),
   weight: Yup.number().required(VALIDATION_MESSAGES.required),
   pieces: Yup.number().required(VALIDATION_MESSAGES.required),
-  height: Yup.number(),
-  length: Yup.number(),
-  breath: Yup.number(),
+  size: Yup.string().required(VALIDATION_MESSAGES.required),
   pickPlace: Yup.string().required(VALIDATION_MESSAGES.required),
   pickDzongkhag: Yup.string().required(VALIDATION_MESSAGES.required),
   pickGewog: Yup.string().required(VALIDATION_MESSAGES.required),
@@ -35,9 +33,7 @@ export const POST_JOB_INITIALIZER = {
   price: '',
   weight: '',
   pieces: '',
-  height: '',
-  length: '',
-  breath: '',
+  size: '',
   pickPlace: '',
   pickDzongkhag: 'Bumthang',
   pickGewog: '',
@@ -60,4 +56,11 @@ export const POST_JOB_LOAD_TYPE = [
 export const POST_JOB_PERISH = [
   { label: 'Perishable', value: 'Perishable' },
   { label: 'Non-Perishable', value: 'Non-Perishable' },
+];
+
+export const POST_JOB_SIZES = [
+  { label: 'Small', value: 'Small' },
+  { label: 'Medium', value: 'Medium' },
+  { label: 'Large', value: 'Large' },
+  { label: 'Extra Large', value: 'Extra Large' },
 ];
