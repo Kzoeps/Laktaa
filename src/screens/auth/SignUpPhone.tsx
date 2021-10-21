@@ -20,7 +20,7 @@ const SignUpPhone: FC = () => {
   const [verificationId, setVerificationId] = useState<string>('');
   const [showLocalLoader, setShowLocalLoader] = useState(false);
   const [pendingRegistration, setPendingRegistration] = useState(false);
-	const status = useSelector(selectStoreStatus(RootReducersEnum.authSlice));
+  const status = useSelector(selectStoreStatus(RootReducersEnum.authSlice));
   const recaptchaVerifier = useRef(null);
   const initialValues = {
     phoneNumber: '',
@@ -57,13 +57,18 @@ const SignUpPhone: FC = () => {
       code
     );
     try {
-			await firebase.auth().signInWithCredential(credential);
-		} catch (e) {
-			console.error(e);
-		}
+      await firebase.auth().signInWithCredential(credential);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
-  useEffect(() => () => {setPendingRegistration(false)}, [])
+  useEffect(
+    () => () => {
+      setPendingRegistration(false);
+    },
+    []
+  );
 
   const handleSubmit = async (formValues: SignUpForm) => {
     const { verificationCode, name, phoneNumber, location } = formValues;
@@ -73,7 +78,7 @@ const SignUpPhone: FC = () => {
     // const user = firebase.auth().currentUser;
     await updateUserProfile(name);
     debugger;
-		await dispatch(
+    await dispatch(
       updateUserDetails({
         phoneNumber: `+975${phoneNumber}`,
         location,
@@ -82,28 +87,33 @@ const SignUpPhone: FC = () => {
       })
     );
   };
-	if (status === APIStatuses.LOADING) {
-		return (
-			<View style={tailwind('my-24')}>
-				<Spinner
-					accessibilityLabel="Loading posts"
-					color="emerald.500"
-					size="lg"
-				/>
-				<Heading
-					style={tailwind('text-center')}
-					color="emerald.500"
-					fontSize="xl"
-				>
-					Loading ...
-				</Heading>
-			</View>
-		);
-	}
+  if (status === APIStatuses.LOADING) {
+    return (
+      <View style={tailwind('my-24')}>
+        <Spinner
+          accessibilityLabel="Loading posts"
+          color="emerald.500"
+          size="lg"
+        />
+        <Heading
+          style={tailwind('text-center')}
+          color="emerald.500"
+          fontSize="xl"
+        >
+          Loading ...
+        </Heading>
+      </View>
+    );
+  }
 
   return (
     <>
-      <ScrollView style={[tailwind('w-full h-full'), {backgroundColor: "rgba(73, 193, 164, 0.9)"}]}>
+      <ScrollView
+        style={[
+          tailwind('w-full h-full'),
+          { backgroundColor: 'rgba(73, 193, 164, 0.9)' },
+        ]}
+      >
         <View style={tailwind('items-center')}>
           <Image
             style={tailwind('h-48 w-full mb-5')}
@@ -125,44 +135,46 @@ const SignUpPhone: FC = () => {
                     name="name"
                     formik={formik as unknown as FormikProps<FormikValues>}
                     icon="person"
-										placeholderTextColor="white"
-									/>
-								</Box>
-								<Box style={tailwind('mt-6 w-full items-center')}>
-									<FMTextInput
-										placeholderTextColor="white"
-										label='Location'
-										name='location'
-										formik={formik as unknown as FormikProps<FormikValues>}
-										icon='place'
-									/>
-								</Box>
-								<Box style={tailwind('mt-6 w-11/12 items-center flex flex-row')}>
-									<View style={tailwind('w-8/12')}>
-										<FMTextInput
-											placeholderTextColor="white"
-											label='Phone Number'
-											name='phoneNumber'
-											formik={formik as unknown as FormikProps<FormikValues>}
-											icon='phone'
-										/>
-									</View>
-									<Button
-										style={tailwind('w-4/12')}
-										isLoading={showLocalLoader}
-										onPress={() => {
-											sendVerification(formik.values.phoneNumber);
-										}}
-									>
-										Create OTP
-									</Button>
-								</Box>
-								<Box style={tailwind('mt-6 w-full items-center')}>
+                    placeholderTextColor="white"
+                  />
+                </Box>
+                <Box style={tailwind('mt-6 w-full items-center')}>
+                  <FMTextInput
+                    placeholderTextColor="white"
+                    label="Location"
+                    name="location"
+                    formik={formik as unknown as FormikProps<FormikValues>}
+                    icon="place"
+                  />
+                </Box>
+                <Box
+                  style={tailwind('mt-6 w-11/12 items-center flex flex-row')}
+                >
+                  <View style={tailwind('w-8/12')}>
+                    <FMTextInput
+                      placeholderTextColor="white"
+                      label="Phone Number"
+                      name="phoneNumber"
+                      formik={formik as unknown as FormikProps<FormikValues>}
+                      icon="phone"
+                    />
+                  </View>
+                  <Button
+                    style={tailwind('w-4/12')}
+                    isLoading={showLocalLoader}
+                    onPress={() => {
+                      sendVerification(formik.values.phoneNumber);
+                    }}
+                  >
+                    Create OTP
+                  </Button>
+                </Box>
+                <Box style={tailwind('mt-6 w-full items-center')}>
                   <FMTextInput
                     label="Verification Code"
                     formik={formik as unknown as FormikProps<FormikValues>}
-										placeholderTextColor="white"
-										name="verificationCode"
+                    placeholderTextColor="white"
+                    name="verificationCode"
                     icon="lock"
                     doNotShow
                   />
@@ -173,7 +185,7 @@ const SignUpPhone: FC = () => {
                 />
                 <Box style={tailwind('mt-8 w-3/6')}>
                   <Button
-										isLoading={pendingRegistration}
+                    isLoading={pendingRegistration}
                     endIcon={
                       <Icon
                         as={<MaterialIcons name="arrow-forward" size={4} />}

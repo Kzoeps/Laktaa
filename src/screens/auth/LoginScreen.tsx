@@ -52,8 +52,8 @@ const LoginScreen = ({ navigation }): JSX.Element => {
   };
 
   useEffect(() => () => {
-  	setPending(false);
-	})
+    setPending(false);
+  });
   return (
     <View style={{ flex: 1 }}>
       {/* eslint-disable-next-line global-require */}
@@ -66,25 +66,28 @@ const LoginScreen = ({ navigation }): JSX.Element => {
         <View style={tailwind('items-center h-full')}>
           <Formik
             initialValues={initialValues}
-            onSubmit={ async ({ phoneNumber, verificationCode }) => {
-            	setPending(true)
-            	await confirmCode(verificationCode);
-            	if (firebase.auth().currentUser?.displayName) await dispatch(fetchUserProfile(phoneNumber));
-            	setPending(false)
+            onSubmit={async ({ phoneNumber, verificationCode }) => {
+              setPending(true);
+              await confirmCode(verificationCode);
+              if (firebase.auth().currentUser?.displayName)
+                await dispatch(fetchUserProfile(phoneNumber));
+              setPending(false);
             }}
           >
             {(formik: FormikProps<LoginFormValues>) => (
               <View style={tailwind('h-full w-11/12 mt-32 items-center')}>
                 <View style={tailwind('w-11/12 items-center flex flex-row')}>
-									<View style={tailwind('w-8/12')}><FMTextInput
-										label='Phone Number'
-										name='phoneNumber'
-										formik={formik as unknown as FormikProps<FormikValues>}
-										icon='phone'
-										color='white'
-									/></View>
+                  <View style={tailwind('w-8/12')}>
+                    <FMTextInput
+                      label="Phone Number"
+                      name="phoneNumber"
+                      formik={formik as unknown as FormikProps<FormikValues>}
+                      icon="phone"
+                      color="white"
+                    />
+                  </View>
                   <Button
-										style={tailwind('w-4/12')}
+                    style={tailwind('w-4/12')}
                     isLoading={showLocalLoader}
                     onPress={() => sendVerification(formik.values.phoneNumber)}
                   >
@@ -98,7 +101,7 @@ const LoginScreen = ({ navigation }): JSX.Element => {
                   formik={formik as unknown as FormikProps<FormikValues>}
                   icon="lock"
                   doNotShow
-									color="white"
+                  color="white"
                 />
                 <Button
                   style={tailwind('mt-10 w-11/12 rounded-lg')}
