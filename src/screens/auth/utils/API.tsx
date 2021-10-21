@@ -28,7 +28,7 @@ export const FIREBASE_CALLS = {
     phoneNumber,
     userName,
     location,
-		registeredDriver
+    registeredDriver,
   }: UserDetails): Promise<void> =>
     firebase
       .firestore()
@@ -38,12 +38,16 @@ export const FIREBASE_CALLS = {
         phoneNumber,
         userName,
         location,
-				registeredDriver
+        registeredDriver,
       }),
-  getUserProfile: (phoneNumber: string): Promise<DocumentSnapshot<UserDetails>> =>
-    firebase.firestore().collection(phoneNumber).doc('userProfile').get() as Promise<
-      DocumentSnapshot<UserDetails>
-    >,
+  getUserProfile: (
+    phoneNumber: string
+  ): Promise<DocumentSnapshot<UserDetails>> =>
+    firebase
+      .firestore()
+      .collection(phoneNumber)
+      .doc('userProfile')
+      .get() as Promise<DocumentSnapshot<UserDetails>>,
   updateUserProfile: (userDetails: UserDetails): Promise<void> =>
     firebase
       .firestore()

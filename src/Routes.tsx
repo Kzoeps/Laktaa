@@ -18,8 +18,9 @@ const Routes = (): JSX.Element => {
     const onAuthStateChanges = (user: User | null) => {
       // eslint-disable-next-line no-unused-expressions
       if (currentUser?.phoneNumber !== user?.phoneNumber) {
-				if (user?.displayName) dispatch(fetchUserProfile(user?.phoneNumber as string));
-			}
+        if (user?.displayName)
+          dispatch(fetchUserProfile(user?.phoneNumber as string));
+      }
       setCurrentUser(user);
     };
     firebase.auth().onAuthStateChanged(onAuthStateChanges);

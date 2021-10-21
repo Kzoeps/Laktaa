@@ -14,125 +14,135 @@ import { fetchUserProfile } from './store/authSlice';
 import { LoginFormValues } from './models/models';
 
 const LoginScreen = ({ navigation }): JSX.Element => {
-	const { loginWithEmail } = useContext(AuthContext);
-	const [updateUserProfile, setUpdateUserProfile] = useState<boolean>(false);
-	const [userEmail, setEmail] = useState<string>('');
-	const [pending, setPending] = useState<boolean>(false);
-	const [showLocalLoader, setShowLocalLoader] = useState<boolean>(false);
-	const [verificationId, setVerificationId] = useState<string>('');
-	const recaptchaVerifier = useRef(null);
-	const initialValues = {
-		phoneNumber: '',
-		verificationCode: '',
-	};
-	const dispatch = useDispatch();
+  const { loginWithEmail } = useContext(AuthContext);
+  const [updateUserProfile, setUpdateUserProfile] = useState<boolean>(false);
+  const [userEmail, setEmail] = useState<string>('');
+  const [pending, setPending] = useState<boolean>(false);
+  const [showLocalLoader, setShowLocalLoader] = useState<boolean>(false);
+  const [verificationId, setVerificationId] = useState<string>('');
+  const recaptchaVerifier = useRef(null);
+  const initialValues = {
+    phoneNumber: '',
+    verificationCode: '',
+  };
+  const dispatch = useDispatch();
 
-	const sendVerification = (phoneNumber: string) => {
-		const phoneProvider = new firebase.auth.PhoneAuthProvider();
-		setShowLocalLoader(true);
-		phoneProvider.verifyPhoneNumber(`+975${phoneNumber}`, recaptchaVerifier.current as unknown as ApplicationVerifier).then((id) => {
-			setVerificationId(id);
-		}).finally(() => {
-			setShowLocalLoader(false);
-		});
-	};
+  const sendVerification = (phoneNumber: string) => {
+    const phoneProvider = new firebase.auth.PhoneAuthProvider();
+    setShowLocalLoader(true);
+    phoneProvider
+      .verifyPhoneNumber(
+        `+975${phoneNumber}`,
+        recaptchaVerifier.current as unknown as ApplicationVerifier
+      )
+      .then((id) => {
+        setVerificationId(id);
+      })
+      .finally(() => {
+        setShowLocalLoader(false);
+      });
+  };
 
-	const confirmCode = async (code: string) => {
-		const credential = firebase.auth.PhoneAuthProvider.credential(
-			verificationId,
-			code,
-		);
-		await firebase.auth().signInWithCredential(credential);
-	};
+  const confirmCode = async (code: string) => {
+    const credential = firebase.auth.PhoneAuthProvider.credential(
+      verificationId,
+      code
+    );
+    await firebase.auth().signInWithCredential(credential);
+  };
 
-	useEffect(() => {
-		if (updateUserProfile) {
-			dispatch(fetchUserProfile(userEmail));
-		}
-		return () => setUpdateUserProfile(false);
-	}, [
-		updateUserProfile,
-		userEmail,
-		setUpdateUserProfile,
-		initialValues.email,
-		dispatch,
-	]);
+  useEffect(() => {
+    if (updateUserProfile) {
+      dispatch(fetchUserProfile(userEmail));
+    }
+    return () => setUpdateUserProfile(false);
+  }, [
+    updateUserProfile,
+    userEmail,
+    setUpdateUserProfile,
+    initialValues.email,
+    dispatch,
+  ]);
 
-	return (
-		<View style={{ flex: 1 }}>
-			{/* eslint-disable-next-line global-require */}
-			<ImageBackground
-				source={require('../../assets/thimphu-bg.jpeg')}
-				blurRadius={2}
-				resizeMode='cover'
-				style={{ flex: 1 }}
-			>
-				<View style={tailwind('items-center h-full')}>
-					<Formik
-						initialValues={initialValues}
-						onSubmit={({ phoneNumber, verificationCode }) => {
-
-							// setPending(true);
-							// loginWithEmail(email, password)
-							//   .then(() => {
-							//     setEmail(email);
-							//     setUpdateUserProfile(true);
-							//   })
-							//   .catch((error: Error) => {
-							//     console.log(error);
-							//   })
-							//   .finally(() => {
-							//     setPending(false);
-							//   });
-						}}
-					>
-						{(
-							formik: FormikProps<LoginFormValues>,
-						) => (
-							<View style={tailwind('h-full w-11/12 mt-32 items-center')}>
-								<View style={tailwind('w-full items-center')}>
-									<FMTextInput
-										label='Phone Number'
-										name='phoneNumber'
-										formik={formik as unknown as FormikProps<FormikValues>}
-										icon='phone'
-									/>
-									<Button isLoading={showLocalLoader} onPress={() => sendVerification(formik.values.phoneNumber)}>Generate
-										OTP</Button>
-								</View>
-								<FMTextInput
-									styleProp='mt-10'
-									label='Verification Code'
-									name='verificationCode'
-									formik={formik as unknown as FormikProps<FormikValues>}
-									icon='lock'
-									doNotShow
-								/>
-								<Button
-									style={tailwind('mt-10 w-11/12 rounded-lg')}
-									isLoading={pending}
-									endIcon={
-										<Icon
-											as={<MaterialIcons name='arrow-forward' size={4} />}
-										/>
-									}
-									onPress={formik.handleSubmit}
-									block
-									light
-								>
-									Log In
-								</Button>
-								<FirebaseRecaptchaVerifierModal ref={recaptchaVerifier} firebaseConfig={firebase.app().options} />
-								<View
-									style={tailwind('flex flex-row h-full w-11/12 items-center ')}
-								>
-									<Text
-										style={tailwind(
-											'h-44 flex-auto w-3/6 mb-8 text-white text-right',
-										)}
-									>
-										Dont have an account?
-									</Text>
+  return (
+    <View style={{ flex: 1 }}>
+      {/* eslint-disable-next-line global-require */}
+      <ImageBackground
+        source={require('../../assets/thimphu-bg.jpeg')}
+        blurRadius={2}
+        resizeMode="cover"
+        style={{ flex: 1 }}
+      >
+        <View style={tailwind('items-center h-full')}>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={({ phoneNumber, verificationCode }) => {
+              // setPending(true);
+              // loginWithEmail(email, password)
+              //   .then(() => {
+              //     setEmail(email);
+              //     setUpdateUserProfile(true);
+              //   })
+              //   .catch((error: Error) => {
+              //     console.log(error);
+              //   })
+              //   .finally(() => {
+              //     setPending(false);
+              //   });
+            }}
+          >
+            {(formik: FormikProps<LoginFormValues>) => (
+              <View style={tailwind('h-full w-11/12 mt-32 items-center')}>
+                <View style={tailwind('w-full items-center')}>
+                  <FMTextInput
+                    label="Phone Number"
+                    name="phoneNumber"
+                    formik={formik as unknown as FormikProps<FormikValues>}
+                    icon="phone"
+                  />
+                  <Button
+                    isLoading={showLocalLoader}
+                    onPress={() => sendVerification(formik.values.phoneNumber)}
+                  >
+                    Generate OTP
+                  </Button>
+                </View>
+                <FMTextInput
+                  styleProp="mt-10"
+                  label="Verification Code"
+                  name="verificationCode"
+                  formik={formik as unknown as FormikProps<FormikValues>}
+                  icon="lock"
+                  doNotShow
+                />
+                <Button
+                  style={tailwind('mt-10 w-11/12 rounded-lg')}
+                  isLoading={pending}
+                  endIcon={
+                    <Icon
+                      as={<MaterialIcons name="arrow-forward" size={4} />}
+                    />
+                  }
+                  onPress={formik.handleSubmit}
+                  block
+                  light
+                >
+                  Log In
+                </Button>
+                <FirebaseRecaptchaVerifierModal
+                  ref={recaptchaVerifier}
+                  firebaseConfig={firebase.app().options}
+                />
+                <View
+                  style={tailwind('flex flex-row h-full w-11/12 items-center ')}
+                >
+                  <Text
+                    style={tailwind(
+                      'h-44 flex-auto w-3/6 mb-8 text-white text-right'
+                    )}
+                  >
+                    Dont have an account?
+                  </Text>
                   <Text
                     style={tailwind(
                       'h-44 flex-auto w-8 text-green-400 text-left ml-2 mb-8 mr-8 font-bold'

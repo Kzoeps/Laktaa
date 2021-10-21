@@ -1,5 +1,5 @@
-import { APIStatuses } from 'src/shared/models/model';
 import firebase from 'firebase';
+import { APIStatuses } from '../../../shared/models/model';
 
 export interface AuthState {
   userDetails: UserDetails;
@@ -8,8 +8,8 @@ export interface AuthState {
 }
 
 export interface LoginFormValues {
-	phoneNumber:string
-	verificationCode:string
+  phoneNumber: string;
+  verificationCode: string;
 }
 
 export interface UserDetails {
@@ -41,8 +41,8 @@ export enum AuthStoreActionTypes {
 }
 
 export interface SignUpForm {
-	phoneNumber: string,
-	verificationCode: string,
-	name: string,
-	location: string
+  phoneNumber: string;
+  verificationCode: string;
+  name: string;
+  location: string;
 }
