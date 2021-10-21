@@ -94,33 +94,36 @@ const SignUpPhone: FC = () => {
                     name="name"
                     formik={formik as unknown as FormikProps<FormikValues>}
                     icon="person"
-                  />
-                </Box>
-                <Box style={tailwind('mt-5 w-full items-center')}>
-                  <FMTextInput
-                    label="Location"
-                    name="location"
-                    formik={formik as unknown as FormikProps<FormikValues>}
-                    icon="place"
-                  />
-                </Box>
-                <Box style={tailwind('mt-5 w-full items-center')}>
-                  <FMTextInput
-                    label="Phone Number"
-                    name="phoneNumber"
-                    formik={formik as unknown as FormikProps<FormikValues>}
-                    icon="phone"
-                  />
-                  <Button
-                    isLoading={showLocalLoader}
-                    onPress={() => {
-                      sendVerification(formik.values.phoneNumber);
-                    }}
-                  >
-                    Generate OTP
-                  </Button>
-                </Box>
-                <Box style={tailwind('mt-5 w-full items-center')}>
+									/>
+								</Box>
+								<Box style={tailwind('mt-5 w-full items-center')}>
+									<FMTextInput
+										label='Location'
+										name='location'
+										formik={formik as unknown as FormikProps<FormikValues>}
+										icon='place'
+									/>
+								</Box>
+								<Box style={tailwind('mt-5 w-11/12 items-center flex flex-row')}>
+									<View style={tailwind('w-8/12')}>
+										<FMTextInput
+											label='Phone Number'
+											name='phoneNumber'
+											formik={formik as unknown as FormikProps<FormikValues>}
+											icon='phone'
+										/>
+									</View>
+									<Button
+										style={tailwind('w-4/12')}
+										isLoading={showLocalLoader}
+										onPress={() => {
+											sendVerification(formik.values.phoneNumber);
+										}}
+									>
+										Create OTP
+									</Button>
+								</Box>
+								<Box style={tailwind('mt-5 w-full items-center')}>
                   <FMTextInput
                     label="Verification Code"
                     formik={formik as unknown as FormikProps<FormikValues>}

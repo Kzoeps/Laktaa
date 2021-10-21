@@ -75,19 +75,20 @@ const LoginScreen = ({ navigation }): JSX.Element => {
           >
             {(formik: FormikProps<LoginFormValues>) => (
               <View style={tailwind('h-full w-11/12 mt-32 items-center')}>
-                <View style={tailwind('w-full items-center')}>
-                  <FMTextInput
-                    label="Phone Number"
-                    name="phoneNumber"
-                    formik={formik as unknown as FormikProps<FormikValues>}
-                    icon="phone"
-										color="white"
-                  />
+                <View style={tailwind('w-11/12 items-center flex flex-row')}>
+									<View style={tailwind('w-8/12')}><FMTextInput
+										label='Phone Number'
+										name='phoneNumber'
+										formik={formik as unknown as FormikProps<FormikValues>}
+										icon='phone'
+										color='white'
+									/></View>
                   <Button
+										style={tailwind('w-4/12')}
                     isLoading={showLocalLoader}
                     onPress={() => sendVerification(formik.values.phoneNumber)}
                   >
-                    Generate OTP
+                    Create OTP
                   </Button>
                 </View>
                 <FMTextInput

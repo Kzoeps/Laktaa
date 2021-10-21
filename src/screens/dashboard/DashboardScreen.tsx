@@ -54,7 +54,6 @@ const DashboardScreen: FC = ({ navigation }) => {
         </View>
         <Layout styleProp="h-full">
           <View style={tailwind('my-2')}>
-            <Button onPress={logout} title="logout" />
             <SearchInput filters={filters} setFilters={setFilters} ref={ref} />
           </View>
           <JobCard data={jobs} navigation={navigation} />
