@@ -32,7 +32,7 @@ const SignUpPhone: FC = () => {
 
   const updateUserProfile = async (displayName: string) => {
     const user: firebase.User | null = firebase.auth().currentUser;
-    await user?.updateProfile({ displayName });
+    if (user) await user?.updateProfile({ displayName });
   };
 
   const sendVerification = (phoneNumber: string) => {
@@ -56,19 +56,26 @@ const SignUpPhone: FC = () => {
       verificationId,
       code
     );
-    await firebase.auth().signInWithCredential(credential);
+    try {
+			await firebase.auth().signInWithCredential(credential);
+		} catch (e) {
+			console.error(e);
+		}
   };
 
   useEffect(() => () => {setPendingRegistration(false)}, [])
 
   const handleSubmit = async (formValues: SignUpForm) => {
     const { verificationCode, name, phoneNumber, location } = formValues;
+    debugger;
     await confirmCode(verificationCode);
+    debugger;
     // const user = firebase.auth().currentUser;
     await updateUserProfile(name);
+    debugger;
 		await dispatch(
       updateUserDetails({
-        phoneNumber,
+        phoneNumber: `+975${phoneNumber}`,
         location,
         userName: name,
         registeredDriver: false,
@@ -96,10 +103,10 @@ const SignUpPhone: FC = () => {
 
   return (
     <>
-      <ScrollView style={tailwind('w-full h-full')}>
-        <View style={tailwind('bg-blue-200 items-center')}>
+      <ScrollView style={[tailwind('w-full h-full'), {backgroundColor: "rgba(73, 193, 164, 0.9)"}]}>
+        <View style={tailwind('items-center')}>
           <Image
-            style={tailwind('h-48 w-full')}
+            style={tailwind('h-48 w-full mb-5')}
             source={{
               uri: 'https://cdn.dribbble.com/users/3961326/screenshots/10483213/media/711898708fb56c7d4bb4bc6cd7fcd956.jpg',
             }}
@@ -118,19 +125,22 @@ const SignUpPhone: FC = () => {
                     name="name"
                     formik={formik as unknown as FormikProps<FormikValues>}
                     icon="person"
+										placeholderTextColor="white"
 									/>
 								</Box>
-								<Box style={tailwind('mt-5 w-full items-center')}>
+								<Box style={tailwind('mt-6 w-full items-center')}>
 									<FMTextInput
+										placeholderTextColor="white"
 										label='Location'
 										name='location'
 										formik={formik as unknown as FormikProps<FormikValues>}
 										icon='place'
 									/>
 								</Box>
-								<Box style={tailwind('mt-5 w-11/12 items-center flex flex-row')}>
+								<Box style={tailwind('mt-6 w-11/12 items-center flex flex-row')}>
 									<View style={tailwind('w-8/12')}>
 										<FMTextInput
+											placeholderTextColor="white"
 											label='Phone Number'
 											name='phoneNumber'
 											formik={formik as unknown as FormikProps<FormikValues>}
@@ -147,11 +157,12 @@ const SignUpPhone: FC = () => {
 										Create OTP
 									</Button>
 								</Box>
-								<Box style={tailwind('mt-5 w-full items-center')}>
+								<Box style={tailwind('mt-6 w-full items-center')}>
                   <FMTextInput
                     label="Verification Code"
                     formik={formik as unknown as FormikProps<FormikValues>}
-                    name="verificationCode"
+										placeholderTextColor="white"
+										name="verificationCode"
                     icon="lock"
                     doNotShow
                   />
@@ -160,7 +171,7 @@ const SignUpPhone: FC = () => {
                   ref={recaptchaVerifier}
                   firebaseConfig={firebase.app().options}
                 />
-                <Box style={tailwind('mt-6 w-3/6')}>
+                <Box style={tailwind('mt-8 w-3/6')}>
                   <Button
 										isLoading={pendingRegistration}
                     endIcon={

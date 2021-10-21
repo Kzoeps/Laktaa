@@ -32,7 +32,7 @@ export const FIREBASE_CALLS = {
   }: UserDetails): Promise<void> =>
     firebase
       .firestore()
-      .collection(`+975${phoneNumber}`.toLowerCase())
+      .collection(`${phoneNumber}`.toLowerCase())
       .doc('userProfile')
       .set({
         phoneNumber,

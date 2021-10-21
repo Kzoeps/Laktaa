@@ -16,6 +16,7 @@ const FMTextInput: FC<{
   variant?: string;
   disableInput?: boolean;
   color?: string;
+	placeholderTextColor?: string
 }> = ({
   label,
   formik,
@@ -27,7 +28,8 @@ const FMTextInput: FC<{
   iconPlacement,
   variant,
   disableInput,
-	color
+	color,
+	placeholderTextColor
 }) => (
   <Box w="90%" style={tailwind(styleProp ?? '')}>
     <Input
@@ -47,6 +49,7 @@ const FMTextInput: FC<{
       type={doNotShow ? 'password' : 'text'}
       variant={variant || 'outline'}
       bg="transparent"
+			placeholderTextColor={placeholderTextColor || "gray"}
       placeholder={label}
       onChangeText={formik.handleChange(name)}
 			color={color || 'black'}

@@ -43,7 +43,7 @@ const SignUpScreen: FC = () => {
   }, [shouldUpdateProfile, userDetails, currentUser, displayName, dispatch]);
 
   return (
-    <View style={tailwind('bg-blue-200 items-center')}>
+    <View style={tailwind('bg-blue-200 h-screen bg-cover items-center')}>
       <Image
         style={tailwind('h-48 w-full')}
         source={{
