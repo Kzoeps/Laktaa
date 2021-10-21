@@ -8,7 +8,7 @@ const Stack = createStackNavigator();
 
 const AuthStack = (): JSX.Element => (
   <Stack.Navigator>
-    <Stack.Screen name="Login" component={SignUpPhone} />
+    <Stack.Screen name="Login" component={LoginScreen} />
     <Stack.Screen
       name="Sign Up"
       component={SignUpPhone}

@@ -8,8 +8,8 @@ export interface AuthState {
 }
 
 export interface LoginFormValues {
-	phoneNumber: number
-	verificationCode: number
+	phoneNumber:string
+	verificationCode:string
 }
 
 export interface UserDetails {
