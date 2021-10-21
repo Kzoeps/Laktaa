@@ -14,11 +14,13 @@ const FMNavHeaderProfile: FC<
     userEmail?: string;
     phoneNumber: string;
   } & NavHeaderNavProps
-> = ({ navigation, imageUri, userInitials, userEmail , phoneNumber }) => {
+> = ({ navigation, imageUri, userInitials, userEmail, phoneNumber }) => {
   return (
     <TouchableOpacity
       style={tailwind('mr-4')}
-      onPress={() => navigation.navigate(RoutePaths.userProfile, { phoneNumber })}
+      onPress={() =>
+        navigation.navigate(RoutePaths.userProfile, { phoneNumber })
+      }
     >
       <FMAvatar
         size="md"

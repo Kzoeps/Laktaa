@@ -8,8 +8,8 @@ export interface AuthState {
 }
 
 export interface LoginFormValues {
-	phoneNumber: number
-	verificationCode: number
+  phoneNumber: number;
+  verificationCode: number;
 }
 
 export interface UserDetails {
@@ -41,8 +41,8 @@ export enum AuthStoreActionTypes {
 }
 
 export interface SignUpForm {
-	phoneNumber: string,
-	verificationCode: string,
-	name: string,
-	location: string
+  phoneNumber: string;
+  verificationCode: string;
+  name: string;
+  location: string;
 }
