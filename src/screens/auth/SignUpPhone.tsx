@@ -1,22 +1,26 @@
 import { Formik, FormikProps, FormikValues } from 'formik';
-import React, { FC, useContext, useRef, useState } from 'react';
-import { Box, Button, Icon } from 'native-base';
+import React, { FC, useContext, useEffect, useRef, useState } from 'react';
+import { Box, Button, Heading, Icon, Spinner } from 'native-base';
 import firebase from 'firebase';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import { ApplicationVerifier } from '@firebase/auth-types';
 import tailwind from 'tailwind-rn';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Image, ScrollView, View } from 'react-native';
 import { AuthContext } from './auth';
 import FMTextInput from '../../shared/components/TextInput';
 import { SignUpForm } from './models/models';
 import { setUserDetails as updateUserDetails } from './store/authSlice';
+import { selectStoreStatus } from '../../shared/utils';
+import { APIStatuses, RootReducersEnum } from '../../shared/models/model';
 
 const SignUpPhone: FC = () => {
   const { currentUser } = useContext(AuthContext);
   const [verificationId, setVerificationId] = useState<string>('');
   const [showLocalLoader, setShowLocalLoader] = useState(false);
+  const [pendingRegistration, setPendingRegistration] = useState(false);
+	const status = useSelector(selectStoreStatus(RootReducersEnum.authSlice));
   const recaptchaVerifier = useRef(null);
   const initialValues = {
     phoneNumber: '',
@@ -55,12 +59,14 @@ const SignUpPhone: FC = () => {
     await firebase.auth().signInWithCredential(credential);
   };
 
+  useEffect(() => () => {setPendingRegistration(false)}, [])
+
   const handleSubmit = async (formValues: SignUpForm) => {
     const { verificationCode, name, phoneNumber, location } = formValues;
     await confirmCode(verificationCode);
     // const user = firebase.auth().currentUser;
     await updateUserProfile(name);
-    await dispatch(
+		await dispatch(
       updateUserDetails({
         phoneNumber,
         location,
@@ -69,6 +75,24 @@ const SignUpPhone: FC = () => {
       })
     );
   };
+	if (status === APIStatuses.LOADING) {
+		return (
+			<View style={tailwind('my-24')}>
+				<Spinner
+					accessibilityLabel="Loading posts"
+					color="emerald.500"
+					size="lg"
+				/>
+				<Heading
+					style={tailwind('text-center')}
+					color="emerald.500"
+					fontSize="xl"
+				>
+					Loading ...
+				</Heading>
+			</View>
+		);
+	}
 
   return (
     <>
@@ -138,6 +162,7 @@ const SignUpPhone: FC = () => {
                 />
                 <Box style={tailwind('mt-6 w-3/6')}>
                   <Button
+										isLoading={pendingRegistration}
                     endIcon={
                       <Icon
                         as={<MaterialIcons name="arrow-forward" size={4} />}
