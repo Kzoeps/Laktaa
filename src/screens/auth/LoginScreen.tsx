@@ -51,19 +51,9 @@ const LoginScreen = ({ navigation }): JSX.Element => {
     await firebase.auth().signInWithCredential(credential);
   };
 
-  useEffect(() => {
-    if (updateUserProfile) {
-      dispatch(fetchUserProfile(userEmail));
-    }
-    return () => setUpdateUserProfile(false);
-  }, [
-    updateUserProfile,
-    userEmail,
-    setUpdateUserProfile,
-    initialValues.email,
-    dispatch,
-  ]);
-
+  useEffect(() => () => {
+  	setPending(false);
+	})
   return (
     <View style={{ flex: 1 }}>
       {/* eslint-disable-next-line global-require */}
@@ -76,19 +66,11 @@ const LoginScreen = ({ navigation }): JSX.Element => {
         <View style={tailwind('items-center h-full')}>
           <Formik
             initialValues={initialValues}
-            onSubmit={({ phoneNumber, verificationCode }) => {
-              // setPending(true);
-              // loginWithEmail(email, password)
-              //   .then(() => {
-              //     setEmail(email);
-              //     setUpdateUserProfile(true);
-              //   })
-              //   .catch((error: Error) => {
-              //     console.log(error);
-              //   })
-              //   .finally(() => {
-              //     setPending(false);
-              //   });
+            onSubmit={ async ({ phoneNumber, verificationCode }) => {
+            	setPending(true)
+            	await confirmCode(verificationCode);
+            	if (firebase.auth().currentUser?.displayName) await dispatch(fetchUserProfile(phoneNumber));
+            	setPending(false)
             }}
           >
             {(formik: FormikProps<LoginFormValues>) => (
@@ -99,6 +81,7 @@ const LoginScreen = ({ navigation }): JSX.Element => {
                     name="phoneNumber"
                     formik={formik as unknown as FormikProps<FormikValues>}
                     icon="phone"
+										color="white"
                   />
                   <Button
                     isLoading={showLocalLoader}
@@ -114,6 +97,7 @@ const LoginScreen = ({ navigation }): JSX.Element => {
                   formik={formik as unknown as FormikProps<FormikValues>}
                   icon="lock"
                   doNotShow
+									color="white"
                 />
                 <Button
                   style={tailwind('mt-10 w-11/12 rounded-lg')}

@@ -15,6 +15,7 @@ const FMTextInput: FC<{
   iconPlacement?: JSX.Element;
   variant?: string;
   disableInput?: boolean;
+  color?: string;
 }> = ({
   label,
   formik,
@@ -26,6 +27,7 @@ const FMTextInput: FC<{
   iconPlacement,
   variant,
   disableInput,
+	color
 }) => (
   <Box w="90%" style={tailwind(styleProp ?? '')}>
     <Input
@@ -47,6 +49,7 @@ const FMTextInput: FC<{
       bg="transparent"
       placeholder={label}
       onChangeText={formik.handleChange(name)}
+			color={color || 'black'}
     />
     {formik.touched[name] && formik.errors[name] && (
       <Text style={tailwind('text-red-400')}>{formik.errors[name]}</Text>
