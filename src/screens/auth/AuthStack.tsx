@@ -11,7 +11,7 @@ const AuthStack = (): JSX.Element => (
     <Stack.Screen name="Login" component={SignUpPhone} />
     <Stack.Screen
       name="Sign Up"
-      component={SignUpScreen}
+      component={SignUpPhone}
       options={{
         title: 'Sign Up',
         headerStyle: {

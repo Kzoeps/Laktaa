@@ -1,5 +1,5 @@
 import React, { FC, useContext, useEffect, useState, useRef } from 'react';
-import { TouchableOpacity, ScrollView, RefreshControl } from 'react-native';
+import { TouchableOpacity, ScrollView, RefreshControl, Button } from 'react-native';
 import { Text, View } from 'native-base';
 import tailwind from 'tailwind-rn';
 import { useDispatch, useSelector } from 'react-redux';
@@ -49,6 +49,7 @@ const DashboardScreen: FC = ({ navigation }) => {
         </View>
         <Layout styleProp="h-full">
           <View style={tailwind('my-2')}>
+						<Button onPress={logout} title="logout"/>
             <SearchInput filters={filters} setFilters={setFilters} ref={ref} />
           </View>
           <JobCard data={jobs} navigation={navigation} />

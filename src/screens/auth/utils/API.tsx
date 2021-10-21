@@ -25,20 +25,16 @@ export const FIREBASE_CALLS = {
     firebase.auth().signInWithEmailAndPassword(email, password),
   logout: (): Promise<void> => firebase.auth().signOut(),
   createUserProfile: ({
-    email,
+    phoneNumber,
     userName,
     location,
-  }: {
-    email: string;
-    location: string;
-    userName: string;
-  }): Promise<void> =>
+  }: UserDetails): Promise<void> =>
     firebase
       .firestore()
-      .collection(email.toLowerCase())
+      .collection(`${phoneNumber}`.toLowerCase())
       .doc('userProfile')
       .set({
-        email,
+        phoneNumber,
         userName,
         location,
       }),

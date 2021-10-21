@@ -16,8 +16,8 @@ export interface UserDetails {
   userName: string;
   userId?: string;
   location: string;
-  email: string;
-  phoneNumber?: number | string;
+  email?: string;
+  phoneNumber: number | string;
   profileImageUrl?: string;
 }
 
@@ -37,4 +37,11 @@ export enum AuthStoreActionTypes {
   fetchUserProfile = 'auth/fetchUserProfile',
   updateUserProfile = 'auth/updateUserProfile',
   updateUserProfileImage = 'auth/updateUserProfileImage',
+}
+
+export interface SignUpForm {
+	phoneNumber: string,
+	verificationCode: string,
+	name: string,
+	location: string
 }
