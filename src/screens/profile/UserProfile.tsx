@@ -1,27 +1,21 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Button, Heading, Icon, Spinner } from 'native-base';
+import { Box, Button, Heading, Spinner } from 'native-base';
 import { Formik, FormikProps, FormikValues } from 'formik';
-import { MaterialIcons } from '@expo/vector-icons';
 import * as DocumentPicker from 'expo-document-picker';
 import { DocumentResult } from 'expo-document-picker';
 import tailwind from 'tailwind-rn';
-import { NavigationScreenProp } from 'react-navigation';
 import {
-  fetchUserProfile,
-  selectStoreStatus,
-  selectUserDetails,
-  updateUserProfile as updateUserProfileStore,
-  updateUserProfileImage,
+	fetchUserProfile,
+	selectStoreStatus,
+	selectUserDetails,
+	updateUserProfile as updateUserProfileStore,
+	updateUserProfileImage,
 } from '../auth/store/authSlice';
 import { EDIT_PROFILE_SCHEMA } from './models/constants';
 import FMTextInput from '../../shared/components/TextInput';
-import {
-  APIStatuses,
-  NavigationProps,
-  RoutePaths,
-} from '../../shared/models/model';
+import { APIStatuses, NavigationProps, RoutePaths } from '../../shared/models/model';
 import { UserDetails } from '../auth/models/models';
 import useFirestoreUpload from '../../shared/components/useFirestoreUpload';
 import Layout from '../../shared/layout/layout';
@@ -144,27 +138,27 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
                 <>
                   <Box style={tailwind('w-10/12 items-center')}>
                     <FMTextInput
-                      styleProp="mt-3"
-                      disableInput={inputsDisabled}
-                      label="Name"
-                      name="name"
-                      formik={formik as unknown as FormikProps<FormikValues>}
-                    />
-                    <FMTextInput
-                      styleProp="mt-3"
-                      disableInput={inputsDisabled}
-                      label="Location"
-                      name="location"
-                      formik={formik as unknown as FormikProps<FormikValues>}
-                    />
-                    <FMTextInput
-                      styleProp="mt-3"
-                      disableInput={inputsDisabled}
-                      label="Phone Number"
-                      name="phoneNumber"
-                      formik={formik as unknown as FormikProps<FormikValues>}
-                    />
-                  </Box>
+											styleProp="mt-3"
+											disableInput={inputsDisabled}
+											label="Name"
+											name='name'
+											formik={formik as unknown as FormikProps<FormikValues>}
+										/>
+										<FMTextInput
+											styleProp='mt-3'
+											disableInput={inputsDisabled}
+											label='Location'
+											name='location'
+											formik={formik as unknown as FormikProps<FormikValues>}
+										/>
+										{/* <FMTextInput */}
+										{/*  styleProp="mt-3" */}
+										{/*  disableInput={inputsDisabled} */}
+										{/*  label="Phone Number" */}
+										{/*  name="phoneNumber" */}
+										{/*  formik={formik as unknown as FormikProps<FormikValues>} */}
+										{/* /> */}
+									</Box>
 
                   <View style={tailwind('mt-8 items-center')}>
                     {!inputsDisabled && (
