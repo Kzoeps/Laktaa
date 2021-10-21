@@ -45,9 +45,9 @@ const AppStack = (): JSX.Element => {
           headerTitle: 'Dashboard',
           headerRight: (props) => (
             <FMNavHeaderProfile
-              userEmail={currentUser.email}
+              phoneNumber={currentUser.phoneNumber}
               userInitials={userDetails?.profileImageUrl ? '' : userInitials}
-              imageUri={userDetails.profileImageUrl}
+              imageUri={userDetails?.profileImageUrl}
               navigation={navigation}
               route={route}
             />
@@ -67,7 +67,7 @@ const AppStack = (): JSX.Element => {
           headerTitle: 'Vehicle Registration',
           headerRight: (props) => (
             <FMNavHeaderProfile
-              userEmail={currentUser.email}
+              phoneNumber={currentUser.phoneNumber}
               imageUri={userDetails?.profileImageUrl}
               userInitials={userInitials}
               navigation={navigation}
@@ -85,7 +85,7 @@ const AppStack = (): JSX.Element => {
           headerRight: (props) => (
             <FMNavHeaderProfile
               route={route}
-              userEmail={currentUser.email}
+              phoneNumber={currentUser.phoneNumber}
               imageUri={userDetails?.profileImageUrl}
               userInitials={userInitials}
               navigation={navigation}
@@ -100,7 +100,7 @@ const AppStack = (): JSX.Element => {
           headerTitle: 'Job Details',
           headerRight: (props) => (
             <FMNavHeaderProfile
-              userEmail={currentUser.email}
+              phoneNumber={currentUser.phoneNumber}
               imageUri={userDetails?.profileImageUrl}
               userInitials={userInitials}
               navigation={navigation}

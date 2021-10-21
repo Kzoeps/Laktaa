@@ -60,7 +60,7 @@ export enum RoutePaths {
 
 export type AppStackParamList = {
   [RoutePaths.dashboard]: undefined;
-  [RoutePaths.userProfile]: { userEmail: string };
+  [RoutePaths.userProfile]: { phoneNumber: string };
   [RoutePaths.vehicleRegistration]: undefined;
   [RoutePaths.postJob]: undefined;
   [RoutePaths.jobDetails]: { imageUrl: string; data: PostJobInfo };

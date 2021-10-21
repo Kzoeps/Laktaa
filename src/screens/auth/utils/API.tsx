@@ -28,24 +28,26 @@ export const FIREBASE_CALLS = {
     phoneNumber,
     userName,
     location,
+		registeredDriver
   }: UserDetails): Promise<void> =>
     firebase
       .firestore()
-      .collection(`${phoneNumber}`.toLowerCase())
+      .collection(`+975${phoneNumber}`.toLowerCase())
       .doc('userProfile')
       .set({
         phoneNumber,
         userName,
         location,
+				registeredDriver
       }),
-  getUserProfile: (email: string): Promise<DocumentSnapshot<UserDetails>> =>
-    firebase.firestore().collection(email).doc('userProfile').get() as Promise<
+  getUserProfile: (phoneNumber: string): Promise<DocumentSnapshot<UserDetails>> =>
+    firebase.firestore().collection(phoneNumber).doc('userProfile').get() as Promise<
       DocumentSnapshot<UserDetails>
     >,
   updateUserProfile: (userDetails: UserDetails): Promise<void> =>
     firebase
       .firestore()
-      .collection(userDetails.email)
+      .collection(userDetails.phoneNumber as string)
       .doc('userProfile')
       .update({
         userName: userDetails.userName,
@@ -53,10 +55,10 @@ export const FIREBASE_CALLS = {
         phoneNumber: userDetails.phoneNumber,
       }),
   updateUserProfileImage: ({
-    email,
+    phoneNumber,
     profileImageUrl,
   }: ProfileUpdatePayload): Promise<void> =>
-    firebase.firestore().collection(email).doc('userProfile').update({
+    firebase.firestore().collection(phoneNumber).doc('userProfile').update({
       profileImageUrl,
     }),
 };

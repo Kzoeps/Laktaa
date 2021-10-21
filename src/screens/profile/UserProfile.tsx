@@ -34,13 +34,13 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
   const [inputsDisabled, setInputsDisabled] = useState<boolean>(true);
   const userDetails = useSelector(selectUserDetails);
   const storeStatus = useSelector(selectStoreStatus);
-  const { userEmail } = route.params;
+  const { phoneNumber } = route.params;
   const [file, setFile] = useState<DocumentResult | undefined>(undefined);
   const [userInitials, setUserInitials] = useState<string>('');
   const { currentUser, logout } = useContext(AuthContext);
   const dispatch = useDispatch();
   const uploadImage = useFirestoreUpload(
-    `profileImages/${userDetails?.email}`,
+    `profileImages/${phoneNumber}`,
     file,
     setFile
   );
@@ -60,27 +60,27 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
   };
 
   useEffect(() => {
-    dispatch(fetchUserProfile(userEmail));
-  }, [userEmail, dispatch]);
+    dispatch(fetchUserProfile(phoneNumber));
+  }, [phoneNumber, dispatch]);
 
   useEffect(() => {
-    if (userEmail === currentUser.email) setInputsDisabled(false);
+    if (phoneNumber === currentUser.phoneNumber) setInputsDisabled(false);
     else setInputsDisabled(true);
-  }, [userEmail, currentUser.email]);
+  }, [phoneNumber, currentUser.phoneNumber]);
 
   useEffect(() => {
     if (!['idle', 'pending'].includes(uploadImage)) {
       const updateUserProfileImageUrl = async () => {
         await dispatch(
           updateUserProfileImage({
-            email: userDetails?.email,
+            phoneNumber: currentUser.phoneNumber,
             profileImageUrl: uploadImage,
           })
         );
       };
       updateUserProfileImageUrl();
     }
-  }, [uploadImage, userDetails?.email, dispatch]);
+  }, [uploadImage, dispatch, currentUser.phoneNumber]);
   useEffect(() => {
     setUserInitials(
       userDetails?.userName
@@ -126,12 +126,11 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
-              onSubmit={({ name: userName, phoneNumber, location }) => {
-                updateUserProfile({
+              onSubmit={ async ({ name: userName, phoneNumber: userNumber, location }) => {
+                await updateUserProfile({
                   userName,
-                  phoneNumber,
+                  phoneNumber: currentUser.phoneNumber,
                   location,
-                  email: userDetails?.email,
                 });
               }}
             >

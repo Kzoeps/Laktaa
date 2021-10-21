@@ -24,7 +24,7 @@ export interface UserDetails {
 
 export interface ProfileUpdatePayload {
   profileImageUrl: string;
-  email: string;
+  phoneNumber: string;
 }
 
 export interface AuthContext {

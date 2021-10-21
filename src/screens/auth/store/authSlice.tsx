@@ -46,8 +46,8 @@ export const updateUserProfileImage = createAsyncThunk(
 
 export const fetchUserProfile = createAsyncThunk(
   AuthStoreActionTypes.fetchUserProfile,
-  async (email: string) => {
-    const response = await FIREBASE_CALLS.getUserProfile(email);
+  async (phoneNumber: string) => {
+    const response = await FIREBASE_CALLS.getUserProfile(phoneNumber);
     return response.data();
   }
 );

@@ -14,15 +14,16 @@ const Routes = (): JSX.Element => {
   const dispatch = useDispatch();
 
   LogBox.ignoreLogs(['Setting a timer']);
-  useEffect((): void => {
+  useEffect(() => {
     const onAuthStateChanges = (user: User | null) => {
       // eslint-disable-next-line no-unused-expressions
-      currentUser?.email !== user?.email &&
-        dispatch(fetchUserProfile(user?.email as string));
+      if (currentUser?.phoneNumber !== user?.phoneNumber) {
+				if (user?.displayName) dispatch(fetchUserProfile(user?.phoneNumber as string));
+			}
       setCurrentUser(user);
     };
     firebase.auth().onAuthStateChanged(onAuthStateChanges);
-  }, [setCurrentUser]);
+  }, [currentUser?.phoneNumber, dispatch, setCurrentUser]);
   return (
     <NavigationContainer>
       {currentUser ? <AppStack /> : <AuthStack />}
