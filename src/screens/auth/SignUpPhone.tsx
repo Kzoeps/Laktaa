@@ -17,6 +17,7 @@ import { setUserDetails as updateUserDetails } from './store/authSlice';
 const SignUpPhone: FC = () => {
 	const { currentUser } = useContext(AuthContext);
 	const [verificationId, setVerificationId] = useState<string>('');
+	const [showLocalLoader, setShowLocalLoader] = useState(false);
 	const recaptchaVerifier = useRef(null);
 	const initialValues = {
 		phoneNumber: '',
@@ -33,7 +34,10 @@ const SignUpPhone: FC = () => {
 
 	const sendVerification = (phoneNumber: string) => {
 		const phoneProvider = new firebase.auth.PhoneAuthProvider();
-		phoneProvider.verifyPhoneNumber(`+975${phoneNumber}`, recaptchaVerifier.current as unknown as ApplicationVerifier).then(setVerificationId);
+		setShowLocalLoader(true);
+		phoneProvider.verifyPhoneNumber(`+975${phoneNumber}`, recaptchaVerifier.current as unknown as ApplicationVerifier).then((id) => {
+			setVerificationId(id);
+		}).finally(() => {setShowLocalLoader(false)});
 	};
 
 	const confirmCode = async (code: string) => {
@@ -47,8 +51,9 @@ const SignUpPhone: FC = () => {
 	const handleSubmit = async (formValues: SignUpForm) => {
 		const { verificationCode, name, phoneNumber, location } = formValues;
 		await confirmCode(verificationCode);
+		// const user = firebase.auth().currentUser;
 		await updateUserProfile(name);
-		await dispatch(updateUserDetails({ phoneNumber, location, userName: name }));
+		await dispatch(updateUserDetails({ phoneNumber, location, userName: name, registeredDriver: false }));
 	};
 
 	return (
@@ -63,11 +68,6 @@ const SignUpPhone: FC = () => {
 					/>
 					<Formik initialValues={initialValues} onSubmit={async (formValues) => {
 						await handleSubmit(formValues);
-						// if (!verificationCode) {
-						// 	sendVerification(phoneNumber);
-						// 	return;
-						// }
-						// confirmCode(verificationCode);
 					}}>
 						{(formik: FormikProps<SignUpForm>) => (
 							<>
@@ -94,7 +94,7 @@ const SignUpPhone: FC = () => {
 										formik={formik as unknown as FormikProps<FormikValues>}
 										icon='phone'
 									/>
-									<Button onPress={() => {
+									<Button isLoading={showLocalLoader} onPress={() => {
 										sendVerification(formik.values.phoneNumber);
 									}}>Generate OTP</Button>
 								</Box>

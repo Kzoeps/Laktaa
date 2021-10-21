@@ -19,6 +19,7 @@ export interface UserDetails {
   email?: string;
   phoneNumber: number | string;
   profileImageUrl?: string;
+  registeredDriver?: boolean;
 }
 
 export interface ProfileUpdatePayload {
