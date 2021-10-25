@@ -76,23 +76,27 @@ const JobCard: FC = ({ data, navigation, registeredDriver }) => {
             <View style={tailwind('mb-3')}>
               <View style={tailwind('flex flex-row')}>
                 <View style={tailwind('flex-1 border-r border-gray-200')}>
-                  <Text style={tailwind('text-center')}>
+                  <Text style={tailwind('text-center text-xs')}>
                     {item.pickDzongkhag}
                   </Text>
-                  <Text style={tailwind('text-center')}>to</Text>
-                  <Text style={tailwind('text-center')}>
+                  <Text style={tailwind('text-center text-xs')}>to</Text>
+                  <Text style={tailwind('text-center text-xs')}>
                     {item.dropDzongkhag}
                   </Text>
                 </View>
                 <View style={tailwind('flex-1 border-r border-gray-200')}>
-                  <Text style={tailwind('text-center')}>Price</Text>
-                  <Text style={tailwind('text-center')}>Nu {item.price}</Text>
+                  <Text style={tailwind('text-center text-xs')}>Price</Text>
+                  <Text style={tailwind('text-center text-xs')}>
+                    Nu {item.price}
+                  </Text>
                 </View>
                 <View style={tailwind('flex-1 border-gray-200')}>
-                  <Text style={tailwind('text-center')}>
+                  <Text style={tailwind('text-center text-xs')}>
                     Nos: {item.pieces}
                   </Text>
-                  <Text style={tailwind('text-center')}>Kg:{item.weight}</Text>
+                  <Text style={tailwind('text-center text-xs')}>
+                    Kg:{item.weight}
+                  </Text>
                 </View>
               </View>
             </View>
@@ -110,11 +114,11 @@ const JobCard: FC = ({ data, navigation, registeredDriver }) => {
               >
                 <Text
                   style={tailwind(
-                    'text-center border-gray-200 border rounded-3xl py-1 px-6'
+                    'text-center border-gray-200 border rounded-3xl py-1 px-6 text-xs'
                   )}
                 >
-                  <Feather name="phone-call" size={16} color="#33d399" />
-                  &nbsp;&nbsp;Call
+                  <Feather name="phone-call" size={14} color="#33d399" />
+                  &nbsp;Call
                 </Text>
               </TouchableOpacity>
 
@@ -126,15 +130,15 @@ const JobCard: FC = ({ data, navigation, registeredDriver }) => {
               >
                 <Text
                   style={tailwind(
-                    'text-center border-gray-200 border rounded-3xl py-1 px-6'
+                    'text-center border-gray-200 border rounded-3xl py-1 px-6 text-xs'
                   )}
                 >
                   <MaterialCommunityIcons
                     name="page-next-outline"
-                    size={16}
+                    size={14}
                     color="#33d399"
                   />
-                  &nbsp;&nbsp;Detail
+                  &nbsp;Detail
                 </Text>
               </TouchableOpacity>
             </View>
