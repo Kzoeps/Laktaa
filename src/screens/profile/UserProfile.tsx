@@ -112,8 +112,9 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
   return (
     <Box bg="emerald.400">
       <FMHeader header="My Profile" />
+      <View style={tailwind('my-4')} />
       <Layout styleProp="h-full">
-        <View style={tailwind('items-center h-full w-full')}>
+        <View style={tailwind('items-center h-full w-full my-20')}>
           <View style={tailwind('mt-10 mb-4')}>
             <FMAvatar
               fallbackText={userInitials}
