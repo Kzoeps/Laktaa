@@ -18,6 +18,7 @@ const DashboardScreen: FC = ({ navigation }) => {
   const dispatch = useDispatch();
   const jobs = useSelector(selectJobs);
   const userDetails = useSelector(selectUserDetails);
+  console.log('====> ', userDetails);
   const [filters, setFilters] = useState({});
   const [refreshing, setRefreshing] = React.useState(false);
   const ref = useRef(null);
