@@ -9,7 +9,6 @@ import {
   useToast,
   Spinner,
   Heading,
-  HStack,
 } from 'native-base';
 import tailwind from 'tailwind-rn';
 import { Formik, FormikProps, FormikValues } from 'formik';
@@ -27,6 +26,7 @@ import {
   POST_JOB_LOAD_TYPE,
   POST_JOB_INITIALIZER,
   POST_JOB_PERISH,
+  POST_JOB_SIZES,
 } from './models/constants';
 import FMTextInput from '../../shared/components/TextInput';
 import FMSelectInput from '../../shared/components/SelectInput/FMSelectInput';
@@ -77,7 +77,7 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
     }
     if (fromDate > toDate) {
       toast.show({
-        title: 'Pick up date cannot be after drop off date',
+        title: 'Pick up date cannot be after the drop off \n date',
         status: 'error',
       });
       return;
@@ -268,44 +268,24 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
                         variant="outline"
                       />
                     </Box>
+                    <Box style={tailwind('mx-8 my-2')}>
+                      <FMSelectInput
+                        formik={formik as unknown as FormikProps<FormikValues>}
+                        name="size"
+                        options={POST_JOB_SIZES}
+                        placeholder="Size"
+                        icon="size"
+                        iconPlacement={
+                          <Entypo
+                            name="resize-full-screen"
+                            size={24}
+                            color="black"
+                          />
+                        }
+                        inputColor="grey"
+                      />
+                    </Box>
 
-                    <View style={tailwind('items-center justify-center mt-6 ')}>
-                      <Text style={tailwind('text-gray-400')}>
-                        All the mesurements in meters
-                      </Text>
-                    </View>
-                    <View style={tailwind('flex flex-row mt-4 justify-center')}>
-                      <Box style={tailwind('w-28 my-2')}>
-                        <FMTextInput
-                          label="Height"
-                          name="height"
-                          formik={
-                            formik as unknown as FormikProps<FormikValues>
-                          }
-                          variant="outline"
-                        />
-                      </Box>
-                      <Box style={tailwind('mx-2 w-28 my-2')}>
-                        <FMTextInput
-                          label="Length"
-                          name="length"
-                          formik={
-                            formik as unknown as FormikProps<FormikValues>
-                          }
-                          variant="outline"
-                        />
-                      </Box>
-                      <Box style={tailwind('mx-2 w-28 my-2')}>
-                        <FMTextInput
-                          label="Breadth"
-                          name="breath"
-                          formik={
-                            formik as unknown as FormikProps<FormikValues>
-                          }
-                          variant="outline"
-                        />
-                      </Box>
-                    </View>
                     <View
                       style={tailwind('mt-8 items-center text-sm mx-6 pb-2')}
                     >
@@ -324,7 +304,7 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
                       <View>
                         <Box style={tailwind('my-2 ml-8')}>
                           <FMTextInput
-                            label="Place"
+                            label="Landmark nearby"
                             name="pickPlace"
                             variant="outline"
                             formik={
@@ -390,7 +370,7 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
                       <View>
                         <Box style={tailwind('my-2 ml-8')}>
                           <FMTextInput
-                            label="Place"
+                            label="Landmark nearby"
                             name="dropPlace"
                             variant="outline"
                             formik={

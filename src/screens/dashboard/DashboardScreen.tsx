@@ -14,12 +14,16 @@ import SearchInput from './SearchInput';
 import JobCard from './JobCard';
 import Layout from '../../shared/layout/layout';
 import { fetchJobs, selectJobs } from './store/dashboardSlice';
+import { fetchUserProfile, selectUserDetails } from '../auth/store/authSlice';
 
 const DashboardScreen: FC = ({ navigation }) => {
+  const { userEmail } = useContext(AuthContext);
   const [shouldLogout, setShouldLogout] = useState<boolean>(false);
   const { logout } = useContext(AuthContext);
   const dispatch = useDispatch();
   const jobs = useSelector(selectJobs);
+  const userDetails = useSelector(selectUserDetails);
+  console.log('====> ', userDetails);
   const [filters, setFilters] = useState({});
   const [refreshing, setRefreshing] = React.useState(false);
   const ref = useRef(null);
@@ -27,6 +31,10 @@ const DashboardScreen: FC = ({ navigation }) => {
   useEffect(() => {
     dispatch(fetchJobs(filters));
   }, [dispatch, filters]);
+
+  useEffect(() => {
+    dispatch(fetchUserProfile(userEmail));
+  }, [userEmail, dispatch]);
 
   const onRefresh = () => {
     setFilters({});
@@ -56,7 +64,11 @@ const DashboardScreen: FC = ({ navigation }) => {
           <View style={tailwind('my-2')}>
             <SearchInput filters={filters} setFilters={setFilters} ref={ref} />
           </View>
-          <JobCard data={jobs} navigation={navigation} />
+          <JobCard
+            data={jobs}
+            navigation={navigation}
+            registeredDriver={userDetails.registeredDriver}
+          />
         </Layout>
       </ScrollView>
 

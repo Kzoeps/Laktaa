@@ -1,5 +1,5 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Button, Heading, Spinner } from 'native-base';
 import { Formik, FormikProps, FormikValues } from 'formik';
@@ -133,106 +133,108 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
   }
   return (
     <Box bg="emerald.400">
-      <FMHeader header="My Profile" />
-      <Layout styleProp="h-full">
-        <View style={tailwind('items-center h-full w-full')}>
-          <View style={tailwind('mt-10 mb-4')}>
-            <FMAvatar
-              fallbackText={userInitials}
-              showBadge
-              onBadgeClick={openFilePicker}
-              imageUrl={userDetails?.profileImageUrl}
-            />
-          </View>
-          <View style={tailwind('items-center w-full h-1/2')}>
-            <Formik
-              initialValues={initialValues}
-              validationSchema={validationSchema}
-              onSubmit={async ({
-                name: userName,
-                phoneNumber: userNumber,
-                location,
-              }) => {
-                if (firebase.auth()?.currentUser?.displayName) {
-                  await updateUserProfile({
+      <ScrollView>
+        <FMHeader header="My Profile" />
+        <Layout styleProp="h-full">
+          <View style={tailwind('items-center h-full w-full my-14')}>
+            <View style={tailwind('mt-10 mb-4')}>
+              <FMAvatar
+                fallbackText={userInitials}
+                showBadge
+                onBadgeClick={openFilePicker}
+                imageUrl={userDetails?.profileImageUrl}
+              />
+            </View>
+            <View style={tailwind('items-center w-full h-1/2')}>
+              <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={async ({
+                  name: userName,
+                  phoneNumber: userNumber,
+                  location,
+                }) => {
+                  if (firebase.auth()?.currentUser?.displayName) {
+                    await updateUserProfile({
+                      userName,
+                      phoneNumber: currentUser.phoneNumber,
+                      location,
+                    });
+                    return;
+                  }
+                  await createUserProfile({
                     userName,
                     phoneNumber: currentUser.phoneNumber,
                     location,
                   });
-                  return;
-                }
-                await createUserProfile({
-                  userName,
-                  phoneNumber: currentUser.phoneNumber,
-                  location,
-                });
-              }}
-            >
-              {(
-                formik: FormikProps<{
-                  name: string;
-                  phoneNumber: number;
-                  location: string;
-                }>
-              ) => (
-                <>
-                  <Box style={tailwind('w-10/12 items-center')}>
-                    <FMTextInput
-                      styleProp="mt-3"
-                      disableInput={inputsDisabled}
-                      label="Name"
-                      name="name"
-                      formik={formik as unknown as FormikProps<FormikValues>}
-                    />
-                    <FMTextInput
-                      styleProp="mt-3"
-                      disableInput={inputsDisabled}
-                      label="Location"
-                      name="location"
-                      formik={formik as unknown as FormikProps<FormikValues>}
-                    />
-                    {/* <FMTextInput */}
-                    {/*  styleProp="mt-3" */}
-                    {/*  disableInput={inputsDisabled} */}
-                    {/*  label="Phone Number" */}
-                    {/*  name="phoneNumber" */}
-                    {/*  formik={formik as unknown as FormikProps<FormikValues>} */}
-                    {/* /> */}
-                  </Box>
+                }}
+              >
+                {(
+                  formik: FormikProps<{
+                    name: string;
+                    phoneNumber: number;
+                    location: string;
+                  }>
+                ) => (
+                  <>
+                    <Box style={tailwind('w-10/12 items-center')}>
+                      <FMTextInput
+                        styleProp="mt-3"
+                        disableInput={inputsDisabled}
+                        label="Name"
+                        name="name"
+                        formik={formik as unknown as FormikProps<FormikValues>}
+                      />
+                      <FMTextInput
+                        styleProp="mt-3"
+                        disableInput={inputsDisabled}
+                        label="Location"
+                        name="location"
+                        formik={formik as unknown as FormikProps<FormikValues>}
+                      />
+                      {/* <FMTextInput */}
+                      {/*  styleProp="mt-3" */}
+                      {/*  disableInput={inputsDisabled} */}
+                      {/*  label="Phone Number" */}
+                      {/*  name="phoneNumber" */}
+                      {/*  formik={formik as unknown as FormikProps<FormikValues>} */}
+                      {/* /> */}
+                    </Box>
 
-                  <View style={tailwind('mt-8 items-center')}>
-                    {!inputsDisabled && (
-                      <View style={tailwind('w-10/12 flex flex-row')}>
-                        <Button
-                          style={tailwind('flex-auto mr-3')}
-                          onPress={formik.handleSubmit}
-                        >
-                          Save
-                        </Button>
-                        <Button
-                          style={tailwind('flex-auto ml-1')}
-                          onPress={() => {
-                            formik.resetForm();
-                          }}
-                        >
-                          Cancel
-                        </Button>
-                      </View>
-                    )}
-                  </View>
-                </>
-              )}
-            </Formik>
+                    <View style={tailwind('mt-8 items-center')}>
+                      {!inputsDisabled && (
+                        <View style={tailwind('w-10/12 flex flex-row')}>
+                          <Button
+                            style={tailwind('flex-auto mr-3')}
+                            onPress={formik.handleSubmit}
+                          >
+                            Save
+                          </Button>
+                          <Button
+                            style={tailwind('flex-auto ml-1')}
+                            onPress={() => {
+                              formik.resetForm();
+                            }}
+                          >
+                            Cancel
+                          </Button>
+                        </View>
+                      )}
+                    </View>
+                  </>
+                )}
+              </Formik>
+            </View>
+            <TouchableOpacity style={tailwind('')} onPress={logout}>
+              <Text
+                style={tailwind('w-full font-bold underline items-center h-10')}
+              >
+                Logout
+              </Text>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity style={tailwind('')} onPress={logout}>
-            <Text
-              style={tailwind('w-full font-bold underline items-center h-10')}
-            >
-              Logout
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </Layout>
+        </Layout>
+      </ScrollView>
     </Box>
   );
 };

@@ -15,6 +15,7 @@ const JobDetails: FC<JobDetailsNavProps> = ({ route, navigation }) => {
     measurementLabel: 'text-gray-300',
     numberPrice: 'border-b border-gray-200 pb-1 mr-16',
     location: 'mx-8 my-1 p-2 border-b border-gray-200',
+    infoLabel: 'text-gray-300 text-sm',
   };
 
   const returnDate = (dateStr: string) => {
@@ -41,29 +42,23 @@ const JobDetails: FC<JobDetailsNavProps> = ({ route, navigation }) => {
               <Text>{data.pieces}</Text>
             </View>
             <View style={tailwind(styles.measurementParent)}>
-              <Text style={tailwind(styles.measurementLabel)}>Weight (Kg)</Text>
+              <Text style={tailwind(styles.measurementLabel)}>
+                Total Weight (Kg)
+              </Text>
               <Text>{data.weight}</Text>
+            </View>
+          </View>
+
+          <View style={tailwind('flex-row justify-between pb-8 ')}>
+            <View style={tailwind(styles.measurementParent)}>
+              <Text style={tailwind(styles.measurementLabel)}>Size</Text>
+              <Text>{data.size}</Text>
             </View>
             <View style={tailwind(styles.measurementParent)}>
               <Text style={tailwind(styles.measurementLabel)}>
                 Total Price (Nu)
               </Text>
               <Text>{data.price}</Text>
-            </View>
-          </View>
-
-          <View style={tailwind('flex-row justify-between pb-8 ')}>
-            <View style={tailwind(styles.measurementParent)}>
-              <Text style={tailwind(styles.measurementLabel)}>Height (M)</Text>
-              <Text>{data.height}</Text>
-            </View>
-            <View style={tailwind(styles.measurementParent)}>
-              <Text style={tailwind(styles.measurementLabel)}>Length</Text>
-              <Text>{data.length}</Text>
-            </View>
-            <View style={tailwind(styles.measurementParent)}>
-              <Text style={tailwind(styles.measurementLabel)}>Length (M)</Text>
-              <Text>{data.length}</Text>
             </View>
           </View>
 
@@ -79,26 +74,31 @@ const JobDetails: FC<JobDetailsNavProps> = ({ route, navigation }) => {
               </Text>
               <View>
                 <Box style={tailwind(styles.location)}>
+                  <Text style={tailwind(styles.infoLabel)}>Landmark</Text>
                   <Text>{data.pickPlace}</Text>
                 </Box>
               </View>
               <View>
                 <Box style={tailwind(styles.location)}>
+                  <Text style={tailwind(styles.infoLabel)}>Gewog</Text>
                   <Text>{data.pickGewog}</Text>
                 </Box>
               </View>
               <View>
                 <Box style={tailwind(styles.location)}>
+                  <Text style={tailwind(styles.infoLabel)}>Dzongkhag</Text>
                   <Text>{data.pickDzongkhag}</Text>
                 </Box>
               </View>
               <View>
                 <Box style={tailwind(styles.location)}>
+                  <Text style={tailwind(styles.infoLabel)}>Date</Text>
                   <Text>{returnDate(data.pickUpDate)}</Text>
                 </Box>
               </View>
               <View>
                 <Box style={tailwind(styles.location)}>
+                  <Text style={tailwind(styles.infoLabel)}>Phone</Text>
                   <Text>{data.pickUpPhone}</Text>
                 </Box>
               </View>
@@ -114,26 +114,31 @@ const JobDetails: FC<JobDetailsNavProps> = ({ route, navigation }) => {
               </Text>
               <View>
                 <Box style={tailwind(styles.location)}>
+                  <Text style={tailwind(styles.infoLabel)}>Landmark</Text>
                   <Text>{data.dropPlace} </Text>
                 </Box>
               </View>
               <View>
                 <Box style={tailwind(styles.location)}>
+                  <Text style={tailwind(styles.infoLabel)}>Gewog</Text>
                   <Text>{data.dropGewog}</Text>
                 </Box>
               </View>
               <View>
                 <Box style={tailwind(styles.location)}>
+                  <Text style={tailwind(styles.infoLabel)}>Dzongkhag</Text>
                   <Text>{data.dropDzongkhag}</Text>
                 </Box>
               </View>
               <View>
                 <Box style={tailwind(styles.location)}>
+                  <Text style={tailwind(styles.infoLabel)}>Date</Text>
                   <Text>{returnDate(data.dropOffDate)}</Text>
                 </Box>
               </View>
               <View>
                 <Box style={tailwind(styles.location)}>
+                  <Text style={tailwind(styles.infoLabel)}>Phone</Text>
                   <Text>{data.dropOffPhone}</Text>
                 </Box>
               </View>
