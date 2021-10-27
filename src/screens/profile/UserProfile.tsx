@@ -13,7 +13,7 @@ import {
   selectUserDetails,
   updateUserProfile as updateUserProfileStore,
   updateUserProfileImage,
-	setUserDetails
+  setUserDetails,
 } from '../auth/store/authSlice';
 import { EDIT_PROFILE_SCHEMA } from './models/constants';
 import FMTextInput from '../../shared/components/TextInput';
@@ -53,22 +53,28 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
   const validationSchema = EDIT_PROFILE_SCHEMA;
 
   const updateUserProfile = async (userDetailsPayload: UserDetails) => {
-  	try {
-			await firebase.auth().currentUser?.updateProfile({ displayName: userDetails.userName })
-			await dispatch(updateUserProfileStore(userDetailsPayload));
-		} catch (e) {
-  		console.log(e);
-		}
+    try {
+      await firebase
+        .auth()
+        .currentUser?.updateProfile({ displayName: userDetails.userName });
+      await dispatch(updateUserProfileStore(userDetailsPayload));
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const createUserProfile = async (userDetailsPayload: UserDetails) => {
-  	try {
-			await firebase.auth().currentUser?.updateProfile({ displayName: userDetails.userName })
-			await dispatch(setUserDetails({...userDetailsPayload, registeredDriver: false}));
-		} catch (e) {
-			console.log(e);
-		}
-	}
+    try {
+      await firebase
+        .auth()
+        .currentUser?.updateProfile({ displayName: userDetails.userName });
+      await dispatch(
+        setUserDetails({ ...userDetailsPayload, registeredDriver: false })
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const openFilePicker = async () => {
     const fileRef = await DocumentPicker.getDocumentAsync({ type: 'image/*' });
@@ -147,15 +153,19 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
                 phoneNumber: userNumber,
                 location,
               }) => {
-              	if (firebase.auth()?.currentUser?.displayName) {
-									await updateUserProfile({
-										userName,
-										phoneNumber: currentUser.phoneNumber,
-										location,
-									});
-									return;
-								}
-              	await createUserProfile({ userName, phoneNumber: currentUser.phoneNumber, location });
+                if (firebase.auth()?.currentUser?.displayName) {
+                  await updateUserProfile({
+                    userName,
+                    phoneNumber: currentUser.phoneNumber,
+                    location,
+                  });
+                  return;
+                }
+                await createUserProfile({
+                  userName,
+                  phoneNumber: currentUser.phoneNumber,
+                  location,
+                });
               }}
             >
               {(

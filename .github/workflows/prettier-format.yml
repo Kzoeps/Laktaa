@@ -1,5 +1,9 @@
 name: run-formatter
-on: push
+on:
+  push:
+    branches:
+      - main
+      - development
 jobs:
   format-code:
     runs-on: ubuntu-latest

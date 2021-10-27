@@ -23,7 +23,7 @@ const initialState: AuthState = {
 export const setUserDetails = createAsyncThunk(
   AuthStoreActionTypes.setUserDetails,
   async (userDetails: UserDetails) => {
-		await FIREBASE_CALLS.createUserProfile(userDetails);
+    await FIREBASE_CALLS.createUserProfile(userDetails);
     return userDetails;
   }
 );

@@ -48,31 +48,33 @@ export const FIREBASE_CALLS = {
       .collection(phoneNumber)
       .doc('userProfile')
       .get() as Promise<DocumentSnapshot<UserDetails>>,
-	updateUserProfile: (userDetails: UserDetails): Promise<void> =>
-		firebase
-			.firestore()
-			.collection(userDetails.phoneNumber as string)
-			.doc('userProfile')
-			.update({
-				userName: userDetails.userName,
-				location: userDetails.location,
-				phoneNumber: userDetails.phoneNumber,
-			}),
-	updateUserProfileGeneral: (userDetails: Partial<UserDetails>): Promise<void> | undefined => {
-		if (userDetails.phoneNumber) {
-			return firebase
-				.firestore()
-				.collection(userDetails.phoneNumber.toString())
-				.doc('userProfile')
-				.update(userDetails);
-		}
-		return undefined
-	},
-	updateUserProfileImage: ({
-														 phoneNumber,
-														 profileImageUrl,
-													 }: ProfileUpdatePayload): Promise<void> =>
-		firebase.firestore().collection(phoneNumber).doc('userProfile').update({
-			profileImageUrl,
-		}),
+  updateUserProfile: (userDetails: UserDetails): Promise<void> =>
+    firebase
+      .firestore()
+      .collection(userDetails.phoneNumber as string)
+      .doc('userProfile')
+      .update({
+        userName: userDetails.userName,
+        location: userDetails.location,
+        phoneNumber: userDetails.phoneNumber,
+      }),
+  updateUserProfileGeneral: (
+    userDetails: Partial<UserDetails>
+  ): Promise<void> | undefined => {
+    if (userDetails.phoneNumber) {
+      return firebase
+        .firestore()
+        .collection(userDetails.phoneNumber.toString())
+        .doc('userProfile')
+        .update(userDetails);
+    }
+    return undefined;
+  },
+  updateUserProfileImage: ({
+    phoneNumber,
+    profileImageUrl,
+  }: ProfileUpdatePayload): Promise<void> =>
+    firebase.firestore().collection(phoneNumber).doc('userProfile').update({
+      profileImageUrl,
+    }),
 };

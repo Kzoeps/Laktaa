@@ -85,7 +85,10 @@ const VehicleRegistration: FC<VehicleRegistrationNavProps> = ({
     setShowLoader(true);
     const payload = { ...registrationDetails };
     if (imageInfo) {
-      payload.carImageUri = await uploadFile(`carImages/${phoneNumber}`, imageInfo);
+      payload.carImageUri = await uploadFile(
+        `carImages/${phoneNumber}`,
+        imageInfo
+      );
     }
     if (driverImageInfo) {
       payload.driverImageUri = await uploadFile(
@@ -95,14 +98,23 @@ const VehicleRegistration: FC<VehicleRegistrationNavProps> = ({
     }
     if (vehicleInfo?.vehicleType) {
       await dispatch(
-        updateVehicleRegistration({ registrationDetails: payload,  phoneNumber: phoneNumber.toString() })
+        updateVehicleRegistration({
+          registrationDetails: payload,
+          phoneNumber: phoneNumber.toString(),
+        })
       );
-		} else {
+    } else {
       await dispatch(
-        setVehicleRegistration({ registrationDetails: payload, phoneNumber: phoneNumber.toString() })
+        setVehicleRegistration({
+          registrationDetails: payload,
+          phoneNumber: phoneNumber.toString(),
+        })
       );
-			FIREBASE_CALLS.updateUserProfileGeneral({registeredDriver: true, phoneNumber})
-		}
+      FIREBASE_CALLS.updateUserProfileGeneral({
+        registeredDriver: true,
+        phoneNumber,
+      });
+    }
     setShowLoader(false);
     toast.show(getToastConfig('Registered successfully', ToastTypes.success));
   };
