@@ -85,7 +85,7 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
     setLoading(true);
     const uploadedImage = await FIREBASE_POSTJOB_CALLS.postImage(imageUri);
     // eslint-disable-next-line no-param-reassign
-    values.poster = currentUser.email;
+    values.poster = currentUser.phoneNumber;
     // eslint-disable-next-line no-param-reassign
     values.imageUri = uploadedImage;
     // eslint-disable-next-line no-param-reassign

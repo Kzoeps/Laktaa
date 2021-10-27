@@ -151,4 +151,4 @@ export const NAVIGATION_HEADER_CONFIG = {
 export const PHONE_NUMBER_EXPRESSION =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
-export const BHT_PHONE_NUMBER_EXPRESSION = /^([17][7])[1-9]{6}$/
+export const BHT_PHONE_NUMBER_EXPRESSION = /^([17][7])[0-9]{6}$/

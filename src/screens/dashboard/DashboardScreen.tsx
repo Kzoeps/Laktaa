@@ -17,13 +17,12 @@ import { fetchJobs, selectJobs } from './store/dashboardSlice';
 import { fetchUserProfile, selectUserDetails } from '../auth/store/authSlice';
 
 const DashboardScreen: FC = ({ navigation }) => {
-  const { userEmail } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
   const [shouldLogout, setShouldLogout] = useState<boolean>(false);
   const { logout } = useContext(AuthContext);
   const dispatch = useDispatch();
   const jobs = useSelector(selectJobs);
   const userDetails = useSelector(selectUserDetails);
-  console.log('====> ', userDetails);
   const [filters, setFilters] = useState({});
   const [refreshing, setRefreshing] = React.useState(false);
   const ref = useRef(null);
@@ -33,8 +32,8 @@ const DashboardScreen: FC = ({ navigation }) => {
   }, [dispatch, filters]);
 
   useEffect(() => {
-    dispatch(fetchUserProfile(userEmail));
-  }, [userEmail, dispatch]);
+    dispatch(fetchUserProfile(currentUser.phoneNumber));
+  }, []);
 
   const onRefresh = () => {
     setFilters({});
@@ -67,7 +66,7 @@ const DashboardScreen: FC = ({ navigation }) => {
           <JobCard
             data={jobs}
             navigation={navigation}
-            registeredDriver={userDetails.registeredDriver}
+            registeredDriver={userDetails?.registeredDriver}
           />
         </Layout>
       </ScrollView>

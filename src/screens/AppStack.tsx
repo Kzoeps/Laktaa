@@ -23,9 +23,9 @@ const AppStack = (): JSX.Element => {
 
   useEffect(() => {
     if (!userDetails?.userName) {
-      if (currentUser.email) dispatch(fetchUserProfile(currentUser.email));
+      if (currentUser.phoneNumber) dispatch(fetchUserProfile(currentUser.phoneNumber));
     }
-  }, [userDetails?.userName]);
+  }, [userDetails?.userName, currentUser.phoneNumber, dispatch]);
   useEffect(() => {
     setUserInitials(
       userDetails?.userName
@@ -47,7 +47,7 @@ const AppStack = (): JSX.Element => {
           headerRight: (props) => (
             <FMNavHeaderProfile
               phoneNumber={currentUser.phoneNumber}
-              userInitials={userDetails?.profileImageUrl ? '' : userInitials}
+              userInitials={userInitials}
               imageUri={userDetails?.profileImageUrl}
               navigation={navigation}
               route={route}
