@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { VALIDATION_MESSAGES } from '../../../shared/models/constants';
+import { BHT_PHONE_NUMBER_EXPRESSION, VALIDATION_MESSAGES } from '../../../shared/models/constants';
 import { PHONE_NUMBER_EXPRESSION } from '../../../shared/models/constants';
 
 export const POST_JOB_SCHEMA = Yup.object().shape({
@@ -14,7 +14,7 @@ export const POST_JOB_SCHEMA = Yup.object().shape({
   pickGewog: Yup.string().required(VALIDATION_MESSAGES.required),
   pickUpPhone: Yup.string()
     .required(VALIDATION_MESSAGES.required)
-    .matches(PHONE_NUMBER_EXPRESSION, VALIDATION_MESSAGES.phoneNumber)
+    .matches(BHT_PHONE_NUMBER_EXPRESSION, VALIDATION_MESSAGES.phoneNumber)
     .min(8, VALIDATION_MESSAGES.minLength)
     .max(10, VALIDATION_MESSAGES.maxLength),
   dropPlace: Yup.string().required(VALIDATION_MESSAGES.required),
@@ -22,7 +22,7 @@ export const POST_JOB_SCHEMA = Yup.object().shape({
   dropGewog: Yup.string().required(VALIDATION_MESSAGES.required),
   dropOffPhone: Yup.string()
     .required(VALIDATION_MESSAGES.required)
-    .matches(PHONE_NUMBER_EXPRESSION, VALIDATION_MESSAGES.phoneNumber)
+    .matches(BHT_PHONE_NUMBER_EXPRESSION, VALIDATION_MESSAGES.phoneNumber)
     .min(8, VALIDATION_MESSAGES.minLength)
     .max(10, VALIDATION_MESSAGES.maxLength),
 });

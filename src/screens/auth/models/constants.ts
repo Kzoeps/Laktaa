@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { VALIDATION_MESSAGES } from '../../../shared/models/constants';
+import { BHT_PHONE_NUMBER_EXPRESSION, VALIDATION_MESSAGES } from '../../../shared/models/constants';
 
 export const SIGN_UP_SCHEMA = Yup.object().shape({
   name: Yup.string()
@@ -19,7 +19,7 @@ export const SIGN_UP_PHONE_SCHEMA = Yup.object().shape({
   location: Yup.string().required(VALIDATION_MESSAGES.required),
   phoneNumber: Yup.string()
     .required(VALIDATION_MESSAGES.required)
-    .matches(/^([17][7])[1-9]{6}$/, 'Not a valid number'),
+		.matches(BHT_PHONE_NUMBER_EXPRESSION, VALIDATION_MESSAGES.phoneNumber),
   verificationCode: Yup.string()
     .required(VALIDATION_MESSAGES.required)
     .max(6, 'Verification code is 6 digits long')
@@ -29,8 +29,8 @@ export const SIGN_UP_PHONE_SCHEMA = Yup.object().shape({
 export const LOGIN_PHONE_SCHEMA = Yup.object().shape({
   phoneNumber: Yup.string()
     .required(VALIDATION_MESSAGES.required)
-    .matches(/^([17][7])[1-9]{6}$/, 'Not a valid number'),
-  verificationCode: Yup.string()
+		.matches(BHT_PHONE_NUMBER_EXPRESSION, VALIDATION_MESSAGES.phoneNumber),
+	verificationCode: Yup.string()
     .required(VALIDATION_MESSAGES.required)
     .max(6, 'Verification code is 6 digits long')
     .min(6, 'Verification code is 6 digits long'),
