@@ -24,6 +24,7 @@ import {
 import { RootState } from '../../store/store';
 import OpenCamera from '../postjob/Camera';
 import Pageheader from '../../shared/components/Pageheader/Pageheader';
+import { FIREBASE_CALLS } from '../auth/utils/API';
 
 type VehicleRegistrationNavProps =
   NavigationProps<RoutePaths.vehicleRegistration>;
@@ -96,11 +97,12 @@ const VehicleRegistration: FC<VehicleRegistrationNavProps> = ({
       await dispatch(
         updateVehicleRegistration({ registrationDetails: payload,  phoneNumber: phoneNumber.toString() })
       );
-    } else {
+		} else {
       await dispatch(
         setVehicleRegistration({ registrationDetails: payload, phoneNumber: phoneNumber.toString() })
       );
-    }
+			FIREBASE_CALLS.updateUserProfileGeneral({registeredDriver: true, phoneNumber})
+		}
     setShowLoader(false);
     toast.show(getToastConfig('Registered successfully', ToastTypes.success));
   };

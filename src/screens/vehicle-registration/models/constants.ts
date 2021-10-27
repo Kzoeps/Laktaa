@@ -22,7 +22,7 @@ export const VEHICLE_REGISTRATION_VALIDATION = Yup.object().shape({
   licenseNumber: Yup.string().required(VALIDATION_MESSAGES.required),
   driverName: Yup.string().required(VALIDATION_MESSAGES.required),
   age: Yup.number().required(VALIDATION_MESSAGES.required),
-  contactNumber: Yup.number().required(VALIDATION_MESSAGES.required).max(100),
+  contactNumber: Yup.string().required(VALIDATION_MESSAGES.required).matches(/^([17][7])[1-9]{6}$/, 'Not a valid number'),
 });
 
 export const DRIVER_DETAILS_INITIALIZER = {

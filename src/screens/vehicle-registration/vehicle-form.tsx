@@ -39,7 +39,7 @@ const VehicleForm: FC<{
         (initialFormValues ?? VEHICLE_REGISTER_INITIALIZER) as VehicleInfo &
           DriverInfo
       }
-      // validationSchema={validationSchema}
+      validationSchema={validationSchema}
       onSubmit={(registrationDetails) => {
         setRegistrationDetails({ registrationDetails });
       }}

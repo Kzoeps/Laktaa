@@ -12,6 +12,7 @@ import { AuthContext } from './auth';
 import FMTextInput from '../../shared/components/TextInput';
 import { fetchUserProfile } from './store/authSlice';
 import { LoginFormValues } from './models/models';
+import { LOGIN_PHONE_SCHEMA } from './models/constants';
 
 const LoginScreen = ({ navigation }): JSX.Element => {
   const { loginWithEmail } = useContext(AuthContext);
@@ -25,6 +26,7 @@ const LoginScreen = ({ navigation }): JSX.Element => {
     phoneNumber: '',
     verificationCode: '',
   };
+  const validationSchema = LOGIN_PHONE_SCHEMA;
   const dispatch = useDispatch();
 
   const sendVerification = (phoneNumber: string) => {
@@ -66,6 +68,7 @@ const LoginScreen = ({ navigation }): JSX.Element => {
         <View style={tailwind('items-center h-full')}>
           <Formik
             initialValues={initialValues}
+						validationSchema={validationSchema}
             onSubmit={ async ({ phoneNumber, verificationCode }) => {
             	setPending(true)
             	await confirmCode(verificationCode);
