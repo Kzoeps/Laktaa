@@ -115,8 +115,8 @@ const VehicleRegistration: FC<VehicleRegistrationNavProps> = ({
         registeredDriver: true,
         phoneNumber,
       });
-			await dispatch(fetchUserProfile(phoneNumber));
-		}
+      await dispatch(fetchUserProfile(phoneNumber));
+    }
     setShowLoader(false);
     toast.show(getToastConfig('Registered successfully', ToastTypes.success));
   };

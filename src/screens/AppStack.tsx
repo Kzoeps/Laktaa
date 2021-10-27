@@ -23,7 +23,8 @@ const AppStack = (): JSX.Element => {
 
   useEffect(() => {
     if (!userDetails?.userName) {
-      if (currentUser.phoneNumber) dispatch(fetchUserProfile(currentUser.phoneNumber));
+      if (currentUser.phoneNumber)
+        dispatch(fetchUserProfile(currentUser.phoneNumber));
     }
   }, [userDetails?.userName, currentUser.phoneNumber, dispatch]);
   useEffect(() => {

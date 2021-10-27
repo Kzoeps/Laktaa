@@ -1,5 +1,8 @@
 import * as Yup from 'yup';
-import { BHT_PHONE_NUMBER_EXPRESSION, VALIDATION_MESSAGES } from '../../../shared/models/constants';
+import {
+  BHT_PHONE_NUMBER_EXPRESSION,
+  VALIDATION_MESSAGES,
+} from '../../../shared/models/constants';
 
 export const POST_JOB_SCHEMA = Yup.object().shape({
   loadType: Yup.string().required(VALIDATION_MESSAGES.required),
