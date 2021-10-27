@@ -14,6 +14,7 @@ import { SignUpForm } from './models/models';
 import { setUserDetails as updateUserDetails } from './store/authSlice';
 import { selectStoreStatus } from '../../shared/utils';
 import { APIStatuses, RootReducersEnum } from '../../shared/models/model';
+import { SIGN_UP_FORM, SIGN_UP_PHONE_SCHEMA } from './models/constants';
 
 const SignUpPhone: FC = () => {
   const { currentUser } = useContext(AuthContext);
@@ -22,12 +23,8 @@ const SignUpPhone: FC = () => {
   const [pendingRegistration, setPendingRegistration] = useState(false);
 	const status = useSelector(selectStoreStatus(RootReducersEnum.authSlice));
   const recaptchaVerifier = useRef(null);
-  const initialValues = {
-    phoneNumber: '',
-    verificationCode: '',
-    name: '',
-    location: '',
-  };
+  const initialValues = SIGN_UP_FORM;
+  const validationSchema = SIGN_UP_PHONE_SCHEMA;
   const dispatch = useDispatch();
 
   const updateUserProfile = async (displayName: string) => {
@@ -67,12 +64,9 @@ const SignUpPhone: FC = () => {
 
   const handleSubmit = async (formValues: SignUpForm) => {
     const { verificationCode, name, phoneNumber, location } = formValues;
-    debugger;
     await confirmCode(verificationCode);
-    debugger;
     // const user = firebase.auth().currentUser;
     await updateUserProfile(name);
-    debugger;
 		await dispatch(
       updateUserDetails({
         phoneNumber: `+975${phoneNumber}`,
@@ -113,6 +107,7 @@ const SignUpPhone: FC = () => {
           />
           <Formik
             initialValues={initialValues}
+						validationSchema={validationSchema}
             onSubmit={async (formValues) => {
               await handleSubmit(formValues);
             }}

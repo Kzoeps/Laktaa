@@ -55,13 +55,13 @@ const VehicleRegistration: FC<VehicleRegistrationNavProps> = ({
   };
 
   useEffect(() => {
-    if (currentUser.email && !vehicleInfo) {
-      const getVehicleInfo = async (email: string) => {
-        await dispatch(getVehicleRegistrationDetails(email));
+    if (currentUser.phoneNumber && !vehicleInfo) {
+      const getVehicleInfo = async (phoneNumber: string) => {
+        await dispatch(getVehicleRegistrationDetails(phoneNumber));
       };
-      getVehicleInfo(currentUser.email);
+      getVehicleInfo(currentUser.phoneNumber);
     }
-  }, [dispatch, currentUser.email, vehicleInfo]);
+  }, [dispatch, currentUser.phoneNumber, vehicleInfo]);
 
   const uploadFile = async (
     reference: string,
@@ -80,25 +80,25 @@ const VehicleRegistration: FC<VehicleRegistrationNavProps> = ({
   }: {
     registrationDetails: VehicleInfo & DriverInfo;
   }) => {
-    const { email } = currentUser;
+    const { phoneNumber } = currentUser;
     setShowLoader(true);
     const payload = { ...registrationDetails };
     if (imageInfo) {
-      payload.carImageUri = await uploadFile(`carImages/${email}`, imageInfo);
+      payload.carImageUri = await uploadFile(`carImages/${phoneNumber}`, imageInfo);
     }
     if (driverImageInfo) {
       payload.driverImageUri = await uploadFile(
-        `driverImages/${email}`,
+        `driverImages/${phoneNumber}`,
         driverImageInfo
       );
     }
     if (vehicleInfo?.vehicleType) {
       await dispatch(
-        updateVehicleRegistration({ registrationDetails: payload, email })
+        updateVehicleRegistration({ registrationDetails: payload,  phoneNumber: phoneNumber.toString() })
       );
     } else {
       await dispatch(
-        setVehicleRegistration({ registrationDetails: payload, email })
+        setVehicleRegistration({ registrationDetails: payload, phoneNumber: phoneNumber.toString() })
       );
     }
     setShowLoader(false);

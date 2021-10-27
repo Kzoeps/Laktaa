@@ -16,8 +16,8 @@ const initialState: VehicleSlice = {
 
 export const getVehicleRegistrationDetails = createAsyncThunk(
   DriverSliceActionTypes.getVehicleRegistration,
-  async (email: string) => {
-    const response = await VEHICLE_REGISTER_CALLS.getVehicleRegistration(email);
+  async (phoneNumber: string) => {
+    const response = await VEHICLE_REGISTER_CALLS.getVehicleRegistration(phoneNumber);
     return response.data();
   }
 );
@@ -26,12 +26,12 @@ export const setVehicleRegistration = createAsyncThunk(
   DriverSliceActionTypes.setVehicleRegistration,
   async ({
     registrationDetails,
-    email,
+    phoneNumber,
   }: {
     registrationDetails: VehicleInfo & DriverInfo;
-    email: string;
+    phoneNumber: string;
   }) => {
-    await VEHICLE_REGISTER_CALLS.registerVehicle(registrationDetails, email);
+    await VEHICLE_REGISTER_CALLS.registerVehicle(registrationDetails, phoneNumber);
     return registrationDetails;
   }
 );
@@ -40,14 +40,14 @@ export const updateVehicleRegistration = createAsyncThunk(
   DriverSliceActionTypes.updateVehicleRegistration,
   async ({
     registrationDetails,
-    email,
+    phoneNumber,
   }: {
     registrationDetails: VehicleInfo & DriverInfo;
-    email: string;
+    phoneNumber: string;
   }) => {
     await VEHICLE_REGISTER_CALLS.updateVehicleRegistration(
       registrationDetails,
-      email
+     	phoneNumber
     );
     return registrationDetails;
   }

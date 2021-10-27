@@ -6,28 +6,28 @@ import { RegistrationCollections } from '../models/constants';
 export const VEHICLE_REGISTER_CALLS = {
   registerVehicle: (
     info: VehicleInfo & DriverInfo,
-    email: string
+    phoneNumber: string
   ): Promise<void> =>
     firebase
       .firestore()
       .collection(RegistrationCollections.driverRegistrations)
-      .doc(email)
+      .doc(phoneNumber)
       .set(info),
   updateVehicleRegistration: (
     info: VehicleInfo & DriverInfo,
-    email: string
+    phoneNumber: string
   ): Promise<void> =>
     firebase
       .firestore()
       .collection(RegistrationCollections.driverRegistrations)
-      .doc(email)
+      .doc(phoneNumber)
       .update(info),
   getVehicleRegistration: (
-    email: string
+    phoneNumber: string
   ): Promise<DocumentSnapshot<VehicleInfo & DriverInfo>> =>
     firebase
       .firestore()
       .collection(RegistrationCollections.driverRegistrations)
-      .doc(email)
+      .doc(phoneNumber)
       .get() as Promise<DocumentSnapshot<VehicleInfo & DriverInfo>>,
 };
