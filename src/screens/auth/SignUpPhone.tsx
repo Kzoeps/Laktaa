@@ -155,6 +155,7 @@ const SignUpPhone: FC = () => {
                     />
                   </View>
                   <Button
+                    size="xs"
                     style={tailwind('w-4/12')}
                     isLoading={showLocalLoader}
                     onPress={() => {

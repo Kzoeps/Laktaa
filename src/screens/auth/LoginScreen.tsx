@@ -90,6 +90,7 @@ const LoginScreen = ({ navigation }): JSX.Element => {
                     />
                   </View>
                   <Button
+                    size="xs"
                     style={tailwind('w-4/12')}
                     isLoading={showLocalLoader}
                     onPress={() => sendVerification(formik.values.phoneNumber)}
