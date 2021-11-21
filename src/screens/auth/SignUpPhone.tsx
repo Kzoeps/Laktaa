@@ -38,6 +38,10 @@ const SignUpPhone: FC = () => {
   };
 
   const sendVerification = (phoneNumber: string) => {
+		if (!phoneNumber) {
+			toast.show(getToastConfig('Phone number is required', ToastTypes.error));
+			return;
+		}
     const phoneProvider = new firebase.auth.PhoneAuthProvider();
     setShowLocalLoader(true);
     phoneProvider
