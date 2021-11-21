@@ -68,7 +68,7 @@ const SignUpPhone: FC = () => {
     try {
       await firebase.auth().signInWithCredential(credential);
     } catch (e) {
-      console.error(e);
+    	toast.show(getToastConfig(e?.message || e, ToastTypes.error));
     }
   };
 
@@ -80,18 +80,22 @@ const SignUpPhone: FC = () => {
   );
 
   const handleSubmit = async (formValues: SignUpForm) => {
-    const { verificationCode, name, phoneNumber, location } = formValues;
-    await confirmCode(verificationCode);
-    // const user = firebase.auth().currentUser;
-    await updateUserProfile(name);
-    await dispatch(
-      updateUserDetails({
-        phoneNumber: `+975${phoneNumber}`,
-        location,
-        userName: name,
-        registeredDriver: false,
-      })
-    );
+  	try {
+			const { verificationCode, name, phoneNumber, location } = formValues;
+			await confirmCode(verificationCode);
+			// const user = firebase.auth().currentUser;
+			await updateUserProfile(name);
+			await dispatch(
+				updateUserDetails({
+					phoneNumber: `+975${phoneNumber}`,
+					location,
+					userName: name,
+					registeredDriver: false,
+				})
+			);
+		} catch (e) {
+  		toast.show(getToastConfig(e.message, ToastTypes.error));
+		}
   };
   if (status === APIStatuses.LOADING) {
     return (
@@ -131,7 +135,11 @@ const SignUpPhone: FC = () => {
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={async (formValues) => {
-              await handleSubmit(formValues);
+            	try {
+								await handleSubmit(formValues);
+							} catch (e) {
+            		toast.show(getToastConfig(e.message, ToastTypes.error));
+							}
             }}
           >
             {(formik: FormikProps<SignUpForm>) => (
