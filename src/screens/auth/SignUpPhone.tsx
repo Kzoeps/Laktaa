@@ -1,6 +1,6 @@
 import { Formik, FormikProps, FormikValues } from 'formik';
 import React, { FC, useContext, useEffect, useRef, useState } from 'react';
-import { Box, Button, Heading, Icon, Spinner } from 'native-base';
+import { Box, Button, Heading, Icon, Spinner, useToast } from 'native-base';
 import firebase from 'firebase';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import { ApplicationVerifier } from '@firebase/auth-types';
@@ -12,8 +12,8 @@ import { AuthContext } from './auth';
 import FMTextInput from '../../shared/components/TextInput';
 import { SignUpForm } from './models/models';
 import { setUserDetails as updateUserDetails } from './store/authSlice';
-import { selectStoreStatus } from '../../shared/utils';
-import { APIStatuses, RootReducersEnum } from '../../shared/models/model';
+import { getToastConfig, selectStoreStatus } from '../../shared/utils';
+import { APIStatuses, RootReducersEnum, ToastTypes } from '../../shared/models/model';
 import { SIGN_UP_FORM, SIGN_UP_PHONE_SCHEMA } from './models/constants';
 
 const SignUpPhone: FC = () => {
@@ -25,6 +25,7 @@ const SignUpPhone: FC = () => {
   const recaptchaVerifier = useRef(null);
   const initialValues = SIGN_UP_FORM;
   const validationSchema = SIGN_UP_PHONE_SCHEMA;
+  const toast = useToast();
   const dispatch = useDispatch();
 
   const updateUserProfile = async (displayName: string) => {
@@ -43,6 +44,9 @@ const SignUpPhone: FC = () => {
       .then((id) => {
         setVerificationId(id);
       })
+			.catch((error) => {
+				toast.show(getToastConfig(error?.message || error, ToastTypes.error));
+			})
       .finally(() => {
         setShowLocalLoader(false);
       });

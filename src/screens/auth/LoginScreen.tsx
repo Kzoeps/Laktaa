@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Formik, FormikProps, FormikValues } from 'formik';
 import { ImageBackground, Text, View } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { Button, Icon } from 'native-base';
+import { Button, Icon, useToast } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import { ApplicationVerifier } from '@firebase/auth-types';
 import tailwind from 'tailwind-rn';
@@ -13,6 +13,8 @@ import FMTextInput from '../../shared/components/TextInput';
 import { fetchUserProfile } from './store/authSlice';
 import { LoginFormValues } from './models/models';
 import { LOGIN_PHONE_SCHEMA } from './models/constants';
+import { getToastConfig } from '../../shared/utils';
+import { ToastTypes } from '../../shared/models/model';
 
 const LoginScreen = ({ navigation }): JSX.Element => {
   const { loginWithEmail } = useContext(AuthContext);
@@ -28,6 +30,7 @@ const LoginScreen = ({ navigation }): JSX.Element => {
   };
   const validationSchema = LOGIN_PHONE_SCHEMA;
   const dispatch = useDispatch();
+  const toast = useToast();
 
   const sendVerification = (phoneNumber: string) => {
     const phoneProvider = new firebase.auth.PhoneAuthProvider();
@@ -40,6 +43,9 @@ const LoginScreen = ({ navigation }): JSX.Element => {
       .then((id) => {
         setVerificationId(id);
       })
+			.catch((error) => {
+				toast.show(getToastConfig(error?.message || error, ToastTypes.error));
+			})
       .finally(() => {
         setShowLocalLoader(false);
       });
