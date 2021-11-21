@@ -1,10 +1,10 @@
 {
-  "name": "FirstMile",
-  "displayName": "FirstMile",
+  "name": "Laktaa",
+  "displayName": "Laktaa",
   "expo": {
-    "name": "FirstMile",
-    "slug": "FirstMile",
-    "version": "1.0.0",
+    "name": "Laktaa",
+    "slug": "Laktaa",
+    "version": "1.0.1",
     "assetBundlePatterns": ["**/*"],
     "android": {
       "package": "com.laktaa"
