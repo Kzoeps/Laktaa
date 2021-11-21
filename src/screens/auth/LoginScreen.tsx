@@ -41,7 +41,7 @@ const LoginScreen = ({ navigation }): JSX.Element => {
         recaptchaVerifier.current as unknown as ApplicationVerifier
       )
       .then((id) => {
-      	toast.show(getToastConfig('OTP has been sent', ToastTypes.success))
+        toast.show(getToastConfig('OTP has been sent', ToastTypes.success));
         setVerificationId(id);
       })
       .catch((error) => {
