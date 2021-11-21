@@ -57,12 +57,16 @@ const LoginScreen = ({ navigation }): JSX.Element => {
   };
 
   const confirmCode = async (code: string) => {
-    const credential = firebase.auth.PhoneAuthProvider.credential(
-      verificationId,
-      code
-    );
-    await firebase.auth().signInWithCredential(credential);
-  };
+		try {
+			const credential = firebase.auth.PhoneAuthProvider.credential(
+				verificationId,
+				code,
+			);
+			await firebase.auth().signInWithCredential(credential);
+		} catch (e) {
+			toast.show(getToastConfig(e.message || e, ToastTypes.error));
+		}
+	};
 
   useEffect(() => () => {
     setPending(false);
@@ -81,12 +85,18 @@ const LoginScreen = ({ navigation }): JSX.Element => {
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={async ({ phoneNumber, verificationCode }) => {
-              setPending(true);
-              await confirmCode(verificationCode);
-              if (firebase.auth().currentUser?.displayName)
-                await dispatch(fetchUserProfile(phoneNumber));
-              setPending(false);
-            }}
+							try {
+								setPending(true);
+								await confirmCode(verificationCode);
+								if (firebase.auth().currentUser?.displayName)
+									await dispatch(fetchUserProfile(phoneNumber));
+							} catch (e) {
+								toast.show(getToastConfig(e.message || e, ToastTypes.error));
+							} finally {
+								setPending(false);
+							}
+						}
+					}
           >
             {(formik: FormikProps<LoginFormValues>) => (
               <View style={tailwind('h-full w-11/12 mt-32 items-center')}>
