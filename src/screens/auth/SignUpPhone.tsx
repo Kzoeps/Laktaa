@@ -13,7 +13,11 @@ import FMTextInput from '../../shared/components/TextInput';
 import { SignUpForm } from './models/models';
 import { setUserDetails as updateUserDetails } from './store/authSlice';
 import { getToastConfig, selectStoreStatus } from '../../shared/utils';
-import { APIStatuses, RootReducersEnum, ToastTypes } from '../../shared/models/model';
+import {
+  APIStatuses,
+  RootReducersEnum,
+  ToastTypes,
+} from '../../shared/models/model';
 import { SIGN_UP_FORM, SIGN_UP_PHONE_SCHEMA } from './models/constants';
 
 const SignUpPhone: FC = () => {
@@ -44,9 +48,9 @@ const SignUpPhone: FC = () => {
       .then((id) => {
         setVerificationId(id);
       })
-			.catch((error) => {
-				toast.show(getToastConfig(error?.message || error, ToastTypes.error));
-			})
+      .catch((error) => {
+        toast.show(getToastConfig(error?.message || error, ToastTypes.error));
+      })
       .finally(() => {
         setShowLocalLoader(false);
       });

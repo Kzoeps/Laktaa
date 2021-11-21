@@ -43,9 +43,9 @@ const LoginScreen = ({ navigation }): JSX.Element => {
       .then((id) => {
         setVerificationId(id);
       })
-			.catch((error) => {
-				toast.show(getToastConfig(error?.message || error, ToastTypes.error));
-			})
+      .catch((error) => {
+        toast.show(getToastConfig(error?.message || error, ToastTypes.error));
+      })
       .finally(() => {
         setShowLocalLoader(false);
       });
