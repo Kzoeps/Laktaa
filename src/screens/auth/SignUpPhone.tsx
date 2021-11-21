@@ -68,7 +68,7 @@ const SignUpPhone: FC = () => {
     try {
       await firebase.auth().signInWithCredential(credential);
     } catch (e) {
-    	toast.show(getToastConfig(e?.message || e, ToastTypes.error));
+      toast.show(getToastConfig(e?.message || e, ToastTypes.error));
     }
   };
 
@@ -80,22 +80,22 @@ const SignUpPhone: FC = () => {
   );
 
   const handleSubmit = async (formValues: SignUpForm) => {
-  	try {
-			const { verificationCode, name, phoneNumber, location } = formValues;
-			await confirmCode(verificationCode);
-			// const user = firebase.auth().currentUser;
-			await updateUserProfile(name);
-			await dispatch(
-				updateUserDetails({
-					phoneNumber: `+975${phoneNumber}`,
-					location,
-					userName: name,
-					registeredDriver: false,
-				})
-			);
-		} catch (e) {
-  		toast.show(getToastConfig(e.message, ToastTypes.error));
-		}
+    try {
+      const { verificationCode, name, phoneNumber, location } = formValues;
+      await confirmCode(verificationCode);
+      // const user = firebase.auth().currentUser;
+      await updateUserProfile(name);
+      await dispatch(
+        updateUserDetails({
+          phoneNumber: `+975${phoneNumber}`,
+          location,
+          userName: name,
+          registeredDriver: false,
+        })
+      );
+    } catch (e) {
+      toast.show(getToastConfig(e.message, ToastTypes.error));
+    }
   };
   if (status === APIStatuses.LOADING) {
     return (
@@ -135,11 +135,11 @@ const SignUpPhone: FC = () => {
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={async (formValues) => {
-            	try {
-								await handleSubmit(formValues);
-							} catch (e) {
-            		toast.show(getToastConfig(e.message, ToastTypes.error));
-							}
+              try {
+                await handleSubmit(formValues);
+              } catch (e) {
+                toast.show(getToastConfig(e.message, ToastTypes.error));
+              }
             }}
           >
             {(formik: FormikProps<SignUpForm>) => (
