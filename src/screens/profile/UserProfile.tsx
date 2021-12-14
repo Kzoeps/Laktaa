@@ -65,9 +65,8 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
 
   const createUserProfile = async (userDetailsPayload: UserDetails) => {
     try {
-      await firebase
-        .auth()
-        .currentUser?.updateProfile({ displayName: userDetails.userName });
+      await firebase.auth();
+      // .currentUser?.updateProfile({ displayName: userDetails.userName });
       await dispatch(
         setUserDetails({ ...userDetailsPayload, registeredDriver: false })
       );
@@ -154,7 +153,8 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
                   phoneNumber: userNumber,
                   location,
                 }) => {
-                  if (firebase.auth()?.currentUser?.displayName) {
+                  if (firebase.auth()?.currentUser?.displayName != null) {
+                    console.log('right here: ', firebase.auth());
                     await updateUserProfile({
                       userName,
                       phoneNumber: currentUser.phoneNumber,
@@ -162,6 +162,8 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
                     });
                     return;
                   }
+                  console.log('no display name', firebase.auth());
+                  console.log('nunber: ', currentUser.phoneNumber);
                   await createUserProfile({
                     userName,
                     phoneNumber: currentUser.phoneNumber,
