@@ -54,45 +54,44 @@ const OpenCamera: FC<{
     <View>
       <Camera ref={cameraRef} type={type} style={tailwind('h-full')}>
         <>
-          <>
-            <View style={tailwind('flex-1 flex-row justify-between')}>
-              <TouchableOpacity
-                style={tailwind('m-4 mt-5')}
-                onPress={() => {
-                  props.closeCamera();
-                }}
-              >
-                <Text>
-                  <AntDesign name="closecircleo" size={32} color="grey" />
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={tailwind('m-4')}
-                onPress={() => {
-                  setType(
-                    type === Camera.Constants.Type.back
-                      ? Camera.Constants.Type.front
-                      : Camera.Constants.Type.back
-                  );
-                }}
-              >
-                <Text>
-                  <Ionicons
-                    name="camera-reverse-outline"
-                    size={32}
-                    color="grey"
-                  />
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View style={tailwind('mb-8')}>
-              <TouchableOpacity onPress={onSnap}>
-                <Text style={tailwind('text-center')}>
-                  <MaterialIcons name="camera" size={80} color="white" />
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </>
+          <View style={tailwind('flex-1 flex-row justify-between')}>
+            <TouchableOpacity
+              style={tailwind('m-4')}
+              onPress={() => {
+                props.closeCamera();
+              }}
+            >
+              <Text style={tailwind('pt-4')}>
+                <AntDesign name="closecircleo" size={26} color="grey" />
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={tailwind('m-4')}
+              onPress={() => {
+                setType(
+                  type === Camera.Constants.Type.back
+                    ? Camera.Constants.Type.front
+                    : Camera.Constants.Type.back
+                );
+              }}
+            >
+              <Text style={tailwind('pt-4')}>
+                <Ionicons
+                  name="camera-reverse-outline"
+                  size={28}
+                  color="grey"
+                />
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={tailwind('mb-8')}>
+            <TouchableOpacity onPress={onSnap}>
+              <Text style={tailwind('text-center pt-12')}>
+                <MaterialIcons name="camera" size={68} color="white" />
+              </Text>
+            </TouchableOpacity>
+          </View>
         </>
       </Camera>
     </View>
