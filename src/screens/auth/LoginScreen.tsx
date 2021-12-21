@@ -62,7 +62,9 @@ const LoginScreen = ({ navigation }): JSX.Element => {
         verificationId,
         code
       );
-      await firebase.auth().signInWithCredential(credential);
+      firebase.auth().signInWithCredential(credential).then(() => {
+      	toast.show(getToastConfig('Login Successful', ToastTypes.success));
+			});
     } catch (e) {
       toast.show(getToastConfig(e.message || e, ToastTypes.error));
     }
