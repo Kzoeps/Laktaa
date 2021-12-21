@@ -14,7 +14,7 @@ import { fetchUserProfile } from './store/authSlice';
 import { LoginFormValues } from './models/models';
 import { LOGIN_PHONE_SCHEMA } from './models/constants';
 import { getToastConfig } from '../../shared/utils';
-import { ToastTypes } from '../../shared/models/model';
+import { RoutePaths, ToastTypes } from '../../shared/models/model';
 
 const LoginScreen = ({ navigation }): JSX.Element => {
   const { loginWithEmail } = useContext(AuthContext);
@@ -70,7 +70,7 @@ const LoginScreen = ({ navigation }): JSX.Element => {
 
   useEffect(() => () => {
     setPending(false);
-  });
+  }, []);
   return (
     <View style={{ flex: 1 }}>
       {/* eslint-disable-next-line global-require */}
@@ -92,8 +92,6 @@ const LoginScreen = ({ navigation }): JSX.Element => {
                   await dispatch(fetchUserProfile(phoneNumber));
               } catch (e) {
                 toast.show(getToastConfig(e.message || e, ToastTypes.error));
-              } finally {
-                setPending(false);
               }
             }}
           >
@@ -142,6 +140,7 @@ const LoginScreen = ({ navigation }): JSX.Element => {
                   Log In
                 </Button>
                 <FirebaseRecaptchaVerifierModal
+									attemptInvisibleVerification
                   ref={recaptchaVerifier}
                   firebaseConfig={firebase.app().options}
                 />

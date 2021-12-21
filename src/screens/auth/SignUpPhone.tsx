@@ -61,6 +61,7 @@ const SignUpPhone: FC = () => {
   };
 
   const confirmCode = async (code: string) => {
+  	setPendingRegistration(true);
     const credential = firebase.auth.PhoneAuthProvider.credential(
       verificationId,
       code
@@ -69,7 +70,9 @@ const SignUpPhone: FC = () => {
       await firebase.auth().signInWithCredential(credential);
     } catch (e) {
       toast.show(getToastConfig(e?.message || e, ToastTypes.error));
-    }
+    } finally {
+			setPendingRegistration(false);
+		}
   };
 
   useEffect(
