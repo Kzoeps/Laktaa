@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Formik, FormikProps, FormikValues } from 'formik';
 import { ImageBackground, Text, View } from 'react-native';
 import { useDispatch } from 'react-redux';
@@ -8,18 +8,15 @@ import { ApplicationVerifier } from '@firebase/auth-types';
 import tailwind from 'tailwind-rn';
 import firebase from 'firebase';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
-import { AuthContext } from './auth';
 import FMTextInput from '../../shared/components/TextInput';
 import { fetchUserProfile } from './store/authSlice';
 import { LoginFormValues } from './models/models';
 import { LOGIN_PHONE_SCHEMA } from './models/constants';
 import { getToastConfig } from '../../shared/utils';
-import { RoutePaths, ToastTypes } from '../../shared/models/model';
+import { ToastTypes } from '../../shared/models/model';
+import OtpGenerator from './components/otp-generator';
 
 const LoginScreen = ({ navigation }): JSX.Element => {
-  const { loginWithEmail } = useContext(AuthContext);
-  const [updateUserProfile, setUpdateUserProfile] = useState<boolean>(false);
-  const [userEmail, setEmail] = useState<string>('');
   const [pending, setPending] = useState<boolean>(false);
   const [showLocalLoader, setShowLocalLoader] = useState<boolean>(false);
   const [verificationId, setVerificationId] = useState<string>('');
@@ -100,23 +97,7 @@ const LoginScreen = ({ navigation }): JSX.Element => {
             {(formik: FormikProps<LoginFormValues>) => (
               <View style={tailwind('h-full w-11/12 mt-32 items-center')}>
                 <View style={tailwind('w-11/12 items-center flex flex-row')}>
-                  <View style={tailwind('w-8/12')}>
-                    <FMTextInput
-                      label="Phone Number"
-                      name="phoneNumber"
-                      formik={formik as unknown as FormikProps<FormikValues>}
-                      icon="phone"
-                      color="white"
-                    />
-                  </View>
-                  <Button
-                    size="xs"
-                    style={tailwind('w-4/12')}
-                    isLoading={showLocalLoader}
-                    onPress={() => sendVerification(formik.values.phoneNumber)}
-                  >
-                    Create OTP
-                  </Button>
+									<OtpGenerator formik={formik as unknown as FormikProps<{phoneNumber: string}>} onOtpGenerate={sendVerification} showLoader={showLocalLoader}/>
                 </View>
                 <FMTextInput
                   styleProp="mt-10"

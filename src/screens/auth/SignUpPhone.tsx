@@ -19,9 +19,9 @@ import {
   ToastTypes,
 } from '../../shared/models/model';
 import { SIGN_UP_FORM, SIGN_UP_PHONE_SCHEMA } from './models/constants';
+import OtpGenerator from './components/otp-generator';
 
 const SignUpPhone: FC = () => {
-  const { currentUser } = useContext(AuthContext);
   const [verificationId, setVerificationId] = useState<string>('');
   const [showLocalLoader, setShowLocalLoader] = useState(false);
   const [pendingRegistration, setPendingRegistration] = useState(false);
@@ -70,9 +70,7 @@ const SignUpPhone: FC = () => {
       await firebase.auth().signInWithCredential(credential);
     } catch (e) {
       toast.show(getToastConfig(e?.message || e, ToastTypes.error));
-    } finally {
-			setPendingRegistration(false);
-		}
+    }
   };
 
   useEffect(
@@ -168,25 +166,7 @@ const SignUpPhone: FC = () => {
                 <Box
                   style={tailwind('mt-6 w-11/12 items-center flex flex-row')}
                 >
-                  <View style={tailwind('w-8/12')}>
-                    <FMTextInput
-                      placeholderTextColor="white"
-                      label="Phone Number"
-                      name="phoneNumber"
-                      formik={formik as unknown as FormikProps<FormikValues>}
-                      icon="phone"
-                    />
-                  </View>
-                  <Button
-                    size="xs"
-                    style={tailwind('w-4/12')}
-                    isLoading={showLocalLoader}
-                    onPress={() => {
-                      sendVerification(formik.values.phoneNumber);
-                    }}
-                  >
-                    Create OTP
-                  </Button>
+									<OtpGenerator formik={formik as unknown as FormikProps<{phoneNumber: string}>} onOtpGenerate={sendVerification} showLoader={showLocalLoader}/>
                 </Box>
                 <Box style={tailwind('mt-6 w-full items-center')}>
                   <FMTextInput
@@ -201,6 +181,7 @@ const SignUpPhone: FC = () => {
                 <FirebaseRecaptchaVerifierModal
                   ref={recaptchaVerifier}
                   firebaseConfig={firebase.app().options}
+									attemptInvisibleVerification
                 />
                 <Box style={tailwind('mt-8 w-3/6')}>
                   <Button
