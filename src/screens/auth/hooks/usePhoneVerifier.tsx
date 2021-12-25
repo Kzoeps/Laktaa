@@ -1,8 +1,8 @@
 import { useToast } from 'native-base';
 import firebase from 'firebase';
-import { getToastConfig } from '../../../shared/utils';
 import React from 'react';
 import { ApplicationVerifier } from '@firebase/auth-types';
+import { getToastConfig } from '../../../shared/utils';
 import { SetStateType, ToastTypes } from '../../../shared/models/model';
 
 interface PhoneVerifierProps {
@@ -47,14 +47,12 @@ const usePhoneVerifier = ({
 	const confirmCode = async (code: string): Promise<void> => {
 		if (!verificationId) return;
 		try {
-			setLoader(true);
 			const credential = firebase.auth.PhoneAuthProvider.credential(verificationId, code);
 			firebase.auth().signInWithCredential(credential).then(() => {
 				toast.show(getToastConfig('Login Successful', ToastTypes.success));
 			})
 		} catch (error) {
 			toast.show(getToastConfig(error.message, ToastTypes.error));
-			setLoader(false);
 		}
 	};
 	return { sendCode: sendVerification, confirmCode };

@@ -23,7 +23,6 @@ import OtpGenerator from './components/otp-generator';
 import usePhoneVerifier from './hooks/usePhoneVerifier';
 
 const SignUpPhone: FC = () => {
-  const [verificationId, setVerificationId] = useState<string>('');
   const [showLocalLoader, setShowLocalLoader] = useState(false);
   const [pendingRegistration, setPendingRegistration] = useState(false);
   const status = useSelector(selectStoreStatus(RootReducersEnum.authSlice));
@@ -40,23 +39,16 @@ const SignUpPhone: FC = () => {
   };
 
 	const sendVerification = async (phoneNumber: string) => {
-		const id = await phoneVerifier.sendCode(phoneNumber);
-		if (id) {
-			setVerificationId(id);
-		}
+		await phoneVerifier.sendCode(phoneNumber);
 	};
 
   const confirmCode = async (code: string) => {
   	setPendingRegistration(true);
-    const credential = firebase.auth.PhoneAuthProvider.credential(
-      verificationId,
-      code
-    );
-    try {
-      await firebase.auth().signInWithCredential(credential);
-    } catch (e) {
-      toast.show(getToastConfig(e?.message || e, ToastTypes.error));
-    }
+  	try {
+			await phoneVerifier.confirmCode(code);
+		} catch {
+  		setPendingRegistration(false);
+		}
   };
 
   useEffect(

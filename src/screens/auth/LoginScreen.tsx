@@ -20,7 +20,6 @@ import usePhoneVerifier from './hooks/usePhoneVerifier';
 const LoginScreen = ({ navigation }): JSX.Element => {
   const [pending, setPending] = useState<boolean>(false);
   const [showLocalLoader, setShowLocalLoader] = useState<boolean>(false);
-	const [verificationId, setVerificationId] = useState<string>('');
 	const recaptchaVerifier = useRef<ApplicationVerifier | undefined>(undefined);
 	const initialValues = {
 		phoneNumber: '',
@@ -39,8 +38,13 @@ const LoginScreen = ({ navigation }): JSX.Element => {
   };
 
   const confirmCode = async (code: string): Promise<void> => {
-   	await phoneVerifier.confirmCode(code);
-  };
+		setPending(true);
+		try {
+			await phoneVerifier.confirmCode(code);
+		} catch {
+			setPending(false);
+		}
+	};
 
   useEffect(() => () => {
     setPending(false);
