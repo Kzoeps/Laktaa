@@ -14,7 +14,7 @@ import { LoginFormValues } from './models/models';
 import { LOGIN_PHONE_SCHEMA } from './models/constants';
 import { getToastConfig } from '../../shared/utils';
 import { ToastTypes } from '../../shared/models/model';
-import OtpGenerator from './components/otp-generator';
+import { OtpGenerator } from './components/index';
 import usePhoneVerifier from './hooks/usePhoneVerifier';
 
 const LoginScreen = ({ navigation }): JSX.Element => {

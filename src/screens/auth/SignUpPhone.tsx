@@ -1,5 +1,5 @@
 import { Formik, FormikProps, FormikValues } from 'formik';
-import React, { FC, useContext, useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { Box, Button, Heading, Icon, Spinner, useToast } from 'native-base';
 import firebase from 'firebase';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
@@ -8,18 +8,13 @@ import tailwind from 'tailwind-rn';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { Image, ScrollView, View } from 'react-native';
-import { AuthContext } from './auth';
 import FMTextInput from '../../shared/components/TextInput';
 import { SignUpForm } from './models/models';
 import { setUserDetails as updateUserDetails } from './store/authSlice';
 import { getToastConfig, selectStoreStatus } from '../../shared/utils';
-import {
-  APIStatuses,
-  RootReducersEnum,
-  ToastTypes,
-} from '../../shared/models/model';
+import { APIStatuses, RootReducersEnum, ToastTypes } from '../../shared/models/model';
 import { SIGN_UP_FORM, SIGN_UP_PHONE_SCHEMA } from './models/constants';
-import OtpGenerator from './components/otp-generator';
+import { OtpGenerator } from './components/index';
 import usePhoneVerifier from './hooks/usePhoneVerifier';
 
 const SignUpPhone: FC = () => {
