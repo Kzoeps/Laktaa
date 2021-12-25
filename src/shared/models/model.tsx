@@ -1,4 +1,5 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { Dispatch, SetStateAction } from 'react';
 
 export interface PostJobInfo {
   called: string[];
@@ -69,3 +70,5 @@ export type AppStackParamList = {
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 export type NavigationProps<T> = NativeStackScreenProps<AppStackParamList, T>;
+
+export type SetStateType<T> = Dispatch<SetStateAction<T>>;
