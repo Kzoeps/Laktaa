@@ -20,45 +20,31 @@ import {
 } from '../../shared/models/model';
 import { SIGN_UP_FORM, SIGN_UP_PHONE_SCHEMA } from './models/constants';
 import OtpGenerator from './components/otp-generator';
+import usePhoneVerifier from './hooks/usePhoneVerifier';
 
 const SignUpPhone: FC = () => {
   const [verificationId, setVerificationId] = useState<string>('');
   const [showLocalLoader, setShowLocalLoader] = useState(false);
   const [pendingRegistration, setPendingRegistration] = useState(false);
   const status = useSelector(selectStoreStatus(RootReducersEnum.authSlice));
-  const recaptchaVerifier = useRef(null);
+  const recaptchaVerifier = useRef<ApplicationVerifier>(undefined);
   const initialValues = SIGN_UP_FORM;
   const validationSchema = SIGN_UP_PHONE_SCHEMA;
   const toast = useToast();
   const dispatch = useDispatch();
+  const phoneVerifier = usePhoneVerifier({setLoader: setShowLocalLoader, recaptchaVerifier: recaptchaVerifier.current})
 
   const updateUserProfile = async (displayName: string) => {
     const user: firebase.User | null = firebase.auth().currentUser;
     if (user) await user?.updateProfile({ displayName });
   };
 
-  const sendVerification = (phoneNumber: string) => {
-    if (!phoneNumber) {
-      toast.show(getToastConfig('Phone number is required', ToastTypes.error));
-      return;
-    }
-    const phoneProvider = new firebase.auth.PhoneAuthProvider();
-    setShowLocalLoader(true);
-    phoneProvider
-      .verifyPhoneNumber(
-        `+975${phoneNumber}`,
-        recaptchaVerifier.current as unknown as ApplicationVerifier
-      )
-      .then((id) => {
-        setVerificationId(id);
-      })
-      .catch((error) => {
-        toast.show(getToastConfig(error?.message || error, ToastTypes.error));
-      })
-      .finally(() => {
-        setShowLocalLoader(false);
-      });
-  };
+	const sendVerification = async (phoneNumber: string) => {
+		const id = await phoneVerifier.sendCode(phoneNumber);
+		if (id) {
+			setVerificationId(id);
+		}
+	};
 
   const confirmCode = async (code: string) => {
   	setPendingRegistration(true);

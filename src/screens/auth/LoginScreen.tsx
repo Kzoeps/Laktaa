@@ -35,24 +35,11 @@ const LoginScreen = ({ navigation }): JSX.Element => {
 	});
 
   const sendVerification = async (phoneNumber: string) => {
-   	const id = await phoneVerifier.sendCode(phoneNumber);
-   	if (id) {
-   		setVerificationId(id);
-   	}
+   	await phoneVerifier.sendCode(phoneNumber);
   };
 
-  const confirmCode = async (code: string) => {
-    try {
-      const credential = firebase.auth.PhoneAuthProvider.credential(
-        verificationId,
-        code
-      );
-      firebase.auth().signInWithCredential(credential).then(() => {
-      	toast.show(getToastConfig('Login Successful', ToastTypes.success));
-			});
-    } catch (e) {
-      toast.show(getToastConfig(e.message || e, ToastTypes.error));
-    }
+  const confirmCode = async (code: string): Promise<void> => {
+   	await phoneVerifier.confirmCode(code);
   };
 
   useEffect(() => () => {

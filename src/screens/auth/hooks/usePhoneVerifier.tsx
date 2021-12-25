@@ -7,31 +7,34 @@ import { SetStateType, ToastTypes } from '../../../shared/models/model';
 
 interface PhoneVerifierProps {
 	setLoader: SetStateType<boolean>;
-	recaptchaVerifier: ApplicationVerifier;
+	recaptchaVerifier: ApplicationVerifier | undefined;
 }
 
 interface PhoneVerifierPayload {
 	sendCode: (phoneNumber: string) => Promise<string | undefined>;
+	confirmCode: (code: string) => Promise<void>;
 }
 
 const usePhoneVerifier = ({
 														setLoader,
 														recaptchaVerifier,
 													}: PhoneVerifierProps): PhoneVerifierPayload => {
+	const [verificationId, setVerificationId] = React.useState<string | undefined>(undefined);
 	const toast = useToast();
 
 	const sendVerification = async (phoneNumber: string): Promise<string | undefined> => {
-		if (!phoneNumber) {
+		if (!phoneNumber || !recaptchaVerifier) {
 			toast.show(getToastConfig('Phone Number is Required', ToastTypes.error));
 			return undefined;
 		}
 		const phoneProvider = new firebase.auth.PhoneAuthProvider();
 		try {
-			const verificationId = await phoneProvider.verifyPhoneNumber(
+			const id = await phoneProvider.verifyPhoneNumber(
 				`+975${phoneNumber}`,
 				recaptchaVerifier,
 			);
 			toast.show(getToastConfig('OTP has been sent', ToastTypes.success));
+			setVerificationId(id);
 			return verificationId;
 		} catch (error) {
 			toast.show(getToastConfig(error.message, ToastTypes.error));
@@ -40,7 +43,21 @@ const usePhoneVerifier = ({
 		}
 		return undefined;
 	};
-	return { sendCode: sendVerification };
+
+	const confirmCode = async (code: string): Promise<void> => {
+		if (!verificationId) return;
+		try {
+			setLoader(true);
+			const credential = firebase.auth.PhoneAuthProvider.credential(verificationId, code);
+			firebase.auth().signInWithCredential(credential).then(() => {
+				toast.show(getToastConfig('Login Successful', ToastTypes.success));
+			})
+		} catch (error) {
+			toast.show(getToastConfig(error.message, ToastTypes.error));
+			setLoader(false);
+		}
+	};
+	return { sendCode: sendVerification, confirmCode };
 };
 
 export default usePhoneVerifier;
