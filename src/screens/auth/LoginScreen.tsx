@@ -15,42 +15,30 @@ import { LOGIN_PHONE_SCHEMA } from './models/constants';
 import { getToastConfig } from '../../shared/utils';
 import { ToastTypes } from '../../shared/models/model';
 import OtpGenerator from './components/otp-generator';
+import usePhoneVerifier from './hooks/usePhoneVerifier';
 
 const LoginScreen = ({ navigation }): JSX.Element => {
   const [pending, setPending] = useState<boolean>(false);
   const [showLocalLoader, setShowLocalLoader] = useState<boolean>(false);
-  const [verificationId, setVerificationId] = useState<string>('');
-  const recaptchaVerifier = useRef(null);
-  const initialValues = {
-    phoneNumber: '',
-    verificationCode: '',
-  };
+	const [verificationId, setVerificationId] = useState<string>('');
+	const recaptchaVerifier = useRef<ApplicationVerifier | undefined>(undefined);
+	const initialValues = {
+		phoneNumber: '',
+		verificationCode: '',
+	};
   const validationSchema = LOGIN_PHONE_SCHEMA;
   const dispatch = useDispatch();
-  const toast = useToast();
+	const toast = useToast();
+	const phoneVerifier = usePhoneVerifier({
+		setLoader: setShowLocalLoader,
+		recaptchaVerifier: recaptchaVerifier.current as ApplicationVerifier,
+	});
 
-  const sendVerification = (phoneNumber: string) => {
-    if (!phoneNumber) {
-      toast.show(getToastConfig('Phone number is required', ToastTypes.error));
-      return;
-    }
-    const phoneProvider = new firebase.auth.PhoneAuthProvider();
-    setShowLocalLoader(true);
-    phoneProvider
-      .verifyPhoneNumber(
-        `+975${phoneNumber}`,
-        recaptchaVerifier.current as unknown as ApplicationVerifier
-      )
-      .then((id) => {
-        toast.show(getToastConfig('OTP has been sent', ToastTypes.success));
-        setVerificationId(id);
-      })
-      .catch((error) => {
-        toast.show(getToastConfig(error?.message || error, ToastTypes.error));
-      })
-      .finally(() => {
-        setShowLocalLoader(false);
-      });
+  const sendVerification = async (phoneNumber: string) => {
+   	const id = await phoneVerifier.sendCode(phoneNumber);
+   	if (id) {
+   		setVerificationId(id);
+   	}
   };
 
   const confirmCode = async (code: string) => {

@@ -1,7 +1,7 @@
 import { useToast } from 'native-base';
 import firebase from 'firebase';
 import { getToastConfig } from '../../../shared/utils';
-import React, { FC } from 'react';
+import React from 'react';
 import { ApplicationVerifier } from '@firebase/auth-types';
 import { SetStateType, ToastTypes } from '../../../shared/models/model';
 
@@ -10,10 +10,14 @@ interface PhoneVerifierProps {
 	recaptchaVerifier: ApplicationVerifier;
 }
 
+interface PhoneVerifierPayload {
+	sendCode: (phoneNumber: string) => Promise<string | undefined>;
+}
+
 const usePhoneVerifier = ({
-																										setLoader,
-																										recaptchaVerifier,
-																									}: PhoneVerifierProps): (phoneNumber: string) => Promise<string | undefined> => {
+														setLoader,
+														recaptchaVerifier,
+													}: PhoneVerifierProps): PhoneVerifierPayload => {
 	const toast = useToast();
 
 	const sendVerification = async (phoneNumber: string): Promise<string | undefined> => {
@@ -36,7 +40,7 @@ const usePhoneVerifier = ({
 		}
 		return undefined;
 	};
-	return sendVerification;
+	return { sendCode: sendVerification };
 };
 
 export default usePhoneVerifier;
