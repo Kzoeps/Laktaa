@@ -30,7 +30,7 @@ const LoginScreen = ({ navigation }): JSX.Element => {
 	const toast = useToast();
 	const phoneVerifier = usePhoneVerifier({
 		setLoader: setShowLocalLoader,
-		recaptchaVerifier: recaptchaVerifier.current as ApplicationVerifier,
+		recaptchaVerifier: recaptchaVerifier.current,
 	});
 
   const sendVerification = async (phoneNumber: string) => {

@@ -26,7 +26,7 @@ const SignUpPhone: FC = () => {
   const [showLocalLoader, setShowLocalLoader] = useState(false);
   const [pendingRegistration, setPendingRegistration] = useState(false);
   const status = useSelector(selectStoreStatus(RootReducersEnum.authSlice));
-  const recaptchaVerifier = useRef<ApplicationVerifier>(undefined);
+  const recaptchaVerifier = useRef<ApplicationVerifier | undefined>(undefined);
   const initialValues = SIGN_UP_FORM;
   const validationSchema = SIGN_UP_PHONE_SCHEMA;
   const toast = useToast();
