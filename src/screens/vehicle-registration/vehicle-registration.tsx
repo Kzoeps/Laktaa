@@ -9,18 +9,8 @@ import VehicleForm from './vehicle-form';
 import { DriverInfo, VehicleInfo } from './models/models';
 import { AuthContext } from '../auth/auth';
 import { getToastConfig, selectStoreStatus } from '../../shared/utils';
-import {
-  APIStatuses,
-  NavigationProps,
-  RootReducersEnum,
-  RoutePaths,
-  ToastTypes,
-} from '../../shared/models/model';
-import {
-  getVehicleRegistrationDetails,
-  setVehicleRegistration,
-  updateVehicleRegistration,
-} from './store/driverSlice';
+import { APIStatuses, NavigationProps, RootReducersEnum, RoutePaths, ToastTypes } from '../../shared/models/model';
+import { getVehicleRegistrationDetails, setVehicleRegistration, updateVehicleRegistration } from './store/driverSlice';
 import { RootState } from '../../store/store';
 import OpenCamera from '../postjob/Camera';
 import Pageheader from '../../shared/components/Pageheader/Pageheader';
@@ -28,9 +18,9 @@ import { FIREBASE_CALLS } from '../auth/utils/API';
 import { fetchUserProfile } from '../auth/store/authSlice';
 
 type VehicleRegistrationNavProps =
-  NavigationProps<RoutePaths.vehicleRegistration>;
+	NavigationProps<RoutePaths.vehicleRegistration>;
 const VehicleRegistration: FC<VehicleRegistrationNavProps> = ({
-  navigation,
+																																navigation,
 }) => {
   const [showCamera, setShowCamera] = useState<boolean>(false);
   const [showDriverCamera, setShowDriverCamera] = useState<boolean>(false);
@@ -85,27 +75,21 @@ const VehicleRegistration: FC<VehicleRegistrationNavProps> = ({
     const { phoneNumber } = currentUser;
     setShowLoader(true);
     const payload = { ...registrationDetails };
-    if (imageInfo) {
-      payload.carImageUri = await uploadFile(
-        `carImages/${phoneNumber}`,
-        imageInfo
-      );
-    }
-    if (driverImageInfo) {
-      payload.driverImageUri = await uploadFile(
-        `driverImages/${phoneNumber}`,
-        driverImageInfo
-      );
-    }
-    if (vehicleInfo?.vehicleType) {
-      await dispatch(
-        updateVehicleRegistration({
-          registrationDetails: payload,
-          phoneNumber: phoneNumber.toString(),
-        })
-      );
-    } else {
-      await dispatch(
+		if (imageInfo) {
+			payload.carImageUri = await uploadFile(`carImages/${phoneNumber}`, imageInfo);
+		}
+		if (driverImageInfo) {
+			payload.driverImageUri = await uploadFile(`driverImages/${phoneNumber}`, driverImageInfo);
+		}
+		if (vehicleInfo?.vehicleType) {
+			await dispatch(
+				updateVehicleRegistration({
+					registrationDetails: payload,
+					phoneNumber: phoneNumber.toString(),
+				}),
+			);
+		} else {
+			await dispatch(
         setVehicleRegistration({
           registrationDetails: payload,
           phoneNumber: phoneNumber.toString(),
