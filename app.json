@@ -9,7 +9,7 @@
     "assetBundlePatterns": ["**/*"],
     "android": {
       "package": "com.laktaa",
-	  "versionCode": 1
+      "versionCode": 1
     }
   }
 }
