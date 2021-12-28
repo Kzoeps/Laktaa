@@ -80,6 +80,7 @@ const LoginScreen = ({ navigation }): JSX.Element => {
                 </View>
                 <FMTextInput
                   styleProp="mt-10"
+									placeholderTextColor="white"
                   label="Verification Code"
                   name="verificationCode"
                   formik={formik as unknown as FormikProps<FormikValues>}

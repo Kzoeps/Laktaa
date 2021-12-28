@@ -29,6 +29,7 @@ const usePhoneVerifier = ({
 		}
 		const phoneProvider = new firebase.auth.PhoneAuthProvider();
 		try {
+			setLoader(true)
 			const id = await phoneProvider.verifyPhoneNumber(
 				`+975${phoneNumber}`,
 				recaptchaVerifier,
