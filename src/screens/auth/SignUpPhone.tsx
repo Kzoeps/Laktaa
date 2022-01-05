@@ -50,7 +50,8 @@ const SignUpPhone: FC = () => {
         recaptchaVerifier.current as unknown as ApplicationVerifier
       )
       .then((id) => {
-        setVerificationId(id);
+				toast.show(getToastConfig('OTP has been sent', ToastTypes.success));
+				setVerificationId(id);
       })
       .catch((error) => {
         toast.show(getToastConfig(error?.message || error, ToastTypes.error));
@@ -196,6 +197,7 @@ const SignUpPhone: FC = () => {
                   />
                 </Box>
                 <FirebaseRecaptchaVerifierModal
+									attemptInvisibleVerification
                   ref={recaptchaVerifier}
                   firebaseConfig={firebase.app().options}
                 />

@@ -142,6 +142,7 @@ const LoginScreen = ({ navigation }): JSX.Element => {
                   Log In
                 </Button>
                 <FirebaseRecaptchaVerifierModal
+									attemptInvisibleVerification
                   ref={recaptchaVerifier}
                   firebaseConfig={firebase.app().options}
                 />
