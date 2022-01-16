@@ -136,7 +136,7 @@ const PostJob: FC<PostJobNavProps> = ({ navigation, route }) => {
             <View style={tailwind('mt-6')}>
               <Formik
                 initialValues={initialValues}
-                // validationSchema={validationSchema}
+                validationSchema={validationSchema}
                 onSubmit={postJobs}
               >
                 {(formik: FormikProps<PostJobInfo>) => (
