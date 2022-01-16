@@ -191,13 +191,6 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
                         name="location"
                         formik={formik as unknown as FormikProps<FormikValues>}
                       />
-                      {/* <FMTextInput */}
-                      {/*  styleProp="mt-3" */}
-                      {/*  disableInput={inputsDisabled} */}
-                      {/*  label="Phone Number" */}
-                      {/*  name="phoneNumber" */}
-                      {/*  formik={formik as unknown as FormikProps<FormikValues>} */}
-                      {/* /> */}
                     </Box>
 
                     <View style={tailwind('mt-8 items-center')}>
