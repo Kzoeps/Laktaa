@@ -94,21 +94,7 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
 		if (fileRef.type === 'success') {
 			setShowCamera(false);
 			setImageUri(fileRef.uri);
-/*			setShowCamera(false);
-			const imageUrl = await uploadFile(fileRef.uri);
-			setLoading(false);
-			console.log(imageUrl); */
 		}
-		/* if (fileRef.type === 'success') {
-			const profileImageUrl = await uploadImage.uploadFile(fileRef.uri);
-			await dispatch(
-				updateUserProfileImage({
-					phoneNumber: currentUser.phoneNumber,
-					profileImageUrl,
-				})
-			);
-			setUploadImageStatus(false);
-		} */
 	};
 	if (loading)
 		return (
@@ -198,7 +184,7 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
 												/>
 											</View>
 											<View style={tailwind('my-8')}>
-												<TouchableOpacity onPress={() => setShowCamera(true)}>
+												<TouchableOpacity onPress={() => resetImage()}>
 													<Text style={tailwind('text-center text-blue-300')}>
 														Retake Picture!
 													</Text>
