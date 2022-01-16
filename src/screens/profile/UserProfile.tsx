@@ -1,33 +1,30 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
-import { Text, TouchableOpacity, View, ScrollView } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Button, Heading, Spinner } from 'native-base';
+import { Box, Button, Heading, Spinner, useToast } from 'native-base';
 import { Formik, FormikProps, FormikValues } from 'formik';
 import * as DocumentPicker from 'expo-document-picker';
 import { DocumentResult } from 'expo-document-picker';
 import tailwind from 'tailwind-rn';
 import firebase from 'firebase';
 import {
-  fetchUserProfile,
-  selectStoreStatus,
-  selectUserDetails,
-  updateUserProfile as updateUserProfileStore,
-  updateUserProfileImage,
-  setUserDetails,
+	fetchUserProfile,
+	selectStoreStatus,
+	selectUserDetails,
+	setUserDetails,
+	updateUserProfile as updateUserProfileStore,
+	updateUserProfileImage,
 } from '../auth/store/authSlice';
 import { EDIT_PROFILE_SCHEMA } from './models/constants';
 import FMTextInput from '../../shared/components/TextInput';
-import {
-  APIStatuses,
-  NavigationProps,
-  RoutePaths,
-} from '../../shared/models/model';
+import { APIStatuses, NavigationProps, RoutePaths, ToastTypes } from '../../shared/models/model';
 import { UserDetails } from '../auth/models/models';
 import useFirestoreUpload from '../../shared/components/useFirestoreUpload';
 import Layout from '../../shared/layout/layout';
 import FMAvatar from '../../shared/components/FMAvatar/FMAvatar';
 import FMHeader from '../../shared/components/FMHeader/FMHeader';
 import { AuthContext } from '../auth/auth';
+import { getToastConfig } from '../../shared/utils';
 
 type UserProfileNavProps = NavigationProps<RoutePaths.userProfile>;
 const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
@@ -39,6 +36,7 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
   const [file, setFile] = useState<DocumentResult | undefined>(undefined);
   const [userInitials, setUserInitials] = useState<string>('');
   const { currentUser, logout } = useContext(AuthContext);
+  const toast = useToast();
   const dispatch = useDispatch();
   const uploadImage = useFirestoreUpload(
     `profileImages/${phoneNumber}`,
@@ -61,7 +59,7 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
         .currentUser?.updateProfile({ displayName: userDetails.userName });
       await dispatch(updateUserProfileStore(userDetailsPayload));
     } catch (e) {
-      console.log(e);
+    	toast.show(getToastConfig(e.message || 'Error', ToastTypes.error))
     }
   };
 
@@ -73,8 +71,8 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
         setUserDetails({ ...userDetailsPayload, registeredDriver: false })
       );
     } catch (e) {
-      console.log(e);
-    }
+			toast.show(getToastConfig(e.message || 'Error', ToastTypes.error))
+		}
   };
 
   const openFilePicker = async () => {

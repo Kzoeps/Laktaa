@@ -98,8 +98,6 @@ export const authSlice = createSlice({
       action: PayloadAction<ProfileUpdatePayload>
     ) => {
       state.userDetails = { ...state.userDetails, ...action.payload };
-      console.log('data saved', state.userDetails);
-      console.log('payload :', action.payload);
       state.status = APIStatuses.SUCCEEDED;
     },
     [updateUserProfileImage.rejected as unknown as string]: (
