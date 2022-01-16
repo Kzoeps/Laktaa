@@ -31,7 +31,6 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
 	const validationSchema = POST_JOB_SCHEMA;
 	const initialValues = POST_JOB_INITIALIZER;
 	const [imageUri, setImageUri] = useState<string | undefined>('');
-	const [imageTaken, setImageTaken] = useState(false);
 	const [imageRequired, setImageRequired] = useState(false);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [fromDate, setFromDate] = useState<{ seconds: number, nanoseconds: number }>();
