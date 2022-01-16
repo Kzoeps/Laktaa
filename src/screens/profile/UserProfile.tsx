@@ -8,16 +8,21 @@ import { DocumentResult } from 'expo-document-picker';
 import tailwind from 'tailwind-rn';
 import firebase from 'firebase';
 import {
-	fetchUserProfile,
-	selectStoreStatus,
-	selectUserDetails,
-	setUserDetails,
-	updateUserProfile as updateUserProfileStore,
-	updateUserProfileImage,
+  fetchUserProfile,
+  selectStoreStatus,
+  selectUserDetails,
+  setUserDetails,
+  updateUserProfile as updateUserProfileStore,
+  updateUserProfileImage,
 } from '../auth/store/authSlice';
 import { EDIT_PROFILE_SCHEMA } from './models/constants';
 import FMTextInput from '../../shared/components/TextInput';
-import { APIStatuses, NavigationProps, RoutePaths, ToastTypes } from '../../shared/models/model';
+import {
+  APIStatuses,
+  NavigationProps,
+  RoutePaths,
+  ToastTypes,
+} from '../../shared/models/model';
 import { UserDetails } from '../auth/models/models';
 import useFirestoreUpload from '../../shared/components/useFirestoreUpload';
 import Layout from '../../shared/layout/layout';
@@ -42,7 +47,7 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
     `profileImages/${phoneNumber}`,
     file,
     setFile,
-		setUploadImageStatus
+    setUploadImageStatus
   );
 
   const initialValues = {
@@ -59,30 +64,32 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
         .currentUser?.updateProfile({ displayName: userDetails.userName });
       await dispatch(updateUserProfileStore(userDetailsPayload));
     } catch (e) {
-    	toast.show(getToastConfig(e.message || 'Error', ToastTypes.error))
+      toast.show(getToastConfig(e.message || 'Error', ToastTypes.error));
     }
   };
 
   const createUserProfile = async (userDetailsPayload: UserDetails) => {
     try {
       await firebase.auth();
-      // .currentUser?.updateProfile({ displayName: userDetails.userName });
       await dispatch(
         setUserDetails({ ...userDetailsPayload, registeredDriver: false })
       );
     } catch (e) {
-			toast.show(getToastConfig(e.message || 'Error', ToastTypes.error))
-		}
+      toast.show(getToastConfig(e.message || 'Error', ToastTypes.error));
+    }
   };
 
   const openFilePicker = async () => {
     const fileRef = await DocumentPicker.getDocumentAsync({ type: 'image/*' });
     if (fileRef.type === 'success') {
-    	const profileImageUrl = await uploadImage.uploadFile(fileRef.uri);
-    	await dispatch(updateUserProfileImage({
-				phoneNumber: currentUser.phoneNumber,
-				profileImageUrl
-			}))
+      const profileImageUrl = await uploadImage.uploadFile(fileRef.uri);
+      await dispatch(
+        updateUserProfileImage({
+          phoneNumber: currentUser.phoneNumber,
+          profileImageUrl,
+        })
+      );
+      setUploadImageStatus(false);
     }
   };
 
@@ -95,19 +102,6 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
     else setInputsDisabled(true);
   }, [phoneNumber, currentUser.phoneNumber]);
 
-  /* useEffect(() => {
-    if (!['idle', 'pending'].includes(uploadImage)) {
-      const updateUserProfileImageUrl = async () => {
-        await dispatch(
-          updateUserProfileImage({
-            phoneNumber: currentUser.phoneNumber,
-            profileImageUrl: uploadImage,
-          })
-        );
-      };
-      updateUserProfileImageUrl();
-    }
-  }, [uploadImage, dispatch, currentUser.phoneNumber]); */
   useEffect(() => {
     setUserInitials(
       userDetails?.userName
