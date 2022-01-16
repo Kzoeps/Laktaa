@@ -69,39 +69,40 @@ const OpenCamera: FC<{
                 <AntDesign name="closecircleo" size={26} color="grey" />
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={tailwind('m-4')}
-              onPress={() => {
-                setType(
-                  type === Camera.Constants.Type.back
-                    ? Camera.Constants.Type.front
-                    : Camera.Constants.Type.back
-                );
-              }}
-            >
-              <Text style={tailwind('pt-4')}>
-                <Ionicons
-                  name="camera-reverse-outline"
-                  size={28}
-                  color="grey"
-                />
-              </Text>
-            </TouchableOpacity>
           </View>
 
-					<View style={tailwind('mb-8')}>
+					<View style={tailwind('mb-8 flex-row justify-between')}>
+						{
+							props?.showGalleryOption ?
+								<TouchableOpacity onPress={onGalleryClick} style={tailwind('p-4')}>
+									<Text style={tailwind('pt-4')}>
+										<MaterialIcons name='collections' size={32} color='white' />
+									</Text>
+								</TouchableOpacity> : undefined
+						}
 						<TouchableOpacity onPress={onSnap}>
 							<Text style={tailwind('text-center pt-12')}>
 								<MaterialIcons name='camera' size={68} color='white' />
 							</Text>
 						</TouchableOpacity>
-						{
-							props?.showGalleryOption && <TouchableOpacity onPress={onGalleryClick}>
-							<Text style={tailwind('pt-12')}>
-								<MaterialIcons name='gallery' size={64} color='white' />
+						<TouchableOpacity
+							style={tailwind('m-4')}
+							onPress={() => {
+								setType(
+									type === Camera.Constants.Type.back
+										? Camera.Constants.Type.front
+										: Camera.Constants.Type.back
+								);
+							}}
+						>
+							<Text style={tailwind('pt-4')}>
+								<Ionicons
+									name="camera-reverse-outline"
+									size={32}
+									color="white"
+								/>
 							</Text>
 						</TouchableOpacity>
-						}
 					</View>
         </>
       </Camera>
