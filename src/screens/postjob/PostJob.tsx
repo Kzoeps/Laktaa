@@ -235,7 +235,7 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
                     </Box>
                     <Box style={tailwind('my-2 ml-8')}>
                       <FMTextInput
-                        label="Price"
+                        label="Delivery Fee"
                         name="price"
                         formik={formik as unknown as FormikProps<FormikValues>}
                         icon="money"
@@ -304,7 +304,7 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
                       <View>
                         <Box style={tailwind('my-2 ml-8')}>
                           <FMTextInput
-                            label="Landmark nearby"
+                            label="Address/Landmark nearby"
                             name="pickPlace"
                             variant="outline"
                             formik={
@@ -336,7 +336,7 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
                         </Box>
                         <Box style={tailwind('my-2 ml-8')}>
                           <FMTextInput
-                            label="Contact Number"
+                            label="Contact number of parcel owner"
                             name="pickUpPhone"
                             variant="outline"
                             formik={
@@ -370,7 +370,7 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
                       <View>
                         <Box style={tailwind('my-2 ml-8')}>
                           <FMTextInput
-                            label="Landmark nearby"
+                            label="Address/Landmark nearby"
                             name="dropPlace"
                             variant="outline"
                             formik={
@@ -403,7 +403,7 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
                         </Box>
                         <Box style={tailwind('my-2 ml-8')}>
                           <FMTextInput
-                            label="Contact Number"
+                            label="Contact number of goods receiver"
                             name="dropOffPhone"
                             variant="outline"
                             formik={

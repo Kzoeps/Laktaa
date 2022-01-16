@@ -53,16 +53,22 @@ export const POST_JOB_LOAD_TYPE = [
   { label: 'Documents', value: 'Documents' },
   { label: 'Furniture', value: 'Furniture' },
   { label: 'Auto Parts', value: 'AutoParts' },
+  { label: 'Electronics', value: 'Electronics' },
+  { label: 'Others', value: 'Others' },
 ];
 
 export const POST_JOB_PERISH = [
   { label: 'Perishable', value: 'Perishable' },
   { label: 'Non-Perishable', value: 'Non-Perishable' },
+  { label: 'Fragile', value: 'Fragile' },
 ];
 
 export const POST_JOB_SIZES = [
-  { label: 'Small', value: 'Small' },
-  { label: 'Medium', value: 'Medium' },
-  { label: 'Large', value: 'Large' },
-  { label: 'Extra Large', value: 'Extra Large' },
+  { label: 'Small: 40cm x 25cm x 28cm', value: 'Small' },
+  { label: 'Medium 55cm x 30cm x 40cm', value: 'Medium' },
+  { label: 'Large: bigger than medium', value: 'Large' },
 ];
+
+// Small: 40 cm by 25 by 28 or smaller
+// Medium: 55cm by 30cm by 40cm or smaller
+// Large: bigger than M
