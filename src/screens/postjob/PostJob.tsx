@@ -191,26 +191,6 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
 												</TouchableOpacity>
 											</View>
 										</>}
-{/*                    {imageUri && (
-                      <>
-                        <View style={tailwind('mx-8 h-96')}>
-                          <Image
-                            source={{
-                              uri: imageUri,
-                            }}
-                            alt="image taken"
-                            style={tailwind('h-full')}
-                          />
-                        </View>
-                        <View style={tailwind('my-8')}>
-                          <TouchableOpacity onPress={() => setShowCamera(true)}>
-                            <Text style={tailwind('text-center text-blue-300')}>
-                              Retake Picture!
-                            </Text>
-                          </TouchableOpacity>
-                        </View>
-                      </>
-                    )} */}
                     <Box style={tailwind('mx-8 my-2')}>
                       <FMSelectInput
                         formik={formik as unknown as FormikProps<FormikValues>}
