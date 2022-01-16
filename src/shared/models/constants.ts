@@ -11,6 +11,7 @@ export const DZONGKHAG_GEWOG: {
   dzongkhag: [
     { label: 'Bumthang བུམ་ཐང་', value: 'Bumthang' },
     { label: 'Chhukha ཆུ་ཁ་', value: 'Chhukha' },
+    { label: 'Phuentholing Thromde', value: 'PhuentsholingThromde' },
     { label: 'Dagana དར་དཀར་ན་', value: 'Dagana' },
     { label: 'Gasa མགར་ས་', value: 'Gasa' },
     { label: 'Haa ཧཱ་', value: 'Haa' },
@@ -20,9 +21,12 @@ export const DZONGKHAG_GEWOG: {
     { label: 'Pema Gatshel པདྨ་དགའ་ཚལ་', value: 'PemaGatshel' },
     { label: 'Punakha སྥུ་ན་ཁ་', value: 'Punakha' },
     { label: 'Samdrup Jongkhar བསམ་གྲུབ་ལྗོངས་མཁར་', value: 'SamdrupJongkhar' },
+    { label: 'Samdrup Jongkhar Thromde', value: 'SamdrupJongkharThromde' },
     { label: 'Samtse བསམ་རྩེ་', value: 'Samtse' },
     { label: 'Sarpang	གསར་སྤང་', value: 'Sarpang' },
+    { label: 'Gelephu Thromde', value: 'GelephuThromde' },
     { label: 'Thimphu	ཐིམ་ཕུག་', value: 'Thimphu' },
+    { label: 'Thimphu Thromde', value: 'ThimphuThromde' },
     { label: 'Trashigang བཀྲ་ཤིས་སྒང་', value: 'Trashigang' },
     { label: 'Trashi Yangtse བཀྲ་ཤིས་གཡང་རྩེ་', value: 'TrashiYangtse' },
     { label: 'Trongsa ཀྲོང་གསར་', value: 'Trongsa' },
@@ -51,6 +55,9 @@ export const DZONGKHAG_GEWOG: {
       value: 'Phuentsholing',
     },
     { label: 'Sampheling བསམ་འཕེལ་གླིང་', value: 'Sampheling' },
+  ],
+  PhuentsholingThromde: [
+    { label: 'Phuentsholing Thromde', value: 'PhuentsholingThromde' },
   ],
   Dagana: [
     { label: 'Dorona རྡོ་རོ་ན་', value: 'Dorona' },
@@ -170,7 +177,9 @@ export const DZONGKHAG_GEWOG: {
     { label: 'Serthi གསེར་ཐིག་', value: 'Serthi' },
     { label: 'Wangphu ཝང་ཕུག་', value: 'Wangphu' },
   ],
-
+  SamdrupJongkharThromde: [
+    { label: 'Samdrup Jongkhar Thromde', value: 'SamdrupJongkharThromde' },
+  ],
   Samtse: [
     { label: 'Dungtoe གདུང་སྟོད་', value: 'Dungtoe' },
     { label: 'Dophoogchen རྡོ་ཕུག་ཅན་', value: 'Dophoogchen' },
@@ -215,6 +224,7 @@ export const DZONGKHAG_GEWOG: {
     { label: 'Tareythang རྟ་རས་ཐང་', value: 'Tareythang' },
     { label: 'Umling ཨུམ་གླིང་', value: 'Umling' },
   ],
+  GelephuThromde: [{ label: 'Gelephu Thromde', value: 'GelephuThromde' }],
   Thimphu: [
     { label: 'Chang ལྕང་', value: 'Chang' },
     { label: 'Darkala དར་དཀར་ལ་', value: 'Darkala' },
@@ -225,6 +235,7 @@ export const DZONGKHAG_GEWOG: {
     { label: 'Naro ན་རོ་', value: 'Naro' },
     { label: 'Soe སྲོས་', value: 'Soe' },
   ],
+  ThimphuThromde: [{ label: 'Thimphu Thromde', value: 'ThimphuThromde' }],
 
   Trashigang: [
     { label: 'Bartsham བར་མཚམས་', value: 'Bartsham' },
