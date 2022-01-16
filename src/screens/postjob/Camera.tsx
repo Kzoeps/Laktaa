@@ -1,9 +1,10 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { Dimensions, TouchableOpacity } from 'react-native';
 import { Text, View } from 'native-base';
 import { Camera } from 'expo-camera';
 import tailwind from 'tailwind-rn';
 import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { GenericFunction } from '../../shared/models/model';
 
 /**
  *
@@ -16,6 +17,7 @@ const OpenCamera: FC<{
 	updateImageInfo: (uri: string) => void;
 	showMySelf?: boolean | undefined | null;
 	showGalleryOption?: boolean | undefined | null;
+	onGalleryClick?: GenericFunction;
 }> = (props) => {
   const [hasPermission, setHasPermission] = useState(false);
   const [type, setType] = useState(Camera.Constants.Type.back);
@@ -23,15 +25,17 @@ const OpenCamera: FC<{
   const [imageInfo, setImageInfo] = useState();
   const cameraRef = useRef();
   const WINDOW_HEIGHT = Dimensions.get('window').height - 180;
+	// eslint-disable-next-line no-multi-assign, no-param-reassign
+  const onGalleryClick = props.onGalleryClick ??= () => undefined;
 
-  const onHandlePermission = async () => {
+  const onHandlePermission = useCallback(async () => {
     const { status } = await Camera.requestPermissionsAsync();
     setHasPermission(status === 'granted');
-  };
+  }, []);
 
   useEffect(() => {
     onHandlePermission();
-  }, []);
+  }, [onHandlePermission]);
 
   /* return null to hide component until showMySelf is true */
   if (props.showMySelf === false) return null;
@@ -50,10 +54,6 @@ const OpenCamera: FC<{
 			props.closeCamera && props.closeCamera();
 		}
 	};
-	const onGalleryClick = () => {
-		console.log('gallery clicked');
-	};
-
 	return (
 		<View>
 			<Camera ref={cameraRef} type={type} style={tailwind('h-full')}>

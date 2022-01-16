@@ -22,6 +22,7 @@ import { FIREBASE_POSTJOB_CALLS } from './utils/API';
 import Calendar from '../../shared/components/Calendar/calendar';
 import { NavigationProps, PostJobInfo, RoutePaths } from '../../shared/models/model';
 import useFirestoreUpload from '../../shared/components/useFirestoreUpload';
+import { documentPicker } from '../../shared/utils';
 
 type PostJobNavProps = NavigationProps<RoutePaths.postJob>;
 const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
@@ -29,15 +30,15 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
 	const [showCamera, setShowCamera] = useState(false);
 	const validationSchema = POST_JOB_SCHEMA;
 	const initialValues = POST_JOB_INITIALIZER;
-	const [imageUri, setImageUri] = useState('');
+	const [imageUri, setImageUri] = useState<string | undefined>('');
 	const [imageTaken, setImageTaken] = useState(false);
 	const [imageRequired, setImageRequired] = useState(false);
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState<boolean>(false);
 	const [fromDate, setFromDate] = useState<{ seconds: number, nanoseconds: number }>();
 	const [toDate, setToDate] = useState<{ seconds: number, nanoseconds: number }>();
 	const imageUid = Math.random().toString(36).substr(2, 18);
 
-	const firestoreUpload = useFirestoreUpload(`jobImages/${imageUid}`, setLoading);
+	const { uploadFile } = useFirestoreUpload(`jobImages/${imageUid}`, setLoading);
 
 	const changeFromDate = (value: Date) => {
 		setFromDate(value);
@@ -53,10 +54,9 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
 
 	const saveImage = (uri: string) => {
 		setImageUri(uri);
-		setImageTaken(true);
 	};
 	const postJobs = async (values: PostJobInfo, { resetForm }) => {
-		if (!imageTaken) {
+		if (!imageUri) {
 			setImageRequired(true);
 			return;
 		}
@@ -82,19 +82,44 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
 		toast.show({ title: 'Job successfully posted!', status: 'success' });
 		setLoading(false);
 		resetForm();
-		setImageTaken(false);
 		setImageUri('');
 	};
+
+	const resetImage = () => {
+		setImageUri(undefined);
+		setShowCamera(true)
+	}
+	const openFilePicker = async () => {
+		const fileRef = await documentPicker();
+		if (fileRef.type === 'success') {
+			setShowCamera(false);
+			setImageUri(fileRef.uri);
+/*			setShowCamera(false);
+			const imageUrl = await uploadFile(fileRef.uri);
+			setLoading(false);
+			console.log(imageUrl); */
+		}
+		/* if (fileRef.type === 'success') {
+			const profileImageUrl = await uploadImage.uploadFile(fileRef.uri);
+			await dispatch(
+				updateUserProfileImage({
+					phoneNumber: currentUser.phoneNumber,
+					profileImageUrl,
+				})
+			);
+			setUploadImageStatus(false);
+		} */
+	};
 	if (loading)
-    return (
-      <>
-        <View style={tailwind('my-24')}>
-          <Spinner
-            accessibilityLabel="Loading posts"
-            color="emerald.500"
-            size="lg"
-          />
-          <Heading
+		return (
+			<>
+				<View style={tailwind('my-24')}>
+					<Spinner
+						accessibilityLabel='Loading posts'
+						color='emerald.500'
+						size='lg'
+					/>
+					<Heading
             style={tailwind('text-center')}
             color="emerald.500"
             fontSize="xl"
@@ -109,7 +134,8 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
       <View>
         {showCamera ? (
           <View>
-            <OpenCamera closeCamera={closeCamera} updateImageInfo={saveImage} showGalleryOption />
+						<OpenCamera closeCamera={closeCamera} updateImageInfo={saveImage} showGalleryOption
+												onGalleryClick={openFilePicker} />
           </View>
         ) : undefined}
       </View>
@@ -129,10 +155,10 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
               >
                 {(formik: FormikProps<PostJobInfo>) => (
                   <>
-                    {!imageTaken && (
+                    {!imageUri && (
                       <>
                         <TouchableOpacity
-                          onPress={() => setShowCamera(true)}
+                          onPress={() => resetImage()}
                           style={[
                             tailwind('mx-24 py-16 mb-4'),
                             {
@@ -162,7 +188,7 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
                         ) : undefined}
                       </>
                     )}
-                    {imageTaken && (
+                    {imageUri && (
                       <>
                         <View style={tailwind('mx-8 h-96')}>
                           <Image
