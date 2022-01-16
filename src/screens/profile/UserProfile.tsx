@@ -34,6 +34,7 @@ import { getToastConfig } from '../../shared/utils';
 type UserProfileNavProps = NavigationProps<RoutePaths.userProfile>;
 const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
   const [inputsDisabled, setInputsDisabled] = useState<boolean>(true);
+  const [uploadImageStatus, setUploadImageStatus] = useState<boolean>(false);
   const userDetails = useSelector(selectUserDetails);
   const storeStatus = useSelector(selectStoreStatus);
   const { phoneNumber } = route.params;
@@ -44,8 +45,7 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const uploadImage = useFirestoreUpload(
     `profileImages/${phoneNumber}`,
-    file,
-    setFile
+    setUploadImageStatus
   );
 
   const initialValues = {
@@ -69,7 +69,6 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
   const createUserProfile = async (userDetailsPayload: UserDetails) => {
     try {
       await firebase.auth();
-      // .currentUser?.updateProfile({ displayName: userDetails.userName });
       await dispatch(
         setUserDetails({ ...userDetailsPayload, registeredDriver: false })
       );
@@ -80,7 +79,16 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
 
   const openFilePicker = async () => {
     const fileRef = await DocumentPicker.getDocumentAsync({ type: 'image/*' });
-    if (fileRef.type === 'success') setFile(fileRef);
+    if (fileRef.type === 'success') {
+      const profileImageUrl = await uploadImage.uploadFile(fileRef.uri);
+      await dispatch(
+        updateUserProfileImage({
+          phoneNumber: currentUser.phoneNumber,
+          profileImageUrl,
+        })
+      );
+      setUploadImageStatus(false);
+    }
   };
 
   useEffect(() => {
@@ -93,19 +101,6 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
   }, [phoneNumber, currentUser.phoneNumber]);
 
   useEffect(() => {
-    if (!['idle', 'pending'].includes(uploadImage)) {
-      const updateUserProfileImageUrl = async () => {
-        await dispatch(
-          updateUserProfileImage({
-            phoneNumber: currentUser.phoneNumber,
-            profileImageUrl: uploadImage,
-          })
-        );
-      };
-      updateUserProfileImageUrl();
-    }
-  }, [uploadImage, dispatch, currentUser.phoneNumber]);
-  useEffect(() => {
     setUserInitials(
       userDetails?.userName
         .split(' ')
@@ -115,7 +110,7 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
     );
   }, [userDetails?.userName]);
 
-  if (storeStatus === APIStatuses.LOADING || uploadImage === 'pending') {
+  if (storeStatus === APIStatuses.LOADING || uploadImageStatus) {
     return (
       <View style={tailwind('my-24')}>
         <Spinner
@@ -194,13 +189,6 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
                         name="location"
                         formik={formik as unknown as FormikProps<FormikValues>}
                       />
-                      {/* <FMTextInput */}
-                      {/*  styleProp="mt-3" */}
-                      {/*  disableInput={inputsDisabled} */}
-                      {/*  label="Phone Number" */}
-                      {/*  name="phoneNumber" */}
-                      {/*  formik={formik as unknown as FormikProps<FormikValues>} */}
-                      {/* /> */}
                     </Box>
 
                     <View style={tailwind('mt-8 items-center')}>

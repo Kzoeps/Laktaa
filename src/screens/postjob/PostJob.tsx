@@ -1,32 +1,17 @@
 import React, { FC, useContext, useState } from 'react';
-import { TouchableOpacity, ScrollView } from 'react-native';
-import {
-  Box,
-  Text,
-  View,
-  Icon,
-  Image,
-  useToast,
-  Spinner,
-  Heading,
-} from 'native-base';
+import { ScrollView, TouchableOpacity } from 'react-native';
+import { Box, Heading, Icon, Image, Spinner, Text, useToast, View } from 'native-base';
 import tailwind from 'tailwind-rn';
 import { Formik, FormikProps, FormikValues } from 'formik';
-import {
-  MaterialCommunityIcons,
-  Entypo,
-  FontAwesome,
-  FontAwesome5,
-  MaterialIcons,
-} from '@expo/vector-icons';
+import { Entypo, FontAwesome, FontAwesome5, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import Pageheader from '../../shared/components/Pageheader/Pageheader';
 import Layout from '../../shared/layout/layout';
 import {
-  POST_JOB_SCHEMA,
-  POST_JOB_LOAD_TYPE,
-  POST_JOB_INITIALIZER,
-  POST_JOB_PERISH,
-  POST_JOB_SIZES,
+	POST_JOB_INITIALIZER,
+	POST_JOB_LOAD_TYPE,
+	POST_JOB_PERISH,
+	POST_JOB_SCHEMA,
+	POST_JOB_SIZES,
 } from './models/constants';
 import FMTextInput from '../../shared/components/TextInput';
 import FMSelectInput from '../../shared/components/SelectInput/FMSelectInput';
@@ -35,83 +20,92 @@ import { AuthContext } from '../auth/auth';
 import OpenCamera from './Camera';
 import { FIREBASE_POSTJOB_CALLS } from './utils/API';
 import Calendar from '../../shared/components/Calendar/calendar';
-import {
-  NavigationProps,
-  RoutePaths,
-  PostJobInfo,
-} from '../../shared/models/model';
+import { NavigationProps, PostJobInfo, RoutePaths } from '../../shared/models/model';
+import useFirestoreUpload from '../../shared/components/useFirestoreUpload';
+import { documentPicker } from '../../shared/utils';
 
 type PostJobNavProps = NavigationProps<RoutePaths.postJob>;
-const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
-  const { currentUser } = useContext(AuthContext);
-  const [showCamera, setShowCamera] = useState(false);
-  const validationSchema = POST_JOB_SCHEMA;
-  const initialValues = POST_JOB_INITIALIZER;
-  const [imageUri, setImageUri] = useState('');
-  const [imageTaken, setImageTaken] = useState(false);
-  const [imageRequired, setImageRequired] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [fromDate, setFromDate] = useState();
-  const [toDate, setToDate] = useState();
+const PostJob: FC<PostJobNavProps> = ({ navigation, route }) => {
+	const { currentUser } = useContext(AuthContext);
+	const [showCamera, setShowCamera] = useState(false);
+	const validationSchema = POST_JOB_SCHEMA;
+	const initialValues = POST_JOB_INITIALIZER;
+	const [imageUri, setImageUri] = useState<string | undefined>('');
+	const [imageRequired, setImageRequired] = useState(false);
+	const [loading, setLoading] = useState<boolean>(false);
+	const [fromDate, setFromDate] = useState<{ seconds: number, nanoseconds: number }>();
+	const [toDate, setToDate] = useState<{ seconds: number, nanoseconds: number }>();
+	const imageUid = Math.random().toString(36).substr(2, 18);
 
-  const changeFromDate = (value: Date) => {
-    setFromDate(value);
-  };
-  const changeToDate = (value: Date) => {
-    setToDate(value);
-  };
+	const { uploadFile } = useFirestoreUpload(`jobImages/${imageUid}`, setLoading);
 
-  const toast = useToast();
-  const closeCamera = () => {
-    setShowCamera(false);
-  };
+	const changeFromDate = (value: Date) => {
+		setFromDate(value);
+	};
+	const changeToDate = (value: Date) => {
+		setToDate(value);
+	};
 
-  const saveImage = (uri: string) => {
-    setImageUri(uri);
-    setImageTaken(true);
-  };
-  const postJobs = async (values: PostJobInfo, { resetForm }) => {
-    if (!imageTaken) {
-      setImageRequired(true);
-      return;
-    }
-    if (fromDate > toDate) {
-      toast.show({
-        title: 'Pick up date cannot be after the drop off \n date',
-        status: 'error',
-      });
-      return;
-    }
-    setLoading(true);
-    const uploadedImage = await FIREBASE_POSTJOB_CALLS.postImage(imageUri);
-    // eslint-disable-next-line no-param-reassign
-    values.poster = currentUser.phoneNumber;
-    // eslint-disable-next-line no-param-reassign
-    values.imageUri = uploadedImage;
-    // eslint-disable-next-line no-param-reassign
-    values.pickUpDate = fromDate;
-    // eslint-disable-next-line no-param-reassign
-    values.dropOffDate = toDate;
-    // eslint-disable-next-line no-param-reassign
-    values.called = [];
+	const toast = useToast();
+	const closeCamera = () => {
+		setShowCamera(false);
+	};
 
-    await FIREBASE_POSTJOB_CALLS.postJob(values);
-    toast.show({ title: 'Job successfully posted!', status: 'success' });
-    setLoading(false);
-    resetForm();
-    setImageTaken(false);
-    setImageUri('');
-  };
-  if (loading)
-    return (
-      <>
-        <View style={tailwind('my-24')}>
-          <Spinner
-            accessibilityLabel="Loading posts"
-            color="emerald.500"
-            size="lg"
-          />
-          <Heading
+	const saveImage = (uri: string) => {
+		setImageUri(uri);
+	};
+	const postJobs = async (values: PostJobInfo, { resetForm }) => {
+		if (!imageUri) {
+			setImageRequired(true);
+			return;
+		}
+		if (fromDate && toDate && fromDate > toDate) {
+			toast.show({
+				title: 'Pick up date cannot be after the drop off \n date',
+				status: 'error',
+			});
+			return;
+		}
+		setLoading(true);
+		// const uploadedImage = await FIREBASE_POSTJOB_CALLS.postImage(imageUri);
+		const uploadedImage = await uploadFile(imageUri);
+		/* eslint-disable no-param-reassign */
+		values.poster = currentUser.phoneNumber;
+		values.imageUri = uploadedImage;
+		if (fromDate) values.pickUpDate = fromDate;
+		if (toDate) values.dropOffDate = toDate;
+		values.called = [];
+		/* eslint-disable no-param-reassign */
+
+
+		await FIREBASE_POSTJOB_CALLS.postJob(values);
+		toast.show({ title: 'Job successfully posted!', status: 'success' });
+		setLoading(false);
+		resetForm();
+		setImageUri('');
+	};
+
+	const resetImage = () => {
+		setImageUri(undefined);
+		setShowCamera(true)
+	}
+	const openFilePicker = async () => {
+		const fileRef = await documentPicker();
+		if (fileRef.type === 'success') {
+			setShowCamera(false);
+			setImageUri(fileRef.uri);
+		}
+	};
+	if (loading)
+		return (
+			<>
+				<View style={tailwind('my-24')}>
+					<Spinner
+						accessibilityLabel='Loading posts'
+						color='emerald.500'
+						size='lg'
+					/>
+					<Heading
             style={tailwind('text-center')}
             color="emerald.500"
             fontSize="xl"
@@ -126,13 +120,14 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
       <View>
         {showCamera ? (
           <View>
-            <OpenCamera closeCamera={closeCamera} updateImageInfo={saveImage} />
+						<OpenCamera closeCamera={closeCamera} updateImageInfo={saveImage} showGalleryOption
+												onGalleryClick={openFilePicker} />
           </View>
         ) : undefined}
       </View>
       <ScrollView>
         <View style={tailwind('-mb-20')}>
-          <Pageheader navigation page="Post Job" />
+          <Pageheader navigation={navigation} page="Post Job"  activeTab='' route={route}/>
         </View>
 
         <Layout>
@@ -146,10 +141,10 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
               >
                 {(formik: FormikProps<PostJobInfo>) => (
                   <>
-                    {!imageTaken && (
+                    {!imageUri ? (
                       <>
                         <TouchableOpacity
-                          onPress={() => setShowCamera(true)}
+                          onPress={() => resetImage()}
                           style={[
                             tailwind('mx-24 py-16 mb-4'),
                             {
@@ -178,27 +173,24 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
                           </Text>
                         ) : undefined}
                       </>
-                    )}
-                    {imageTaken && (
-                      <>
-                        <View style={tailwind('mx-8 h-96')}>
-                          <Image
-                            source={{
-                              uri: imageUri,
-                            }}
-                            alt="image taken"
-                            style={tailwind('h-full')}
-                          />
-                        </View>
-                        <View style={tailwind('my-8')}>
-                          <TouchableOpacity onPress={() => setShowCamera(true)}>
-                            <Text style={tailwind('text-center text-blue-300')}>
-                              Retake Picture!
-                            </Text>
-                          </TouchableOpacity>
-                        </View>
-                      </>
-                    )}
+                    ) : <>
+											<View style={tailwind('mx-8 h-96')}>
+												<Image
+													source={{
+														uri: imageUri,
+													}}
+													alt="image taken"
+													style={tailwind('h-full')}
+												/>
+											</View>
+											<View style={tailwind('my-8')}>
+												<TouchableOpacity onPress={() => resetImage()}>
+													<Text style={tailwind('text-center text-blue-300')}>
+														Retake Picture!
+													</Text>
+												</TouchableOpacity>
+											</View>
+										</>}
                     <Box style={tailwind('mx-8 my-2')}>
                       <FMSelectInput
                         formik={formik as unknown as FormikProps<FormikValues>}

@@ -49,9 +49,9 @@ const FMTextInput: FC<{
       type={doNotShow ? 'password' : 'text'}
       variant={variant || 'outline'}
       bg="transparent"
-      placeholderTextColor={placeholderTextColor || 'gray'}
       placeholder={label}
-      onChangeText={formik.handleChange(name)}
+			placeholderTextColor={placeholderTextColor || 'gray'}
+			onChangeText={formik.handleChange(name)}
       color={color || 'black'}
     />
     {formik.touched[name] && formik.errors[name] && (
