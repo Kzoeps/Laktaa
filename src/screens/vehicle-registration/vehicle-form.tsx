@@ -85,6 +85,14 @@ const VehicleForm: FC<{
                     inputColor="grey"
                   />
                 </Box>
+                <Box style={tailwind('my-1 ml-1')}>
+                  <FMTextInput
+                    label="BP-A-1234"
+                    formik={formik as unknown as FormikProps<FormikValues>}
+                    name="numberPlate"
+                    styleProp="my-1"
+                  />
+                </Box>
               </View>
 
               <View style={tailwind('-ml-20 w-5/12')}>
@@ -114,7 +122,7 @@ const VehicleForm: FC<{
                 )}
               </View>
             </View>
-            <View style={tailwind('w-full items-center mb-4')}>
+            {/* <View style={tailwind('w-full items-center mb-4')}>
               <FMTextInput
                 label="BP-A-1234"
                 formik={formik as unknown as FormikProps<FormikValues>}
@@ -133,7 +141,7 @@ const VehicleForm: FC<{
                 name="licenseNumber"
                 styleProp="my-1"
               />
-            </View>
+            </View> */}
           </Box>
           <Box
             rounded="lg"
@@ -150,10 +158,16 @@ const VehicleForm: FC<{
                   name="driverName"
                   styleProp="my-1"
                 />
-                <FMTextInput
+                {/* <FMTextInput
                   label="Age"
                   formik={formik as unknown as FormikProps<FormikValues>}
                   name="age"
+                  styleProp="my-1"
+                /> */}
+                <FMTextInput
+                  label="Driver's License Number"
+                  formik={formik as unknown as FormikProps<FormikValues>}
+                  name="licenseNumber"
                   styleProp="my-1"
                 />
                 <FMTextInput
