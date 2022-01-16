@@ -25,7 +25,7 @@ import useFirestoreUpload from '../../shared/components/useFirestoreUpload';
 import { documentPicker } from '../../shared/utils';
 
 type PostJobNavProps = NavigationProps<RoutePaths.postJob>;
-const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
+const PostJob: FC<PostJobNavProps> = ({ navigation, route }) => {
 	const { currentUser } = useContext(AuthContext);
 	const [showCamera, setShowCamera] = useState(false);
 	const validationSchema = POST_JOB_SCHEMA;
@@ -67,7 +67,8 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
 			return;
 		}
 		setLoading(true);
-		const uploadedImage = await FIREBASE_POSTJOB_CALLS.postImage(imageUri);
+		// const uploadedImage = await FIREBASE_POSTJOB_CALLS.postImage(imageUri);
+		const uploadedImage = await uploadFile(imageUri);
 		/* eslint-disable no-param-reassign */
 		values.poster = currentUser.phoneNumber;
 		values.imageUri = uploadedImage;
@@ -126,7 +127,7 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
       </View>
       <ScrollView>
         <View style={tailwind('-mb-20')}>
-          <Pageheader navigation page="Post Job" />
+          <Pageheader navigation={navigation} page="Post Job"  activeTab='' route={route}/>
         </View>
 
         <Layout>
@@ -135,7 +136,7 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
             <View style={tailwind('mt-6')}>
               <Formik
                 initialValues={initialValues}
-                validationSchema={validationSchema}
+                // validationSchema={validationSchema}
                 onSubmit={postJobs}
               >
                 {(formik: FormikProps<PostJobInfo>) => (

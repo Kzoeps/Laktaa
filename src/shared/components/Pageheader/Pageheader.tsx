@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Text, View } from 'react-native';
 import tailwind from 'tailwind-rn';
 import HeaderLayout from '../../layout/header';
-import { RoutePaths } from '../../models/model';
+import { NavigationProps, RoutePaths } from '../../models/model';
 
-const Pageheader = ({ navigation, page, activeTab }): JSX.Element => {
+export type PageHeaderProps = {
+	page: any,
+	activeTab: string,
+};
+type Navigation = NavigationProps<RoutePaths.postJob>;
+const Pageheader: FC<PageHeaderProps & Navigation> = ({ navigation, page, activeTab }): JSX.Element => {
   const toggleCustomer = () => {
     navigation.navigate(RoutePaths.dashboard);
   };
