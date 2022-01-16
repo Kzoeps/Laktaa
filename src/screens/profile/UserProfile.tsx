@@ -32,6 +32,7 @@ import { AuthContext } from '../auth/auth';
 type UserProfileNavProps = NavigationProps<RoutePaths.userProfile>;
 const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
   const [inputsDisabled, setInputsDisabled] = useState<boolean>(true);
+  const [uploadImageStatus, setUploadImageStatus] = useState<boolean>(false);
   const userDetails = useSelector(selectUserDetails);
   const storeStatus = useSelector(selectStoreStatus);
   const { phoneNumber } = route.params;
@@ -42,7 +43,8 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
   const uploadImage = useFirestoreUpload(
     `profileImages/${phoneNumber}`,
     file,
-    setFile
+    setFile,
+		setUploadImageStatus
   );
 
   const initialValues = {
@@ -77,7 +79,13 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
 
   const openFilePicker = async () => {
     const fileRef = await DocumentPicker.getDocumentAsync({ type: 'image/*' });
-    if (fileRef.type === 'success') setFile(fileRef);
+    if (fileRef.type === 'success') {
+    	const profileImageUrl = await uploadImage.uploadFile(fileRef.uri);
+    	await dispatch(updateUserProfileImage({
+				phoneNumber: currentUser.phoneNumber,
+				profileImageUrl
+			}))
+    }
   };
 
   useEffect(() => {
@@ -89,7 +97,7 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
     else setInputsDisabled(true);
   }, [phoneNumber, currentUser.phoneNumber]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (!['idle', 'pending'].includes(uploadImage)) {
       const updateUserProfileImageUrl = async () => {
         await dispatch(
@@ -101,7 +109,7 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
       };
       updateUserProfileImageUrl();
     }
-  }, [uploadImage, dispatch, currentUser.phoneNumber]);
+  }, [uploadImage, dispatch, currentUser.phoneNumber]); */
   useEffect(() => {
     setUserInitials(
       userDetails?.userName
@@ -112,7 +120,7 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
     );
   }, [userDetails?.userName]);
 
-  if (storeStatus === APIStatuses.LOADING || uploadImage === 'pending') {
+  if (storeStatus === APIStatuses.LOADING || uploadImageStatus) {
     return (
       <View style={tailwind('my-24')}>
         <Spinner
@@ -154,7 +162,6 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
                   location,
                 }) => {
                   if (firebase.auth()?.currentUser?.displayName != null) {
-                    console.log('right here: ', firebase.auth());
                     await updateUserProfile({
                       userName,
                       phoneNumber: currentUser.phoneNumber,
@@ -162,8 +169,6 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
                     });
                     return;
                   }
-                  console.log('no display name', firebase.auth());
-                  console.log('nunber: ', currentUser.phoneNumber);
                   await createUserProfile({
                     userName,
                     phoneNumber: currentUser.phoneNumber,
