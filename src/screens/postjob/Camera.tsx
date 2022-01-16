@@ -12,9 +12,10 @@ import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons';
  * @constructor
  */
 const OpenCamera: FC<{
-  closeCamera?: () => void;
-  updateImageInfo: (uri: string) => void;
-  showMySelf?: boolean | undefined | null;
+	closeCamera?: () => void;
+	updateImageInfo: (uri: string) => void;
+	showMySelf?: boolean | undefined | null;
+	showGalleryOption?: boolean | undefined | null;
 }> = (props) => {
   const [hasPermission, setHasPermission] = useState(false);
   const [type, setType] = useState(Camera.Constants.Type.back);
@@ -39,26 +40,29 @@ const OpenCamera: FC<{
   }
   if (hasPermission === false) {
     return <Text>Permission to use the camera has been Denied</Text>;
-  }
+	}
 
-  const onSnap = async () => {
-    if (cameraRef.current) {
-      const options = { quality: 0.7, skipProcessing: true };
-      const data = await cameraRef.current.takePictureAsync(options);
-      props.updateImageInfo(data.uri);
-      props.closeCamera && props.closeCamera();
-    }
-  };
+	const onSnap = async () => {
+		if (cameraRef.current) {
+			const options = { quality: 0.7, skipProcessing: true };
+			const data = await cameraRef.current.takePictureAsync(options);
+			props.updateImageInfo(data.uri);
+			props.closeCamera && props.closeCamera();
+		}
+	};
+	const onGalleryClick = () => {
+		console.log('gallery clicked');
+	};
 
-  return (
-    <View>
-      <Camera ref={cameraRef} type={type} style={tailwind('h-full')}>
-        <>
-          <View style={tailwind('flex-1 flex-row justify-between')}>
-            <TouchableOpacity
-              style={tailwind('m-4')}
-              onPress={() => {
-                props.closeCamera();
+	return (
+		<View>
+			<Camera ref={cameraRef} type={type} style={tailwind('h-full')}>
+				<>
+					<View style={tailwind('flex-1 flex-row justify-between')}>
+						<TouchableOpacity
+							style={tailwind('m-4')}
+							onPress={() => {
+								props.closeCamera();
               }}
             >
               <Text style={tailwind('pt-4')}>
@@ -85,13 +89,20 @@ const OpenCamera: FC<{
             </TouchableOpacity>
           </View>
 
-          <View style={tailwind('mb-8')}>
-            <TouchableOpacity onPress={onSnap}>
-              <Text style={tailwind('text-center pt-12')}>
-                <MaterialIcons name="camera" size={68} color="white" />
-              </Text>
-            </TouchableOpacity>
-          </View>
+					<View style={tailwind('mb-8')}>
+						<TouchableOpacity onPress={onSnap}>
+							<Text style={tailwind('text-center pt-12')}>
+								<MaterialIcons name='camera' size={68} color='white' />
+							</Text>
+						</TouchableOpacity>
+						{
+							props?.showGalleryOption && <TouchableOpacity onPress={onGalleryClick}>
+							<Text style={tailwind('pt-12')}>
+								<MaterialIcons name='gallery' size={64} color='white' />
+							</Text>
+						</TouchableOpacity>
+						}
+					</View>
         </>
       </Camera>
     </View>

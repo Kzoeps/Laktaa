@@ -1,32 +1,17 @@
 import React, { FC, useContext, useState } from 'react';
-import { TouchableOpacity, ScrollView } from 'react-native';
-import {
-  Box,
-  Text,
-  View,
-  Icon,
-  Image,
-  useToast,
-  Spinner,
-  Heading,
-} from 'native-base';
+import { ScrollView, TouchableOpacity } from 'react-native';
+import { Box, Heading, Icon, Image, Spinner, Text, useToast, View } from 'native-base';
 import tailwind from 'tailwind-rn';
 import { Formik, FormikProps, FormikValues } from 'formik';
-import {
-  MaterialCommunityIcons,
-  Entypo,
-  FontAwesome,
-  FontAwesome5,
-  MaterialIcons,
-} from '@expo/vector-icons';
+import { Entypo, FontAwesome, FontAwesome5, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import Pageheader from '../../shared/components/Pageheader/Pageheader';
 import Layout from '../../shared/layout/layout';
 import {
-  POST_JOB_SCHEMA,
-  POST_JOB_LOAD_TYPE,
-  POST_JOB_INITIALIZER,
-  POST_JOB_PERISH,
-  POST_JOB_SIZES,
+	POST_JOB_INITIALIZER,
+	POST_JOB_LOAD_TYPE,
+	POST_JOB_PERISH,
+	POST_JOB_SCHEMA,
+	POST_JOB_SIZES,
 } from './models/constants';
 import FMTextInput from '../../shared/components/TextInput';
 import FMSelectInput from '../../shared/components/SelectInput/FMSelectInput';
@@ -35,74 +20,72 @@ import { AuthContext } from '../auth/auth';
 import OpenCamera from './Camera';
 import { FIREBASE_POSTJOB_CALLS } from './utils/API';
 import Calendar from '../../shared/components/Calendar/calendar';
-import {
-  NavigationProps,
-  RoutePaths,
-  PostJobInfo,
-} from '../../shared/models/model';
+import { NavigationProps, PostJobInfo, RoutePaths } from '../../shared/models/model';
+import useFirestoreUpload from '../../shared/components/useFirestoreUpload';
 
 type PostJobNavProps = NavigationProps<RoutePaths.postJob>;
 const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
-  const { currentUser } = useContext(AuthContext);
-  const [showCamera, setShowCamera] = useState(false);
-  const validationSchema = POST_JOB_SCHEMA;
-  const initialValues = POST_JOB_INITIALIZER;
-  const [imageUri, setImageUri] = useState('');
-  const [imageTaken, setImageTaken] = useState(false);
-  const [imageRequired, setImageRequired] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [fromDate, setFromDate] = useState();
-  const [toDate, setToDate] = useState();
+	const { currentUser } = useContext(AuthContext);
+	const [showCamera, setShowCamera] = useState(false);
+	const validationSchema = POST_JOB_SCHEMA;
+	const initialValues = POST_JOB_INITIALIZER;
+	const [imageUri, setImageUri] = useState('');
+	const [imageTaken, setImageTaken] = useState(false);
+	const [imageRequired, setImageRequired] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const [fromDate, setFromDate] = useState<{ seconds: number, nanoseconds: number }>();
+	const [toDate, setToDate] = useState<{ seconds: number, nanoseconds: number }>();
+	const imageUid = Math.random().toString(36).substr(2, 18);
 
-  const changeFromDate = (value: Date) => {
-    setFromDate(value);
-  };
-  const changeToDate = (value: Date) => {
-    setToDate(value);
-  };
+	const firestoreUpload = useFirestoreUpload(`jobImages/${imageUid}`, setLoading);
 
-  const toast = useToast();
-  const closeCamera = () => {
-    setShowCamera(false);
-  };
+	const changeFromDate = (value: Date) => {
+		setFromDate(value);
+	};
+	const changeToDate = (value: Date) => {
+		setToDate(value);
+	};
 
-  const saveImage = (uri: string) => {
-    setImageUri(uri);
-    setImageTaken(true);
-  };
-  const postJobs = async (values: PostJobInfo, { resetForm }) => {
-    if (!imageTaken) {
-      setImageRequired(true);
-      return;
-    }
-    if (fromDate > toDate) {
-      toast.show({
-        title: 'Pick up date cannot be after the drop off \n date',
-        status: 'error',
-      });
-      return;
-    }
-    setLoading(true);
-    const uploadedImage = await FIREBASE_POSTJOB_CALLS.postImage(imageUri);
-    // eslint-disable-next-line no-param-reassign
-    values.poster = currentUser.phoneNumber;
-    // eslint-disable-next-line no-param-reassign
-    values.imageUri = uploadedImage;
-    // eslint-disable-next-line no-param-reassign
-    values.pickUpDate = fromDate;
-    // eslint-disable-next-line no-param-reassign
-    values.dropOffDate = toDate;
-    // eslint-disable-next-line no-param-reassign
-    values.called = [];
+	const toast = useToast();
+	const closeCamera = () => {
+		setShowCamera(false);
+	};
 
-    await FIREBASE_POSTJOB_CALLS.postJob(values);
-    toast.show({ title: 'Job successfully posted!', status: 'success' });
-    setLoading(false);
-    resetForm();
-    setImageTaken(false);
-    setImageUri('');
-  };
-  if (loading)
+	const saveImage = (uri: string) => {
+		setImageUri(uri);
+		setImageTaken(true);
+	};
+	const postJobs = async (values: PostJobInfo, { resetForm }) => {
+		if (!imageTaken) {
+			setImageRequired(true);
+			return;
+		}
+		if (fromDate && toDate && fromDate > toDate) {
+			toast.show({
+				title: 'Pick up date cannot be after the drop off \n date',
+				status: 'error',
+			});
+			return;
+		}
+		setLoading(true);
+		const uploadedImage = await FIREBASE_POSTJOB_CALLS.postImage(imageUri);
+		/* eslint-disable no-param-reassign */
+		values.poster = currentUser.phoneNumber;
+		values.imageUri = uploadedImage;
+		if (fromDate) values.pickUpDate = fromDate;
+		if (toDate) values.dropOffDate = toDate;
+		values.called = [];
+		/* eslint-disable no-param-reassign */
+
+
+		await FIREBASE_POSTJOB_CALLS.postJob(values);
+		toast.show({ title: 'Job successfully posted!', status: 'success' });
+		setLoading(false);
+		resetForm();
+		setImageTaken(false);
+		setImageUri('');
+	};
+	if (loading)
     return (
       <>
         <View style={tailwind('my-24')}>

@@ -45,8 +45,6 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const uploadImage = useFirestoreUpload(
     `profileImages/${phoneNumber}`,
-    file,
-    setFile,
     setUploadImageStatus
   );
 

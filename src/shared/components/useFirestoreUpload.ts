@@ -1,14 +1,11 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import firebase from 'firebase';
-import { DocumentResult } from 'expo-document-picker';
 
 export type FirestoreUpload = {
   uploadFile: (uri: string) => Promise<string>;
 };
 const useFirestoreUpload = (
   reference: string,
-  fileToUploadRef: DocumentResult | undefined,
-  setFileToUpload: Dispatch<SetStateAction<DocumentResult | undefined>>,
   setUploading: Dispatch<SetStateAction<boolean>>
 ): FirestoreUpload => {
   const storageRef = firebase.storage().ref().child(reference);
