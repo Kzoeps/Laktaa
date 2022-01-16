@@ -109,7 +109,7 @@ const PostJob: FC<PostJobNavProps> = ({ navigation }) => {
       <View>
         {showCamera ? (
           <View>
-            <OpenCamera closeCamera={closeCamera} updateImageInfo={saveImage} />
+            <OpenCamera closeCamera={closeCamera} updateImageInfo={saveImage} showGalleryOption />
           </View>
         ) : undefined}
       </View>

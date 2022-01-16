@@ -62,7 +62,7 @@ const OpenCamera: FC<{
 						<TouchableOpacity
 							style={tailwind('m-4')}
 							onPress={() => {
-								props.closeCamera();
+								props?.closeCamera();
               }}
             >
               <Text style={tailwind('pt-4')}>
