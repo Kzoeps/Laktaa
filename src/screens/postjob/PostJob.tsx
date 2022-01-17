@@ -90,11 +90,11 @@ const PostJob: FC<PostJobNavProps> = ({ navigation, route }) => {
 		setShowCamera(true)
 	}
 	const openFilePicker = async () => {
-		const {type, uri} = await documentPicker();
-		if (type === 'success') {
+		const fileRef= await documentPicker();
+		if (fileRef.type === 'success') {
 			setShowCamera(false);
-			const {uri: compressedUri} = await compressImage(uri)
-			setImageUri(compressedUri);
+			const {uri: compressedUri} = await compressImage(fileRef.uri)
+			setImageUri(fileRef.uri);
 		}
 	};
 	if (loading)
