@@ -72,3 +72,9 @@ export const POST_JOB_SIZES = [
 // Small: 40 cm by 25 by 28 or smaller
 // Medium: 55cm by 30cm by 40cm or smaller
 // Large: bigger than M
+
+export const POST_JOB_FILE_SIZE_ACTION = {
+	resize: {
+		width: 550
+	}
+}

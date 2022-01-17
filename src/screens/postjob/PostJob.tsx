@@ -7,6 +7,7 @@ import { Entypo, FontAwesome, FontAwesome5, MaterialCommunityIcons, MaterialIcon
 import Pageheader from '../../shared/components/Pageheader/Pageheader';
 import Layout from '../../shared/layout/layout';
 import {
+	POST_JOB_FILE_SIZE_ACTION,
 	POST_JOB_INITIALIZER,
 	POST_JOB_LOAD_TYPE,
 	POST_JOB_PERISH,
@@ -52,7 +53,7 @@ const PostJob: FC<PostJobNavProps> = ({ navigation, route }) => {
 	};
 
 	const saveImage = async (uri: string) => {
-		const { uri:compressedImageUri } = await compressImage(uri);
+		const { uri:compressedImageUri } = await compressImage(uri, [POST_JOB_FILE_SIZE_ACTION]);
 		setImageUri(compressedImageUri);
 	};
 	const postJobs = async (values: PostJobInfo, { resetForm }) => {

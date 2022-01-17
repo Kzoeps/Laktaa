@@ -15,7 +15,7 @@ import {
   updateUserProfile as updateUserProfileStore,
   updateUserProfileImage,
 } from '../auth/store/authSlice';
-import { EDIT_PROFILE_SCHEMA } from './models/constants';
+import { EDIT_PROFILE_SCHEMA, PROFILE_PICTURE_IMAGE_ACTIONS } from './models/constants';
 import FMTextInput from '../../shared/components/TextInput';
 import {
   APIStatuses,
@@ -80,7 +80,7 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
   const openFilePicker = async () => {
     const fileRef = await documentPicker();
     if (fileRef.type === 'success') {
-			const { uri: imageUri }= await compressImage(fileRef.uri);
+			const { uri: imageUri }= await compressImage(fileRef.uri, PROFILE_PICTURE_IMAGE_ACTIONS);
 			const profileImageUrl = await uploadImage.uploadFile(imageUri);
       await dispatch(
         updateUserProfileImage({
