@@ -1,3 +1,4 @@
+import { Action } from 'expo-image-manipulator';
 import * as Yup from 'yup';
 import { VALIDATION_MESSAGES } from '../../../shared/models/constants';
 
@@ -42,3 +43,11 @@ export const VEHICLE_TYPE_OPTIONS = [
 export enum RegistrationCollections {
   driverRegistrations = 'driverRegistrations',
 }
+
+export const DRIVER_IMAGE_ACTIONS: Action[] = [
+	{
+		resize: {
+			width: 350
+		}
+	}
+]
