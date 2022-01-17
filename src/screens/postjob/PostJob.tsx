@@ -51,8 +51,9 @@ const PostJob: FC<PostJobNavProps> = ({ navigation, route }) => {
 		setShowCamera(false);
 	};
 
-	const saveImage = (uri: string) => {
-		setImageUri(uri);
+	const saveImage = async (uri: string) => {
+		const { uri:compressedImageUri } = await compressImage(uri);
+		setImageUri(compressedImageUri);
 	};
 	const postJobs = async (values: PostJobInfo, { resetForm }) => {
 		if (!imageUri) {

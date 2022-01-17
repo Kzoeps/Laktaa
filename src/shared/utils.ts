@@ -20,6 +20,6 @@ export const selectStoreStatus =
   (state: RootState): APIStatuses =>
     state[sliceName].status;
 
-export const compressImage = async (imageUri: string): Promise<ImageResult> => manipulateAsync(imageUri, [], { compress: 0 })
+export const compressImage = async (imageUri: string): Promise<ImageResult> => manipulateAsync(imageUri, [], { compress: 0.18 })
 
 export const documentPicker = async (allowedAssets = 'image/*'): Promise<DocumentResult> => getDocumentAsync({ type: allowedAssets })
