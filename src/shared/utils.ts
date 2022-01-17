@@ -19,4 +19,7 @@ export const selectStoreStatus =
   (state: RootState): APIStatuses =>
     state[sliceName].status;
 
-export const documentPicker = async (allowedAssets = 'image/*'): Promise<DocumentResult> => DocumentPicker.getDocumentAsync({ type: allowedAssets })
+export const documentPicker = async (
+  allowedAssets = 'image/*'
+): Promise<DocumentResult> =>
+  DocumentPicker.getDocumentAsync({ type: allowedAssets });

@@ -5,11 +5,15 @@ import HeaderLayout from '../../layout/header';
 import { NavigationProps, RoutePaths } from '../../models/model';
 
 export type PageHeaderProps = {
-	page: any,
-	activeTab: string,
+  page: any;
+  activeTab: string;
 };
 type Navigation = NavigationProps<RoutePaths.postJob>;
-const Pageheader: FC<PageHeaderProps & Navigation> = ({ navigation, page, activeTab }): JSX.Element => {
+const Pageheader: FC<PageHeaderProps & Navigation> = ({
+  navigation,
+  page,
+  activeTab,
+}): JSX.Element => {
   const toggleCustomer = () => {
     navigation.navigate(RoutePaths.dashboard);
   };

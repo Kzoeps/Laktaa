@@ -50,8 +50,8 @@ const FMTextInput: FC<{
       variant={variant || 'outline'}
       bg="transparent"
       placeholder={label}
-			placeholderTextColor={placeholderTextColor || 'gray'}
-			onChangeText={formik.handleChange(name)}
+      placeholderTextColor={placeholderTextColor || 'gray'}
+      onChangeText={formik.handleChange(name)}
       color={color || 'black'}
     />
     {formik.touched[name] && formik.errors[name] && (
