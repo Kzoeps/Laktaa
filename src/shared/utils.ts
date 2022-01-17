@@ -1,8 +1,10 @@
 import { IToastProps } from 'native-base';
+import { getDocumentAsync } from 'expo-document-picker';
+import { DocumentResult } from 'expo-document-picker';
+import { ImageResult, manipulateAsync, SaveFormat } from 'expo-image-manipulator';
 import { APIStatuses, ToastTypes } from './models/model';
 import { RootState } from '../store/store';
-import * as DocumentPicker from 'expo-document-picker';
-import { DocumentResult } from 'expo-document-picker';
+
 
 export const getToastConfig = (
   title: string,
@@ -19,4 +21,6 @@ export const selectStoreStatus =
   (state: RootState): APIStatuses =>
     state[sliceName].status;
 
-export const documentPicker = async (allowedAssets = 'image/*'): Promise<DocumentResult> => DocumentPicker.getDocumentAsync({ type: allowedAssets })
+export const compressImage = async (imageUri: string): Promise<ImageResult> => manipulateAsync(imageUri, [], { compress: 0.3, format: SaveFormat.PNG })
+
+export const documentPicker = async (allowedAssets = 'image/*'): Promise<DocumentResult> => getDocumentAsync({ type: allowedAssets })
