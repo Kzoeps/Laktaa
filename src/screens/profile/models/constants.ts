@@ -11,9 +11,9 @@ export const EDIT_PROFILE_SCHEMA = Yup.object().shape({
 });
 
 export const PROFILE_PICTURE_IMAGE_ACTIONS: Action[] = [
-	{
-		resize: {
-			width: 350
-		}
-	}
-]
+  {
+    resize: {
+      width: 350,
+    },
+  },
+];

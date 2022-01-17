@@ -22,12 +22,12 @@ import {
 import Pageheader from '../../shared/components/Pageheader/Pageheader';
 import Layout from '../../shared/layout/layout';
 import {
-	POST_JOB_FILE_SIZE_ACTION,
-	POST_JOB_INITIALIZER,
-	POST_JOB_LOAD_TYPE,
-	POST_JOB_PERISH,
-	POST_JOB_SCHEMA,
-	POST_JOB_SIZES,
+  POST_JOB_FILE_SIZE_ACTION,
+  POST_JOB_INITIALIZER,
+  POST_JOB_LOAD_TYPE,
+  POST_JOB_PERISH,
+  POST_JOB_SCHEMA,
+  POST_JOB_SIZES,
 } from './models/constants';
 import FMTextInput from '../../shared/components/TextInput';
 import FMSelectInput from '../../shared/components/SelectInput/FMSelectInput';
@@ -76,32 +76,34 @@ const PostJob: FC<PostJobNavProps> = ({ navigation, route }) => {
     setShowCamera(false);
   };
 
-	const saveImage = async (uri: string) => {
-		const { uri:compressedImageUri } = await compressImage(uri, [POST_JOB_FILE_SIZE_ACTION]);
-		setImageUri(compressedImageUri);
-	};
-	const postJobs = async (values: PostJobInfo, { resetForm }) => {
-		if (!imageUri) {
-			setImageRequired(true);
-			return;
-		}
-		if (fromDate && toDate && fromDate > toDate) {
-			toast.show({
-				title: 'Pick up date cannot be after the drop off \n date',
-				status: 'error',
-			});
-			return;
-		}
-		setLoading(true);
-		// const uploadedImage = await FIREBASE_POSTJOB_CALLS.postImage(imageUri);
-		const uploadedImage = await uploadFile(imageUri);
-		/* eslint-disable no-param-reassign */
-		values.poster = currentUser.phoneNumber;
-		values.imageUri = uploadedImage;
-		if (fromDate) values.pickUpDate = fromDate;
-		if (toDate) values.dropOffDate = toDate;
-		values.called = [];
-		/* eslint-disable no-param-reassign */
+  const saveImage = async (uri: string) => {
+    const { uri: compressedImageUri } = await compressImage(uri, [
+      POST_JOB_FILE_SIZE_ACTION,
+    ]);
+    setImageUri(compressedImageUri);
+  };
+  const postJobs = async (values: PostJobInfo, { resetForm }) => {
+    if (!imageUri) {
+      setImageRequired(true);
+      return;
+    }
+    if (fromDate && toDate && fromDate > toDate) {
+      toast.show({
+        title: 'Pick up date cannot be after the drop off \n date',
+        status: 'error',
+      });
+      return;
+    }
+    setLoading(true);
+    // const uploadedImage = await FIREBASE_POSTJOB_CALLS.postImage(imageUri);
+    const uploadedImage = await uploadFile(imageUri);
+    /* eslint-disable no-param-reassign */
+    values.poster = currentUser.phoneNumber;
+    values.imageUri = uploadedImage;
+    if (fromDate) values.pickUpDate = fromDate;
+    if (toDate) values.dropOffDate = toDate;
+    values.called = [];
+    /* eslint-disable no-param-reassign */
 
     await FIREBASE_POSTJOB_CALLS.postJob(values);
     toast.show({ title: 'Job successfully posted!', status: 'success' });
@@ -110,28 +112,28 @@ const PostJob: FC<PostJobNavProps> = ({ navigation, route }) => {
     setImageUri('');
   };
 
-	const resetImage = () => {
-		setImageUri(undefined);
-		setShowCamera(true)
-	}
-	const openFilePicker = async () => {
-		const fileRef= await documentPicker();
-		if (fileRef.type === 'success') {
-			setShowCamera(false);
-			const {uri: compressedUri} = await compressImage(fileRef.uri)
-			setImageUri(fileRef.uri);
-		}
-	};
-	if (loading)
-		return (
-			<>
-				<View style={tailwind('my-24')}>
-					<Spinner
-						accessibilityLabel='Loading posts'
-						color='emerald.500'
-						size='lg'
-					/>
-					<Heading
+  const resetImage = () => {
+    setImageUri(undefined);
+    setShowCamera(true);
+  };
+  const openFilePicker = async () => {
+    const fileRef = await documentPicker();
+    if (fileRef.type === 'success') {
+      setShowCamera(false);
+      const { uri: compressedUri } = await compressImage(fileRef.uri);
+      setImageUri(fileRef.uri);
+    }
+  };
+  if (loading)
+    return (
+      <>
+        <View style={tailwind('my-24')}>
+          <Spinner
+            accessibilityLabel="Loading posts"
+            color="emerald.500"
+            size="lg"
+          />
+          <Heading
             style={tailwind('text-center')}
             color="emerald.500"
             fontSize="xl"

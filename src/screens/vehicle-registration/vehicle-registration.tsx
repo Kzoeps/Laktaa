@@ -8,7 +8,11 @@ import Layout from '../../shared/layout/layout';
 import VehicleForm from './vehicle-form';
 import { DriverInfo, VehicleInfo } from './models/models';
 import { AuthContext } from '../auth/auth';
-import { compressImage, getToastConfig, selectStoreStatus } from '../../shared/utils';
+import {
+  compressImage,
+  getToastConfig,
+  selectStoreStatus,
+} from '../../shared/utils';
 import {
   APIStatuses,
   NavigationProps,
@@ -57,13 +61,20 @@ const VehicleRegistration: FC<VehicleRegistrationNavProps> = ({
     setShowDriverCamera(false);
   };
 
-  const updateImageInfo = (type: 'driver' | 'vehicle'): (uri: string) => Promise<void> => {
-  	return async (uri) => {
-  		const { uri: compressedUri } = await compressImage(uri, DRIVER_IMAGE_ACTIONS);
-			// eslint-disable-next-line no-unused-expressions
-  		type === 'driver' ? setDriverImageInfo(compressedUri) : setImageInfo(compressedUri);
-		}
-	}
+  const updateImageInfo = (
+    type: 'driver' | 'vehicle'
+  ): ((uri: string) => Promise<void>) => {
+    return async (uri) => {
+      const { uri: compressedUri } = await compressImage(
+        uri,
+        DRIVER_IMAGE_ACTIONS
+      );
+      // eslint-disable-next-line no-unused-expressions
+      type === 'driver'
+        ? setDriverImageInfo(compressedUri)
+        : setImageInfo(compressedUri);
+    };
+  };
 
   useEffect(() => {
     if (currentUser.phoneNumber && !vehicleInfo) {

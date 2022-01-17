@@ -45,9 +45,9 @@ export enum RegistrationCollections {
 }
 
 export const DRIVER_IMAGE_ACTIONS: Action[] = [
-	{
-		resize: {
-			width: 350
-		}
-	}
-]
+  {
+    resize: {
+      width: 350,
+    },
+  },
+];

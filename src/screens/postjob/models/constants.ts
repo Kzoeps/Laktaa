@@ -70,7 +70,7 @@ export const POST_JOB_SIZES = [
 ];
 
 export const POST_JOB_FILE_SIZE_ACTION = {
-	resize: {
-		width: 550
-	}
-}
+  resize: {
+    width: 550,
+  },
+};
