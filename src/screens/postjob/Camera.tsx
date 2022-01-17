@@ -49,9 +49,9 @@ const OpenCamera: FC<{
   const onSnap = async () => {
     if (cameraRef.current) {
       const options = { quality: 0.7, skipProcessing: true };
-      const data = await cameraRef.current.takePictureAsync(options);
+      const data = await cameraRef?.current?.takePictureAsync(options);
       props.updateImageInfo(data.uri);
-      props.closeCamera && props.closeCamera();
+      if (props.closeCamera) props.closeCamera();
     }
   };
   return (
@@ -62,7 +62,7 @@ const OpenCamera: FC<{
             <TouchableOpacity
               style={tailwind('m-4')}
               onPress={() => {
-                props?.closeCamera();
+                if (props?.closeCamera) props.closeCamera();
               }}
             >
               <Text style={tailwind('pt-4')}>

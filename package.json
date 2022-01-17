@@ -66,6 +66,7 @@
     "react-redux": "^7.2.4",
     "react-select": "^4.3.1",
     "redux-thunk": "^2.3.0",
+    "sharp-cli": "^1.15.0",
     "styled-components": "^5.3.0",
     "styled-system": "^5.1.5",
     "tailwind-rn": "^3.0.1",
