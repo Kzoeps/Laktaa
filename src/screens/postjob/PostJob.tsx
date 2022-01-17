@@ -22,7 +22,7 @@ import { FIREBASE_POSTJOB_CALLS } from './utils/API';
 import Calendar from '../../shared/components/Calendar/calendar';
 import { NavigationProps, PostJobInfo, RoutePaths } from '../../shared/models/model';
 import useFirestoreUpload from '../../shared/components/useFirestoreUpload';
-import { documentPicker } from '../../shared/utils';
+import { compressImage, documentPicker } from '../../shared/utils';
 
 type PostJobNavProps = NavigationProps<RoutePaths.postJob>;
 const PostJob: FC<PostJobNavProps> = ({ navigation, route }) => {
@@ -90,10 +90,11 @@ const PostJob: FC<PostJobNavProps> = ({ navigation, route }) => {
 		setShowCamera(true)
 	}
 	const openFilePicker = async () => {
-		const fileRef = await documentPicker();
-		if (fileRef.type === 'success') {
+		const {type, uri} = await documentPicker();
+		if (type === 'success') {
 			setShowCamera(false);
-			setImageUri(fileRef.uri);
+			const {uri: compressedUri} = await compressImage(uri)
+			setImageUri(compressedUri);
 		}
 	};
 	if (loading)
