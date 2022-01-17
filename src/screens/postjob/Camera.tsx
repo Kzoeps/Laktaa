@@ -19,14 +19,12 @@ const OpenCamera: FC<{
   showGalleryOption?: boolean | undefined | null;
   onGalleryClick?: GenericFunction;
 }> = (props) => {
+	/* eslint-disable react/destructuring-assignment */
   const [hasPermission, setHasPermission] = useState(false);
   const [type, setType] = useState(Camera.Constants.Type.back);
-  const [isPreview, setIsPreview] = useState(false);
-  const [imageInfo, setImageInfo] = useState();
   const cameraRef = useRef();
-  const WINDOW_HEIGHT = Dimensions.get('window').height - 180;
-  // eslint-disable-next-line no-multi-assign, no-param-reassign
-  const onGalleryClick = (props.onGalleryClick ??= () => undefined);
+	// eslint-disable-next-line react/destructuring-assignment
+  const onGalleryClick = props.onGalleryClick || (() => undefined);
 
   const onHandlePermission = useCallback(async () => {
     const { status } = await Camera.requestPermissionsAsync();
@@ -34,7 +32,7 @@ const OpenCamera: FC<{
   }, []);
 
   useEffect(() => {
-    onHandlePermission();
+    onHandlePermission().then(r => undefined);
   }, [onHandlePermission]);
 
   /* return null to hide component until showMySelf is true */
@@ -49,7 +47,7 @@ const OpenCamera: FC<{
   const onSnap = async () => {
     if (cameraRef.current) {
       const options = { quality: 0.7, skipProcessing: true };
-      const data = await cameraRef?.current?.takePictureAsync(options);
+      const data = await cameraRef.current.takePictureAsync(options);
       props.updateImageInfo(data.uri);
       if (props.closeCamera) props.closeCamera();
     }
@@ -110,5 +108,6 @@ const OpenCamera: FC<{
       </Camera>
     </View>
   );
+	/* eslint-disable react/destructuring-assignment */
 };
 export default OpenCamera;
