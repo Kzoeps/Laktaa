@@ -8,7 +8,7 @@ import Layout from '../../shared/layout/layout';
 import VehicleForm from './vehicle-form';
 import { DriverInfo, VehicleInfo } from './models/models';
 import { AuthContext } from '../auth/auth';
-import { getToastConfig, selectStoreStatus } from '../../shared/utils';
+import { compressImage, getToastConfig, selectStoreStatus } from '../../shared/utils';
 import {
   APIStatuses,
   NavigationProps,
@@ -55,6 +55,14 @@ const VehicleRegistration: FC<VehicleRegistrationNavProps> = ({
   const closeDriverCamera = (): void => {
     setShowDriverCamera(false);
   };
+
+  const updateImageInfo = (type: 'driver' | 'vehicle'): (uri: string) => Promise<void> => {
+  	return async (uri) => {
+  		const { uri: compressedUri } = await compressImage(uri);
+			// eslint-disable-next-line no-unused-expressions
+  		type === 'driver' ? setDriverImageInfo(compressedUri) : setImageInfo(compressedUri);
+		}
+	}
 
   useEffect(() => {
     if (currentUser.phoneNumber && !vehicleInfo) {
@@ -152,12 +160,12 @@ const VehicleRegistration: FC<VehicleRegistrationNavProps> = ({
       <OpenCamera
         showMySelf={showCamera}
         closeCamera={closeCamera}
-        updateImageInfo={setImageInfo}
+        updateImageInfo={updateImageInfo('vehicle')}
       />
       <OpenCamera
         showMySelf={showDriverCamera}
         closeCamera={closeDriverCamera}
-        updateImageInfo={setDriverImageInfo}
+        updateImageInfo={updateImageInfo('driver')}
       />
       <Box bg="emerald.400">
         <ScrollView>
