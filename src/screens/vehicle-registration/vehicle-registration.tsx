@@ -26,6 +26,7 @@ import OpenCamera from '../postjob/Camera';
 import Pageheader from '../../shared/components/Pageheader/Pageheader';
 import { FIREBASE_CALLS } from '../auth/utils/API';
 import { fetchUserProfile } from '../auth/store/authSlice';
+import { DRIVER_IMAGE_ACTIONS } from './models/constants';
 
 type VehicleRegistrationNavProps =
   NavigationProps<RoutePaths.vehicleRegistration>;
@@ -58,7 +59,7 @@ const VehicleRegistration: FC<VehicleRegistrationNavProps> = ({
 
   const updateImageInfo = (type: 'driver' | 'vehicle'): (uri: string) => Promise<void> => {
   	return async (uri) => {
-  		const { uri: compressedUri } = await compressImage(uri);
+  		const { uri: compressedUri } = await compressImage(uri, DRIVER_IMAGE_ACTIONS);
 			// eslint-disable-next-line no-unused-expressions
   		type === 'driver' ? setDriverImageInfo(compressedUri) : setImageInfo(compressedUri);
 		}
