@@ -29,7 +29,7 @@ import Layout from '../../shared/layout/layout';
 import FMAvatar from '../../shared/components/FMAvatar/FMAvatar';
 import FMHeader from '../../shared/components/FMHeader/FMHeader';
 import { AuthContext } from '../auth/auth';
-import { getToastConfig } from '../../shared/utils';
+import { compressImage, documentPicker, getToastConfig } from '../../shared/utils';
 
 type UserProfileNavProps = NavigationProps<RoutePaths.userProfile>;
 const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
@@ -78,9 +78,10 @@ const UserProfile: FC<UserProfileNavProps> = ({ route, navigation }) => {
   };
 
   const openFilePicker = async () => {
-    const fileRef = await DocumentPicker.getDocumentAsync({ type: 'image/*' });
+    const fileRef = await documentPicker();
     if (fileRef.type === 'success') {
-      const profileImageUrl = await uploadImage.uploadFile(fileRef.uri);
+			const { uri: imageUri }= await compressImage(fileRef.uri);
+			const profileImageUrl = await uploadImage.uploadFile(imageUri);
       await dispatch(
         updateUserProfileImage({
           phoneNumber: currentUser.phoneNumber,
