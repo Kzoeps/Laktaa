@@ -19,11 +19,11 @@ const OpenCamera: FC<{
   showGalleryOption?: boolean | undefined | null;
   onGalleryClick?: GenericFunction;
 }> = (props) => {
-	/* eslint-disable react/destructuring-assignment */
+  /* eslint-disable react/destructuring-assignment */
   const [hasPermission, setHasPermission] = useState(false);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const cameraRef = useRef();
-	// eslint-disable-next-line react/destructuring-assignment
+  // eslint-disable-next-line react/destructuring-assignment
   const onGalleryClick = props.onGalleryClick || (() => undefined);
 
   const onHandlePermission = useCallback(async () => {
@@ -32,7 +32,7 @@ const OpenCamera: FC<{
   }, []);
 
   useEffect(() => {
-    onHandlePermission().then(r => undefined);
+    onHandlePermission().then((r) => undefined);
   }, [onHandlePermission]);
 
   /* return null to hide component until showMySelf is true */
@@ -108,6 +108,6 @@ const OpenCamera: FC<{
       </Camera>
     </View>
   );
-	/* eslint-disable react/destructuring-assignment */
+  /* eslint-disable react/destructuring-assignment */
 };
 export default OpenCamera;
