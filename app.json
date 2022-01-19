@@ -1,11 +1,9 @@
 {
-  "name": "Laktaa",
-  "displayName": "Laktaa",
-  "icon": "./src/assets/laktaa.jpeg",
   "expo": {
     "name": "Laktaa",
     "slug": "Laktaa",
-    "version": "1.0.1",
+	"icon": "./src/assets/laktaa.jpeg",
+	"version": "1.0.1",
     "assetBundlePatterns": ["**/*"],
     "android": {
       "package": "com.laktaa",
