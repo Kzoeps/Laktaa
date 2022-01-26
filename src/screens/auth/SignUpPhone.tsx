@@ -197,7 +197,6 @@ const SignUpPhone: FC = () => {
                   />
                 </Box>
                 <FirebaseRecaptchaVerifierModal
-                  attemptInvisibleVerification
                   ref={recaptchaVerifier}
                   firebaseConfig={firebase.app().options}
                 />

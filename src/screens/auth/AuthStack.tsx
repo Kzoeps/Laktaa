@@ -14,13 +14,6 @@ const AuthStack = (): JSX.Element => (
       component={SignUpPhone}
       options={{
         title: 'Sign Up',
-        headerStyle: {
-          backgroundColor: '#49C1A4',
-        },
-        headerTitleStyle: {
-          color: '#FAFAFA',
-        },
-        headerTintColor: '#FAFAFA',
       }}
     />
   </Stack.Navigator>
